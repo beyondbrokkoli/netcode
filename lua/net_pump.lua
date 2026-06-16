@@ -21,14 +21,13 @@ function Pump.send_dynamic_history(ctx)
             pkt.frame_tick = current_tick
             pkt.ack_tick = ctx.peer_highest_tick[p]
 
-            -- [!] DEEP AMNESIA FIX: Anchor to simulation head, expand window
-            local head_sim_tick = current_tick - 1
-            if head_sim_tick > 0 and ctx.rollback_arena.is_rollback_active == 0 then
-                local chk_base = head_sim_tick - cfg_net.HASH_WINDOW_LEN + 1
+            -- [!] DEEP AMNESIA FIX: Re-Anchor to conf_tick (mathematical certainty), but use the expanded window
+            if conf_tick > 0 and ctx.rollback_arena.is_rollback_active == 0 then
+                local chk_base = conf_tick - cfg_net.HASH_WINDOW_LEN + 1
                 if chk_base < 1 then chk_base = 1 end
                 pkt.checksum_base_tick = chk_base
                 
-                for i = 0, head_sim_tick - chk_base do
+                for i = 0, conf_tick - chk_base do
                     local c_idx = bit.band(chk_base + i, cfg_net.RING_MASK)
                     pkt.recent_checksums[i] = ctx.rollback_arena.frames[c_idx].state_checksum
                 end

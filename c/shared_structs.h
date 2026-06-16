@@ -15,7 +15,7 @@ typedef struct {
     uint32_t ack_tick;
     uint32_t base_tick;
     uint32_t checksum_base_tick;
-    uint32_t recent_checksums[8];
+    uint32_t recent_checksums[64];
     uint8_t player_id;
     uint8_t history_count;
     uint16_t _align_pad;
