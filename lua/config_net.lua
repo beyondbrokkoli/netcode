@@ -10,6 +10,7 @@ ConfigNet.MAX_PACKED_ACTIONS = 32                     -- [!] PHASE 3: Max sparse
 ConfigNet.LOOKAHEAD_CAP = 200
 ConfigNet.DESYNC_SWEEP = 60
 ConfigNet.TICK_RATE = 60
+ConfigNet.HASH_WINDOW_LEN = 64
 
 -- Infrastructure Routing (Matchmaker, STUN, Fallback ICE)
 ConfigNet.MATCHMAKER_URL = "http://138.199.152.240:80"

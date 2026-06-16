@@ -28,7 +28,7 @@ M.specs = {
             { type = "uint32_t", name = "ack_tick" },
             { type = "uint32_t", name = "base_tick" },
             { type = "uint32_t", name = "checksum_base_tick" },
-            { type = "uint32_t", name = "recent_checksums", count = 8 },
+            { type = "uint32_t", name = "recent_checksums", count = cfg_net.HASH_WINDOW_LEN },
             { type = "uint8_t", name = "player_id" },
             { type = "uint8_t", name = "history_count" },
             { type = "uint16_t", name = "_align_pad" },
