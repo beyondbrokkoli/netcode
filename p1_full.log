@@ -2564,3 +2564,837 @@ Enter Node ID (0-7) OR Preferred Local Port (e.g., 50000):
 [HEARTBEAT] SimTick: 5698 | NetHead: 5697 | Confirmed: 5597 | Missing: 101 | StateHash: 0x411F8074
 [DIAGNOSTIC] Peer Ticks: P0:5697 P2:5697 P3:5697 P4:5697 P5:5641 P6:5612 P7:5597 
 [HEARTBEAT] SimTick: 5698 | NetHead: 5697 | Confirmed: 5597 | Missing: 101 | StateHash: 0x411F8074
+Enter Node ID (0-7) OR Preferred Local Port (e.g., 50000): 
+> [STUN] Querying external NAT edges at 138.199.152.240:3478...
+[STUN] Discovery successful. External mapped endpoint: 93.220.127.30:51094
+
+[MATCHMAKING] Select Mode: (H)ost New Game or (J)oin Existing Lobby
+> Enter Target 4-Character Lobby ID:
+> [MATCHMAKER] Joining Lobby: 3E81
+[MATCHMAKER] Polling quorum status. Waiting for 'locked'...
+[MATCHMAKER] Quorum reached (8/8). Lobby is LOCKED.
+[SYSTEM] Assigning Identity: Node 1. Meshing topology...
+[ICE] Node 0 is local loopback. P2P bypassed.
+[ICE] Node 2 is local loopback. P2P bypassed.
+[ICE] Node 3 is local loopback. P2P bypassed.
+[ICE] Node 4 is on LAN. Hairpin bypassed.
+[ICE] Node 5 is on LAN. Hairpin bypassed.
+[ICE] Node 6 is on LAN. Hairpin bypassed.
+[ICE] Node 7 is on LAN. Hairpin bypassed.
+[ICE] Quorum locked. Blasting P2P tokens for 4.83 seconds...
+[ICE] Sync window closed. Evaluating routing topologies...
+[ROUTING] Node 0 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 2 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 3 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 4 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 5 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 6 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 7 -> P2P [DIRECT RESIDENTIAL]
+[SYSTEM] All routes bound. Drop-in complete.
+[SYSTEM] Topology Locked. Sleeping 4.83 seconds for global sync...
+[SYSTEM] Drop-in complete. Entering pristine FSM loop.
+[DIAGNOSTIC] Peer Ticks: P0:60 P2:66 P3:78 P4:45 P5:59 P6:69 P7:48 
+[HEARTBEAT] SimTick: 61 | NetHead: 60 | Confirmed: 45 | Missing: 16 | StateHash: 0xB3DA50E6
+[DIAGNOSTIC] Peer Ticks: P0:120 P2:126 P3:138 P4:105 P5:104 P6:105 P7:100 
+[HEARTBEAT] SimTick: 121 | NetHead: 120 | Confirmed: 100 | Missing: 21 | StateHash: 0xC5CB26C5
+[DIAGNOSTIC] Peer Ticks: P0:180 P2:186 P3:198 P4:105 P5:104 P6:105 P7:100 
+[HEARTBEAT] SimTick: 181 | NetHead: 180 | Confirmed: 100 | Missing: 81 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:200 P2:200 P3:200 P4:109 P5:104 P6:110 P7:100 
+[HEARTBEAT] SimTick: 201 | NetHead: 200 | Confirmed: 100 | Missing: 101 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:200 P2:200 P3:200 P4:110 P5:109 P6:111 P7:100 
+[HEARTBEAT] SimTick: 201 | NetHead: 200 | Confirmed: 100 | Missing: 101 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:200 P2:200 P3:200 P4:111 P5:110 P6:117 P7:100 
+[HEARTBEAT] SimTick: 201 | NetHead: 200 | Confirmed: 100 | Missing: 101 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:204 P2:201 P3:201 P4:118 P5:116 P6:129 P7:104 
+[HEARTBEAT] SimTick: 205 | NetHead: 204 | Confirmed: 104 | Missing: 101 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:212 P2:212 P3:212 P4:192 P5:125 P6:138 P7:112 
+[HEARTBEAT] SimTick: 213 | NetHead: 212 | Confirmed: 112 | Missing: 101 | StateHash: 0x30CC1B81
+[DIAGNOSTIC] Peer Ticks: P0:212 P2:212 P3:212 P4:205 P5:126 P6:138 P7:112 
+[HEARTBEAT] SimTick: 213 | NetHead: 212 | Confirmed: 112 | Missing: 101 | StateHash: 0x30CC1B81
+[DIAGNOSTIC] Peer Ticks: P0:214 P2:214 P3:214 P4:209 P5:131 P6:140 P7:114 
+[HEARTBEAT] SimTick: 215 | NetHead: 214 | Confirmed: 114 | Missing: 101 | StateHash: 0x30CC1B81
+[DIAGNOSTIC] Peer Ticks: P0:235 P2:235 P3:235 P4:210 P5:135 P6:153 P7:137 
+[HEARTBEAT] SimTick: 236 | NetHead: 235 | Confirmed: 135 | Missing: 101 | StateHash: 0x30CC1B81
+[DIAGNOSTIC] Peer Ticks: P0:235 P2:235 P3:235 P4:211 P5:135 P6:153 P7:137 
+[HEARTBEAT] SimTick: 236 | NetHead: 235 | Confirmed: 135 | Missing: 101 | StateHash: 0x30CC1B81
+[DIAGNOSTIC] Peer Ticks: P0:259 P2:259 P3:259 P4:221 P5:172 P6:185 P7:163 
+[HEARTBEAT] SimTick: 260 | NetHead: 259 | Confirmed: 163 | Missing: 97 | StateHash: 0xDA0BF9E7
+[DIAGNOSTIC] Peer Ticks: P0:292 P2:293 P3:293 P4:256 P5:204 P6:205 P7:193 
+[HEARTBEAT] SimTick: 292 | NetHead: 291 | Confirmed: 193 | Missing: 99 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:300 P2:300 P3:300 P4:300 P5:204 P6:210 P7:200 
+[HEARTBEAT] SimTick: 301 | NetHead: 300 | Confirmed: 200 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:300 P2:300 P3:300 P4:300 P5:208 P6:210 P7:200 
+[HEARTBEAT] SimTick: 301 | NetHead: 300 | Confirmed: 200 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:300 P2:300 P3:300 P4:300 P5:209 P6:211 P7:200 
+[HEARTBEAT] SimTick: 301 | NetHead: 300 | Confirmed: 200 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:300 P2:300 P3:300 P4:300 P5:213 P6:226 P7:200 
+[HEARTBEAT] SimTick: 301 | NetHead: 300 | Confirmed: 200 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:304 P2:304 P3:304 P4:304 P5:219 P6:233 P7:204 
+[HEARTBEAT] SimTick: 305 | NetHead: 304 | Confirmed: 204 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:312 P2:312 P3:312 P4:312 P5:225 P6:240 P7:212 
+[HEARTBEAT] SimTick: 313 | NetHead: 312 | Confirmed: 212 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:314 P2:314 P3:314 P4:314 P5:226 P6:240 P7:214 
+[HEARTBEAT] SimTick: 315 | NetHead: 314 | Confirmed: 214 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:325 P2:325 P3:325 P4:325 P5:231 P6:247 P7:225 
+[HEARTBEAT] SimTick: 326 | NetHead: 325 | Confirmed: 225 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:337 P2:337 P3:337 P4:334 P5:239 P6:253 P7:237 
+[HEARTBEAT] SimTick: 338 | NetHead: 337 | Confirmed: 237 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:339 P2:339 P3:339 P4:337 P5:239 P6:278 P7:244 
+[HEARTBEAT] SimTick: 340 | NetHead: 339 | Confirmed: 239 | Missing: 101 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:373 P2:373 P3:381 P4:376 P5:276 P6:285 P7:282 
+[HEARTBEAT] SimTick: 374 | NetHead: 373 | Confirmed: 276 | Missing: 98 | StateHash: 0x99FB0E1C
+[DIAGNOSTIC] Peer Ticks: P0:400 P2:400 P3:400 P4:400 P5:304 P6:305 P7:300 
+[HEARTBEAT] SimTick: 401 | NetHead: 400 | Confirmed: 300 | Missing: 101 | StateHash: 0x634CABE2
+[DIAGNOSTIC] Peer Ticks: P0:400 P2:400 P3:400 P4:400 P5:305 P6:310 P7:300 
+[HEARTBEAT] SimTick: 401 | NetHead: 400 | Confirmed: 300 | Missing: 101 | StateHash: 0x634CABE2
+[DIAGNOSTIC] Peer Ticks: P0:400 P2:400 P3:400 P4:400 P5:309 P6:311 P7:300 
+[HEARTBEAT] SimTick: 401 | NetHead: 400 | Confirmed: 300 | Missing: 101 | StateHash: 0x634CABE2
+[DIAGNOSTIC] Peer Ticks: P0:400 P2:400 P3:400 P4:400 P5:313 P6:317 P7:300 
+[HEARTBEAT] SimTick: 401 | NetHead: 400 | Confirmed: 300 | Missing: 101 | StateHash: 0x634CABE2
+[DIAGNOSTIC] Peer Ticks: P0:400 P2:400 P3:400 P4:400 P5:313 P6:317 P7:300 
+[HEARTBEAT] SimTick: 401 | NetHead: 400 | Confirmed: 300 | Missing: 101 | StateHash: 0x634CABE2
+[DIAGNOSTIC] Peer Ticks: P0:408 P2:407 P3:407 P4:404 P5:326 P6:340 P7:309 
+[HEARTBEAT] SimTick: 409 | NetHead: 408 | Confirmed: 309 | Missing: 100 | StateHash: 0xC27DA7AE
+[DIAGNOSTIC] Peer Ticks: P0:414 P2:414 P3:414 P4:414 P5:326 P6:340 P7:314 
+[HEARTBEAT] SimTick: 415 | NetHead: 414 | Confirmed: 314 | Missing: 101 | StateHash: 0x1076B689
+[DIAGNOSTIC] Peer Ticks: P0:414 P2:414 P3:414 P4:415 P5:326 P6:340 P7:314 
+[HEARTBEAT] SimTick: 415 | NetHead: 414 | Confirmed: 314 | Missing: 101 | StateHash: 0x1076B689
+[DIAGNOSTIC] Peer Ticks: P0:425 P2:425 P3:425 P4:425 P5:339 P6:351 P7:325 
+[HEARTBEAT] SimTick: 426 | NetHead: 425 | Confirmed: 325 | Missing: 101 | StateHash: 0x1076B689
+[DIAGNOSTIC] Peer Ticks: P0:437 P2:437 P3:437 P4:437 P5:339 P6:353 P7:337 
+[HEARTBEAT] SimTick: 438 | NetHead: 437 | Confirmed: 337 | Missing: 101 | StateHash: 0x1076B689
+[DIAGNOSTIC] Peer Ticks: P0:437 P2:437 P3:437 P4:437 P5:339 P6:385 P7:340 
+[HEARTBEAT] SimTick: 438 | NetHead: 437 | Confirmed: 339 | Missing: 99 | StateHash: 0x1076B689
+[DIAGNOSTIC] Peer Ticks: P0:492 P2:494 P3:490 P4:489 P5:404 P6:394 P7:400 
+[HEARTBEAT] SimTick: 493 | NetHead: 492 | Confirmed: 394 | Missing: 99 | StateHash: 0xF99D2854
+[DIAGNOSTIC] Peer Ticks: P0:500 P2:500 P3:500 P4:500 P5:405 P6:410 P7:400 
+[HEARTBEAT] SimTick: 501 | NetHead: 500 | Confirmed: 400 | Missing: 101 | StateHash: 0xF99D2854
+[DIAGNOSTIC] Peer Ticks: P0:500 P2:500 P3:500 P4:500 P5:408 P6:410 P7:400 
+[HEARTBEAT] SimTick: 501 | NetHead: 500 | Confirmed: 400 | Missing: 101 | StateHash: 0xF99D2854
+[DIAGNOSTIC] Peer Ticks: P0:500 P2:500 P3:500 P4:500 P5:409 P6:416 P7:400 
+[HEARTBEAT] SimTick: 501 | NetHead: 500 | Confirmed: 400 | Missing: 101 | StateHash: 0xF99D2854
+[DIAGNOSTIC] Peer Ticks: P0:500 P2:500 P3:500 P4:500 P5:413 P6:417 P7:400 
+[HEARTBEAT] SimTick: 501 | NetHead: 500 | Confirmed: 400 | Missing: 101 | StateHash: 0xF99D2854
+[DIAGNOSTIC] Peer Ticks: P0:504 P2:504 P3:504 P4:504 P5:423 P6:433 P7:406 
+[HEARTBEAT] SimTick: 505 | NetHead: 504 | Confirmed: 406 | Missing: 99 | StateHash: 0xC4DA3B75
+[DIAGNOSTIC] Peer Ticks: P0:512 P2:512 P3:512 P4:512 P5:426 P6:440 P7:412 
+[HEARTBEAT] SimTick: 513 | NetHead: 512 | Confirmed: 412 | Missing: 101 | StateHash: 0xEC827E8A
+[DIAGNOSTIC] Peer Ticks: P0:514 P2:514 P3:514 P4:514 P5:426 P6:440 P7:414 
+[HEARTBEAT] SimTick: 515 | NetHead: 514 | Confirmed: 414 | Missing: 101 | StateHash: 0xEC827E8A
+[DIAGNOSTIC] Peer Ticks: P0:525 P2:525 P3:525 P4:525 P5:431 P6:443 P7:425 
+[HEARTBEAT] SimTick: 526 | NetHead: 525 | Confirmed: 425 | Missing: 101 | StateHash: 0xEC827E8A
+[DIAGNOSTIC] Peer Ticks: P0:529 P2:529 P3:529 P4:529 P5:439 P6:453 P7:429 
+[HEARTBEAT] SimTick: 530 | NetHead: 529 | Confirmed: 429 | Missing: 101 | StateHash: 0x1A4288F6
+[DIAGNOSTIC] Peer Ticks: P0:537 P2:537 P3:537 P4:537 P5:444 P6:480 P7:437 
+[HEARTBEAT] SimTick: 538 | NetHead: 537 | Confirmed: 437 | Missing: 101 | StateHash: 0xAB32F0B9
+[DIAGNOSTIC] Peer Ticks: P0:565 P2:565 P3:565 P4:557 P5:491 P6:490 P7:466 
+[HEARTBEAT] SimTick: 566 | NetHead: 565 | Confirmed: 466 | Missing: 100 | StateHash: 0xAB32F0B9
+[DIAGNOSTIC] Peer Ticks: P0:600 P2:600 P3:600 P4:600 P5:504 P6:507 P7:500 
+[HEARTBEAT] SimTick: 601 | NetHead: 600 | Confirmed: 500 | Missing: 101 | StateHash: 0xD3F0C805
+[DIAGNOSTIC] Peer Ticks: P0:600 P2:600 P3:600 P4:600 P5:507 P6:510 P7:500 
+[HEARTBEAT] SimTick: 601 | NetHead: 600 | Confirmed: 500 | Missing: 101 | StateHash: 0xD3F0C805
+[DIAGNOSTIC] Peer Ticks: P0:600 P2:600 P3:600 P4:600 P5:509 P6:510 P7:500 
+[HEARTBEAT] SimTick: 601 | NetHead: 600 | Confirmed: 500 | Missing: 101 | StateHash: 0xD3F0C805
+[DIAGNOSTIC] Peer Ticks: P0:600 P2:600 P3:600 P4:600 P5:513 P6:517 P7:500 
+[HEARTBEAT] SimTick: 601 | NetHead: 600 | Confirmed: 500 | Missing: 101 | StateHash: 0xD3F0C805
+[DIAGNOSTIC] Peer Ticks: P0:602 P2:602 P3:602 P4:600 P5:513 P6:533 P7:502 
+[HEARTBEAT] SimTick: 603 | NetHead: 602 | Confirmed: 502 | Missing: 101 | StateHash: 0xD3F0C805
+[DIAGNOSTIC] Peer Ticks: P0:609 P2:609 P3:609 P4:604 P5:526 P6:538 P7:509 
+[HEARTBEAT] SimTick: 610 | NetHead: 609 | Confirmed: 509 | Missing: 101 | StateHash: 0xD3F0C805
+[DIAGNOSTIC] Peer Ticks: P0:614 P2:614 P3:614 P4:614 P5:526 P6:540 P7:514 
+[HEARTBEAT] SimTick: 615 | NetHead: 614 | Confirmed: 514 | Missing: 101 | StateHash: 0x750763EE
+[DIAGNOSTIC] Peer Ticks: P0:616 P2:616 P3:616 P4:614 P5:531 P6:543 P7:517 
+[HEARTBEAT] SimTick: 617 | NetHead: 616 | Confirmed: 517 | Missing: 100 | StateHash: 0x3A442357
+[DIAGNOSTIC] Peer Ticks: P0:628 P2:628 P3:628 P4:625 P5:539 P6:547 P7:529 
+[HEARTBEAT] SimTick: 630 | NetHead: 629 | Confirmed: 529 | Missing: 101 | StateHash: 0xABEE6D7D
+[DIAGNOSTIC] Peer Ticks: P0:629 P2:629 P3:629 P4:629 P5:539 P6:559 P7:529 
+[HEARTBEAT] SimTick: 630 | NetHead: 629 | Confirmed: 529 | Missing: 101 | StateHash: 0xABEE6D7D
+[DIAGNOSTIC] Peer Ticks: P0:651 P2:651 P3:651 P4:645 P5:582 P6:585 P7:551 
+[HEARTBEAT] SimTick: 652 | NetHead: 651 | Confirmed: 551 | Missing: 101 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:679 P2:679 P3:679 P4:668 P5:604 P6:594 P7:582 
+[HEARTBEAT] SimTick: 680 | NetHead: 679 | Confirmed: 582 | Missing: 98 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:700 P2:700 P3:700 P4:700 P5:605 P6:608 P7:600 
+[HEARTBEAT] SimTick: 701 | NetHead: 700 | Confirmed: 600 | Missing: 101 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:700 P2:700 P3:700 P4:700 P5:609 P6:610 P7:600 
+[HEARTBEAT] SimTick: 701 | NetHead: 700 | Confirmed: 600 | Missing: 101 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:700 P2:700 P3:700 P4:700 P5:609 P6:611 P7:600 
+[HEARTBEAT] SimTick: 701 | NetHead: 700 | Confirmed: 600 | Missing: 101 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:700 P2:700 P3:700 P4:700 P5:613 P6:617 P7:600 
+[HEARTBEAT] SimTick: 701 | NetHead: 700 | Confirmed: 600 | Missing: 101 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:705 P2:705 P3:705 P4:704 P5:626 P6:634 P7:607 
+[HEARTBEAT] SimTick: 706 | NetHead: 705 | Confirmed: 607 | Missing: 99 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:709 P2:709 P3:709 P4:709 P5:626 P6:640 P7:609 
+[HEARTBEAT] SimTick: 710 | NetHead: 709 | Confirmed: 609 | Missing: 101 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:714 P2:714 P3:714 P4:714 P5:626 P6:643 P7:614 
+[HEARTBEAT] SimTick: 715 | NetHead: 714 | Confirmed: 614 | Missing: 101 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:723 P2:723 P3:723 P4:723 P5:638 P6:643 P7:623 
+[HEARTBEAT] SimTick: 724 | NetHead: 723 | Confirmed: 623 | Missing: 101 | StateHash: 0x1A156775
+[DIAGNOSTIC] Peer Ticks: P0:725 P2:725 P3:725 P4:725 P5:639 P6:647 P7:625 
+[HEARTBEAT] SimTick: 726 | NetHead: 725 | Confirmed: 625 | Missing: 101 | StateHash: 0x1A156775
+[DIAGNOSTIC] Peer Ticks: P0:729 P2:729 P3:729 P4:737 P5:651 P6:659 P7:629 
+[HEARTBEAT] SimTick: 730 | NetHead: 729 | Confirmed: 629 | Missing: 101 | StateHash: 0x1A156775
+[DIAGNOSTIC] Peer Ticks: P0:754 P2:754 P3:754 P4:754 P5:698 P6:694 P7:655 
+[HEARTBEAT] SimTick: 755 | NetHead: 754 | Confirmed: 655 | Missing: 100 | StateHash: 0x366EE842
+[DIAGNOSTIC] Peer Ticks: P0:768 P2:770 P3:770 P4:769 P5:705 P6:708 P7:671 
+[HEARTBEAT] SimTick: 769 | NetHead: 768 | Confirmed: 671 | Missing: 98 | StateHash: 0x5D0C920E
+[DIAGNOSTIC] Peer Ticks: P0:800 P2:800 P3:800 P4:800 P5:709 P6:710 P7:700 
+[HEARTBEAT] SimTick: 801 | NetHead: 800 | Confirmed: 700 | Missing: 101 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:800 P2:800 P3:800 P4:800 P5:709 P6:711 P7:700 
+[HEARTBEAT] SimTick: 801 | NetHead: 800 | Confirmed: 700 | Missing: 101 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:800 P2:800 P3:800 P4:800 P5:713 P6:717 P7:700 
+[HEARTBEAT] SimTick: 801 | NetHead: 800 | Confirmed: 700 | Missing: 101 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:800 P2:800 P3:800 P4:800 P5:718 P6:717 P7:700 
+[HEARTBEAT] SimTick: 801 | NetHead: 800 | Confirmed: 700 | Missing: 101 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:809 P2:809 P3:809 P4:808 P5:726 P6:740 P7:709 
+[HEARTBEAT] SimTick: 810 | NetHead: 809 | Confirmed: 709 | Missing: 101 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:814 P2:814 P3:814 P4:811 P5:726 P6:740 P7:714 
+[HEARTBEAT] SimTick: 815 | NetHead: 814 | Confirmed: 714 | Missing: 101 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:823 P2:823 P3:823 P4:823 P5:729 P6:743 P7:723 
+[HEARTBEAT] SimTick: 824 | NetHead: 823 | Confirmed: 723 | Missing: 101 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:825 P2:825 P3:825 P4:825 P5:739 P6:747 P7:725 
+[HEARTBEAT] SimTick: 826 | NetHead: 825 | Confirmed: 725 | Missing: 101 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:829 P2:829 P3:829 P4:829 P5:750 P6:753 P7:729 
+[HEARTBEAT] SimTick: 830 | NetHead: 829 | Confirmed: 729 | Missing: 101 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:842 P2:842 P3:841 P4:837 P5:786 P6:790 P7:743 
+[HEARTBEAT] SimTick: 843 | NetHead: 842 | Confirmed: 743 | Missing: 100 | StateHash: 0x05ED6CF2
+[DIAGNOSTIC] Peer Ticks: P0:866 P2:866 P3:866 P4:866 P5:804 P6:794 P7:766 
+[HEARTBEAT] SimTick: 867 | NetHead: 866 | Confirmed: 766 | Missing: 101 | StateHash: 0x5266A86D
+[DIAGNOSTIC] Peer Ticks: P0:871 P2:871 P3:871 P4:871 P5:808 P6:809 P7:771 
+[HEARTBEAT] SimTick: 872 | NetHead: 871 | Confirmed: 771 | Missing: 101 | StateHash: 0x885CB0BA
+[DIAGNOSTIC] Peer Ticks: P0:900 P2:900 P3:900 P4:900 P5:809 P6:810 P7:800 
+[HEARTBEAT] SimTick: 901 | NetHead: 900 | Confirmed: 800 | Missing: 101 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:900 P2:900 P3:900 P4:900 P5:813 P6:811 P7:800 
+[HEARTBEAT] SimTick: 901 | NetHead: 900 | Confirmed: 800 | Missing: 101 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:900 P2:900 P3:900 P4:900 P5:813 P6:817 P7:800 
+[HEARTBEAT] SimTick: 901 | NetHead: 900 | Confirmed: 800 | Missing: 101 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:905 P2:905 P3:905 P4:905 P5:826 P6:834 P7:805 
+[HEARTBEAT] SimTick: 906 | NetHead: 905 | Confirmed: 805 | Missing: 101 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:909 P2:909 P3:909 P4:909 P5:826 P6:843 P7:809 
+[HEARTBEAT] SimTick: 910 | NetHead: 909 | Confirmed: 809 | Missing: 101 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:914 P2:914 P3:914 P4:914 P5:827 P6:843 P7:814 
+[HEARTBEAT] SimTick: 915 | NetHead: 914 | Confirmed: 814 | Missing: 101 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:923 P2:923 P3:923 P4:923 P5:839 P6:844 P7:823 
+[HEARTBEAT] SimTick: 924 | NetHead: 923 | Confirmed: 823 | Missing: 101 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:925 P2:925 P3:925 P4:925 P5:839 P6:847 P7:825 
+[HEARTBEAT] SimTick: 926 | NetHead: 925 | Confirmed: 825 | Missing: 101 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:927 P2:927 P3:927 P4:927 P5:862 P6:853 P7:827 
+[HEARTBEAT] SimTick: 928 | NetHead: 927 | Confirmed: 827 | Missing: 101 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:956 P2:956 P3:963 P4:950 P5:893 P6:894 P7:857 
+[HEARTBEAT] SimTick: 957 | NetHead: 956 | Confirmed: 857 | Missing: 100 | StateHash: 0x8060F4D8
+[DIAGNOSTIC] Peer Ticks: P0:971 P2:971 P3:971 P4:967 P5:905 P6:894 P7:871 
+[HEARTBEAT] SimTick: 972 | NetHead: 971 | Confirmed: 871 | Missing: 101 | StateHash: 0xCAD2AE79
+[DIAGNOSTIC] Peer Ticks: P0:974 P2:974 P3:974 P4:971 P5:909 P6:910 P7:877 
+[HEARTBEAT] SimTick: 975 | NetHead: 974 | Confirmed: 877 | Missing: 98 | StateHash: 0xC86104BF
+[DIAGNOSTIC] Peer Ticks: P0:1000 P2:1000 P3:1000 P4:1000 P5:911 P6:911 P7:900 
+[HEARTBEAT] SimTick: 1001 | NetHead: 1000 | Confirmed: 900 | Missing: 101 | StateHash: 0x90FF9E5A
+[DIAGNOSTIC] Peer Ticks: P0:1000 P2:1000 P3:1000 P4:1000 P5:913 P6:911 P7:900 
+[HEARTBEAT] SimTick: 1001 | NetHead: 1000 | Confirmed: 900 | Missing: 101 | StateHash: 0x90FF9E5A
+[DIAGNOSTIC] Peer Ticks: P0:1005 P2:1005 P3:1005 P4:1006 P5:914 P6:917 P7:905 
+[HEARTBEAT] SimTick: 1006 | NetHead: 1005 | Confirmed: 905 | Missing: 101 | StateHash: 0x93EB7E06
+[DIAGNOSTIC] Peer Ticks: P0:1005 P2:1008 P3:1008 P4:1006 P5:926 P6:943 P7:907 
+[HEARTBEAT] SimTick: 1006 | NetHead: 1005 | Confirmed: 907 | Missing: 99 | StateHash: 0x93EB7E06
+[DIAGNOSTIC] Peer Ticks: P0:1014 P2:1014 P3:1014 P4:1014 P5:926 P6:943 P7:914 
+[HEARTBEAT] SimTick: 1015 | NetHead: 1014 | Confirmed: 914 | Missing: 101 | StateHash: 0x7F2FB1F9
+[DIAGNOSTIC] Peer Ticks: P0:1023 P2:1023 P3:1023 P4:1023 P5:939 P6:943 P7:923 
+[HEARTBEAT] SimTick: 1024 | NetHead: 1023 | Confirmed: 923 | Missing: 101 | StateHash: 0x7F2FB1F9
+[DIAGNOSTIC] Peer Ticks: P0:1025 P2:1025 P3:1025 P4:1025 P5:939 P6:947 P7:925 
+[HEARTBEAT] SimTick: 1026 | NetHead: 1025 | Confirmed: 925 | Missing: 101 | StateHash: 0x7F2FB1F9
+[DIAGNOSTIC] Peer Ticks: P0:1027 P2:1027 P3:1027 P4:1027 P5:951 P6:953 P7:927 
+[HEARTBEAT] SimTick: 1028 | NetHead: 1027 | Confirmed: 927 | Missing: 101 | StateHash: 0x7F2FB1F9
+[DIAGNOSTIC] Peer Ticks: P0:1033 P2:1033 P3:1033 P4:1027 P5:993 P6:953 P7:933 
+[HEARTBEAT] SimTick: 1034 | NetHead: 1033 | Confirmed: 933 | Missing: 101 | StateHash: 0x7F2FB1F9
+[DIAGNOSTIC] Peer Ticks: P0:1059 P2:1058 P3:1058 P4:1051 P5:1005 P6:994 P7:963 
+[HEARTBEAT] SimTick: 1060 | NetHead: 1059 | Confirmed: 963 | Missing: 97 | StateHash: 0x7F2FB1F9
+[DIAGNOSTIC] Peer Ticks: P0:1071 P2:1071 P3:1071 P4:1071 P5:1009 P6:1010 P7:971 
+[HEARTBEAT] SimTick: 1072 | NetHead: 1071 | Confirmed: 971 | Missing: 101 | StateHash: 0x7F2FB1F9
+[DIAGNOSTIC] Peer Ticks: P0:1080 P2:1080 P3:1080 P4:1071 P5:1009 P6:1010 P7:984 
+[HEARTBEAT] SimTick: 1081 | NetHead: 1080 | Confirmed: 984 | Missing: 97 | StateHash: 0x7F2FB1F9
+[DIAGNOSTIC] Peer Ticks: P0:1100 P2:1100 P3:1100 P4:1100 P5:1013 P6:1011 P7:1000 
+[HEARTBEAT] SimTick: 1101 | NetHead: 1100 | Confirmed: 1000 | Missing: 101 | StateHash: 0x6A3E5EF4
+[DIAGNOSTIC] Peer Ticks: P0:1100 P2:1100 P3:1100 P4:1100 P5:1013 P6:1017 P7:1000 
+[HEARTBEAT] SimTick: 1101 | NetHead: 1100 | Confirmed: 1000 | Missing: 101 | StateHash: 0x6A3E5EF4
+[DIAGNOSTIC] Peer Ticks: P0:1105 P2:1105 P3:1105 P4:1105 P5:1022 P6:1033 P7:1005 
+[HEARTBEAT] SimTick: 1106 | NetHead: 1105 | Confirmed: 1005 | Missing: 101 | StateHash: 0x875C2F3D
+[DIAGNOSTIC] Peer Ticks: P0:1109 P2:1109 P3:1109 P4:1109 P5:1026 P6:1043 P7:1010 
+[HEARTBEAT] SimTick: 1110 | NetHead: 1109 | Confirmed: 1010 | Missing: 100 | StateHash: 0x875C2F3D
+[DIAGNOSTIC] Peer Ticks: P0:1118 P2:1118 P3:1118 P4:1118 P5:1031 P6:1043 P7:1018 
+[HEARTBEAT] SimTick: 1119 | NetHead: 1118 | Confirmed: 1018 | Missing: 101 | StateHash: 0x47348E82
+[DIAGNOSTIC] Peer Ticks: P0:1123 P2:1123 P3:1123 P4:1123 P5:1039 P6:1047 P7:1023 
+[HEARTBEAT] SimTick: 1124 | NetHead: 1123 | Confirmed: 1023 | Missing: 101 | StateHash: 0x47348E82
+[DIAGNOSTIC] Peer Ticks: P0:1125 P2:1125 P3:1125 P4:1125 P5:1048 P6:1047 P7:1025 
+[HEARTBEAT] SimTick: 1126 | NetHead: 1125 | Confirmed: 1025 | Missing: 101 | StateHash: 0x33C9AACE
+[DIAGNOSTIC] Peer Ticks: P0:1127 P2:1127 P3:1127 P4:1127 P5:1085 P6:1053 P7:1027 
+[HEARTBEAT] SimTick: 1128 | NetHead: 1127 | Confirmed: 1027 | Missing: 101 | StateHash: 0x33C9AACE
+[DIAGNOSTIC] Peer Ticks: P0:1133 P2:1133 P3:1133 P4:1133 P5:1105 P6:1073 P7:1033 
+[HEARTBEAT] SimTick: 1134 | NetHead: 1133 | Confirmed: 1033 | Missing: 101 | StateHash: 0xB3440829
+[DIAGNOSTIC] Peer Ticks: P0:1168 P2:1168 P3:1168 P4:1160 P5:1109 P6:1099 P7:1071 
+[HEARTBEAT] SimTick: 1169 | NetHead: 1168 | Confirmed: 1071 | Missing: 98 | StateHash: 0xB3440829
+[DIAGNOSTIC] Peer Ticks: P0:1176 P2:1176 P3:1176 P4:1172 P5:1109 P6:1110 P7:1078 
+[HEARTBEAT] SimTick: 1178 | NetHead: 1177 | Confirmed: 1078 | Missing: 100 | StateHash: 0xB3440829
+[DIAGNOSTIC] Peer Ticks: P0:1188 P2:1188 P3:1188 P4:1187 P5:1112 P6:1110 P7:1084 
+[HEARTBEAT] SimTick: 1185 | NetHead: 1184 | Confirmed: 1084 | Missing: 101 | StateHash: 0xB3440829
+[DIAGNOSTIC] Peer Ticks: P0:1200 P2:1200 P3:1200 P4:1200 P5:1113 P6:1117 P7:1100 
+[HEARTBEAT] SimTick: 1201 | NetHead: 1200 | Confirmed: 1100 | Missing: 101 | StateHash: 0xDCC96C95
+[DIAGNOSTIC] Peer Ticks: P0:1200 P2:1200 P3:1200 P4:1200 P5:1121 P6:1117 P7:1100 
+[HEARTBEAT] SimTick: 1201 | NetHead: 1200 | Confirmed: 1100 | Missing: 101 | StateHash: 0xDCC96C95
+[DIAGNOSTIC] Peer Ticks: P0:1209 P2:1209 P3:1209 P4:1206 P5:1126 P6:1133 P7:1109 
+[HEARTBEAT] SimTick: 1210 | NetHead: 1209 | Confirmed: 1109 | Missing: 101 | StateHash: 0xDCC96C95
+[DIAGNOSTIC] Peer Ticks: P0:1213 P2:1213 P3:1213 P4:1213 P5:1126 P6:1143 P7:1113 
+[HEARTBEAT] SimTick: 1214 | NetHead: 1213 | Confirmed: 1113 | Missing: 101 | StateHash: 0x63CDC67C
+[DIAGNOSTIC] Peer Ticks: P0:1218 P2:1218 P3:1218 P4:1218 P5:1139 P6:1144 P7:1118 
+[HEARTBEAT] SimTick: 1219 | NetHead: 1218 | Confirmed: 1118 | Missing: 101 | StateHash: 0xE8F209B6
+[DIAGNOSTIC] Peer Ticks: P0:1223 P2:1223 P3:1223 P4:1220 P5:1139 P6:1147 P7:1123 
+[HEARTBEAT] SimTick: 1224 | NetHead: 1223 | Confirmed: 1123 | Missing: 101 | StateHash: 0x6E9446F5
+[DIAGNOSTIC] Peer Ticks: P0:1225 P2:1225 P3:1225 P4:1225 P5:1148 P6:1148 P7:1125 
+[HEARTBEAT] SimTick: 1226 | NetHead: 1225 | Confirmed: 1125 | Missing: 101 | StateHash: 0x6E9446F5
+[DIAGNOSTIC] Peer Ticks: P0:1225 P2:1225 P3:1227 P4:1225 P5:1167 P6:1153 P7:1125 
+[HEARTBEAT] SimTick: 1226 | NetHead: 1225 | Confirmed: 1125 | Missing: 101 | StateHash: 0x6E9446F5
+[DIAGNOSTIC] Peer Ticks: P0:1233 P2:1233 P3:1236 P4:1233 P5:1209 P6:1197 P7:1133 
+[HEARTBEAT] SimTick: 1234 | NetHead: 1233 | Confirmed: 1133 | Missing: 101 | StateHash: 0x8EA53182
+[DIAGNOSTIC] Peer Ticks: P0:1271 P2:1271 P3:1271 P4:1271 P5:1209 P6:1199 P7:1171 
+[HEARTBEAT] SimTick: 1272 | NetHead: 1271 | Confirmed: 1171 | Missing: 101 | StateHash: 0xABB52979
+[DIAGNOSTIC] Peer Ticks: P0:1284 P2:1284 P3:1284 P4:1284 P5:1209 P6:1210 P7:1184 
+[HEARTBEAT] SimTick: 1285 | NetHead: 1284 | Confirmed: 1184 | Missing: 101 | StateHash: 0xABB52979
+[DIAGNOSTIC] Peer Ticks: P0:1300 P2:1300 P3:1300 P4:1300 P5:1213 P6:1212 P7:1200 
+[HEARTBEAT] SimTick: 1301 | NetHead: 1300 | Confirmed: 1200 | Missing: 101 | StateHash: 0xABB52979
+[DIAGNOSTIC] Peer Ticks: P0:1300 P2:1300 P3:1300 P4:1300 P5:1215 P6:1217 P7:1200 
+[HEARTBEAT] SimTick: 1301 | NetHead: 1300 | Confirmed: 1200 | Missing: 101 | StateHash: 0xABB52979
+[DIAGNOSTIC] Peer Ticks: P0:1303 P2:1303 P3:1303 P4:1300 P5:1226 P6:1233 P7:1204 
+[HEARTBEAT] SimTick: 1304 | NetHead: 1303 | Confirmed: 1204 | Missing: 100 | StateHash: 0xABB52979
+[DIAGNOSTIC] Peer Ticks: P0:1313 P2:1313 P3:1313 P4:1311 P5:1226 P6:1242 P7:1213 
+[HEARTBEAT] SimTick: 1314 | NetHead: 1313 | Confirmed: 1213 | Missing: 101 | StateHash: 0xABB52979
+[DIAGNOSTIC] Peer Ticks: P0:1317 P2:1317 P3:1317 P4:1317 P5:1239 P6:1243 P7:1217 
+[HEARTBEAT] SimTick: 1318 | NetHead: 1317 | Confirmed: 1217 | Missing: 101 | StateHash: 0xABB52979
+[DIAGNOSTIC] Peer Ticks: P0:1318 P2:1318 P3:1318 P4:1318 P5:1239 P6:1244 P7:1218 
+[HEARTBEAT] SimTick: 1319 | NetHead: 1318 | Confirmed: 1218 | Missing: 101 | StateHash: 0xABB52979
+[DIAGNOSTIC] Peer Ticks: P0:1329 P2:1329 P3:1329 P4:1329 P5:1248 P6:1247 P7:1229 
+[HEARTBEAT] SimTick: 1330 | NetHead: 1329 | Confirmed: 1229 | Missing: 101 | StateHash: 0x381128C5
+[DIAGNOSTIC] Peer Ticks: P0:1329 P2:1329 P3:1329 P4:1329 P5:1281 P6:1253 P7:1229 
+[HEARTBEAT] SimTick: 1330 | NetHead: 1329 | Confirmed: 1229 | Missing: 101 | StateHash: 0x381128C5
+[DIAGNOSTIC] Peer Ticks: P0:1333 P2:1333 P3:1333 P4:1333 P5:1305 P6:1269 P7:1233 
+[HEARTBEAT] SimTick: 1334 | NetHead: 1333 | Confirmed: 1233 | Missing: 101 | StateHash: 0x462ECD8F
+[DIAGNOSTIC] Peer Ticks: P0:1339 P2:1339 P3:1339 P4:1339 P5:1309 P6:1299 P7:1239 
+[HEARTBEAT] SimTick: 1340 | NetHead: 1339 | Confirmed: 1239 | Missing: 101 | StateHash: 0x462ECD8F
+[DIAGNOSTIC] Peer Ticks: P0:1371 P2:1371 P3:1371 P4:1371 P5:1309 P6:1310 P7:1271 
+[HEARTBEAT] SimTick: 1372 | NetHead: 1371 | Confirmed: 1271 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1384 P2:1384 P3:1384 P4:1384 P5:1313 P6:1310 P7:1284 
+[HEARTBEAT] SimTick: 1385 | NetHead: 1384 | Confirmed: 1284 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1400 P2:1400 P3:1400 P4:1400 P5:1313 P6:1317 P7:1300 
+[HEARTBEAT] SimTick: 1401 | NetHead: 1400 | Confirmed: 1300 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1400 P2:1400 P3:1400 P4:1400 P5:1326 P6:1317 P7:1300 
+[HEARTBEAT] SimTick: 1401 | NetHead: 1400 | Confirmed: 1300 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1406 P2:1406 P3:1406 P4:1406 P5:1326 P6:1334 P7:1306 
+[HEARTBEAT] SimTick: 1407 | NetHead: 1406 | Confirmed: 1306 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1419 P2:1419 P3:1419 P4:1414 P5:1338 P6:1340 P7:1319 
+[HEARTBEAT] SimTick: 1420 | NetHead: 1419 | Confirmed: 1319 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1419 P2:1419 P3:1419 P4:1419 P5:1339 P6:1343 P7:1319 
+[HEARTBEAT] SimTick: 1420 | NetHead: 1419 | Confirmed: 1319 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1423 P2:1423 P3:1423 P4:1423 P5:1346 P6:1347 P7:1323 
+[HEARTBEAT] SimTick: 1424 | NetHead: 1423 | Confirmed: 1323 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1429 P2:1429 P3:1429 P4:1429 P5:1371 P6:1353 P7:1329 
+[HEARTBEAT] SimTick: 1430 | NetHead: 1429 | Confirmed: 1329 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1429 P2:1429 P3:1429 P4:1429 P5:1401 P6:1354 P7:1329 
+[HEARTBEAT] SimTick: 1430 | NetHead: 1429 | Confirmed: 1329 | Missing: 101 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1434 P2:1434 P3:1434 P4:1435 P5:1409 P6:1374 P7:1334 
+[HEARTBEAT] SimTick: 1435 | NetHead: 1434 | Confirmed: 1334 | Missing: 101 | StateHash: 0x9025FC60
+[DIAGNOSTIC] Peer Ticks: P0:1434 P2:1434 P3:1434 P4:1435 P5:1409 P6:1403 P7:1334 
+[HEARTBEAT] SimTick: 1435 | NetHead: 1434 | Confirmed: 1334 | Missing: 101 | StateHash: 0x9025FC60
+[DIAGNOSTIC] Peer Ticks: P0:1471 P2:1471 P3:1471 P4:1471 P5:1413 P6:1410 P7:1371 
+[HEARTBEAT] SimTick: 1472 | NetHead: 1471 | Confirmed: 1371 | Missing: 101 | StateHash: 0xD5951852
+[DIAGNOSTIC] Peer Ticks: P0:1498 P2:1498 P3:1498 P4:1490 P5:1413 P6:1417 P7:1398 
+[HEARTBEAT] SimTick: 1499 | NetHead: 1498 | Confirmed: 1398 | Missing: 101 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1500 P2:1500 P3:1500 P4:1500 P5:1426 P6:1417 P7:1400 
+[HEARTBEAT] SimTick: 1501 | NetHead: 1500 | Confirmed: 1400 | Missing: 101 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1507 P2:1507 P3:1506 P4:1500 P5:1426 P6:1417 P7:1409 
+[HEARTBEAT] SimTick: 1508 | NetHead: 1507 | Confirmed: 1409 | Missing: 99 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1511 P2:1511 P3:1511 P4:1511 P5:1434 P6:1434 P7:1411 
+[HEARTBEAT] SimTick: 1512 | NetHead: 1511 | Confirmed: 1411 | Missing: 101 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1519 P2:1519 P3:1519 P4:1519 P5:1439 P6:1443 P7:1419 
+[HEARTBEAT] SimTick: 1520 | NetHead: 1519 | Confirmed: 1419 | Missing: 101 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1523 P2:1523 P3:1523 P4:1523 P5:1445 P6:1444 P7:1423 
+[HEARTBEAT] SimTick: 1524 | NetHead: 1523 | Confirmed: 1423 | Missing: 101 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1526 P2:1526 P3:1526 P4:1525 P5:1453 P6:1453 P7:1426 
+[HEARTBEAT] SimTick: 1527 | NetHead: 1526 | Confirmed: 1426 | Missing: 101 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1529 P2:1529 P3:1529 P4:1529 P5:1487 P6:1453 P7:1429 
+[HEARTBEAT] SimTick: 1530 | NetHead: 1529 | Confirmed: 1429 | Missing: 101 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1529 P2:1529 P3:1529 P4:1529 P5:1509 P6:1454 P7:1429 
+[HEARTBEAT] SimTick: 1530 | NetHead: 1529 | Confirmed: 1429 | Missing: 101 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1534 P2:1534 P3:1534 P4:1535 P5:1509 P6:1476 P7:1434 
+[HEARTBEAT] SimTick: 1535 | NetHead: 1534 | Confirmed: 1434 | Missing: 101 | StateHash: 0xE8C03888
+[DIAGNOSTIC] Peer Ticks: P0:1559 P2:1559 P3:1558 P4:1551 P5:1513 P6:1510 P7:1460 
+[HEARTBEAT] SimTick: 1560 | NetHead: 1559 | Confirmed: 1460 | Missing: 100 | StateHash: 0xEEE8693A
+[DIAGNOSTIC] Peer Ticks: P0:1584 P2:1584 P3:1584 P4:1573 P5:1513 P6:1510 P7:1484 
+[HEARTBEAT] SimTick: 1585 | NetHead: 1584 | Confirmed: 1484 | Missing: 101 | StateHash: 0xC639AD65
+[DIAGNOSTIC] Peer Ticks: P0:1600 P2:1600 P3:1600 P4:1600 P5:1520 P6:1517 P7:1500 
+[HEARTBEAT] SimTick: 1601 | NetHead: 1600 | Confirmed: 1500 | Missing: 101 | StateHash: 0xBEA2DB0A
+[DIAGNOSTIC] Peer Ticks: P0:1600 P2:1600 P3:1600 P4:1600 P5:1526 P6:1517 P7:1500 
+[HEARTBEAT] SimTick: 1601 | NetHead: 1600 | Confirmed: 1500 | Missing: 101 | StateHash: 0xBEA2DB0A
+[DIAGNOSTIC] Peer Ticks: P0:1609 P2:1609 P3:1609 P4:1609 P5:1526 P6:1534 P7:1509 
+[HEARTBEAT] SimTick: 1610 | NetHead: 1609 | Confirmed: 1509 | Missing: 101 | StateHash: 0x363A19D6
+[DIAGNOSTIC] Peer Ticks: P0:1612 P2:1612 P3:1612 P4:1612 P5:1536 P6:1537 P7:1512 
+[HEARTBEAT] SimTick: 1613 | NetHead: 1612 | Confirmed: 1512 | Missing: 101 | StateHash: 0x157FFE49
+[DIAGNOSTIC] Peer Ticks: P0:1619 P2:1619 P3:1619 P4:1619 P5:1539 P6:1543 P7:1519 
+[HEARTBEAT] SimTick: 1620 | NetHead: 1619 | Confirmed: 1519 | Missing: 101 | StateHash: 0x157FFE49
+[DIAGNOSTIC] Peer Ticks: P0:1619 P2:1619 P3:1619 P4:1619 P5:1542 P6:1550 P7:1519 
+[HEARTBEAT] SimTick: 1620 | NetHead: 1619 | Confirmed: 1519 | Missing: 101 | StateHash: 0x157FFE49
+[DIAGNOSTIC] Peer Ticks: P0:1626 P2:1626 P3:1626 P4:1626 P5:1556 P6:1553 P7:1526 
+[HEARTBEAT] SimTick: 1627 | NetHead: 1626 | Confirmed: 1526 | Missing: 101 | StateHash: 0x157FFE49
+[DIAGNOSTIC] Peer Ticks: P0:1629 P2:1629 P3:1629 P4:1629 P5:1594 P6:1553 P7:1529 
+[HEARTBEAT] SimTick: 1630 | NetHead: 1629 | Confirmed: 1529 | Missing: 101 | StateHash: 0x157FFE49
+[DIAGNOSTIC] Peer Ticks: P0:1634 P2:1634 P3:1634 P4:1634 P5:1609 P6:1571 P7:1534 
+[HEARTBEAT] SimTick: 1635 | NetHead: 1634 | Confirmed: 1534 | Missing: 101 | StateHash: 0x157FFE49
+[DIAGNOSTIC] Peer Ticks: P0:1637 P2:1637 P3:1637 P4:1637 P5:1609 P6:1582 P7:1537 
+[HEARTBEAT] SimTick: 1638 | NetHead: 1637 | Confirmed: 1537 | Missing: 101 | StateHash: 0x157FFE49
+[DIAGNOSTIC] Peer Ticks: P0:1678 P2:1678 P3:1677 P4:1673 P5:1613 P6:1610 P7:1578 
+[HEARTBEAT] SimTick: 1679 | NetHead: 1678 | Confirmed: 1578 | Missing: 101 | StateHash: 0xDF72FE00
+[DIAGNOSTIC] Peer Ticks: P0:1695 P2:1695 P3:1695 P4:1695 P5:1613 P6:1616 P7:1595 
+[HEARTBEAT] SimTick: 1696 | NetHead: 1695 | Confirmed: 1595 | Missing: 101 | StateHash: 0x2DF950E1
+[DIAGNOSTIC] Peer Ticks: P0:1700 P2:1700 P3:1700 P4:1700 P5:1626 P6:1616 P7:1600 
+[HEARTBEAT] SimTick: 1701 | NetHead: 1700 | Confirmed: 1600 | Missing: 101 | StateHash: 0x2DF950E1
+[DIAGNOSTIC] Peer Ticks: P0:1707 P2:1707 P3:1707 P4:1700 P5:1626 P6:1634 P7:1609 
+[HEARTBEAT] SimTick: 1708 | NetHead: 1707 | Confirmed: 1609 | Missing: 99 | StateHash: 0x0651208D
+[DIAGNOSTIC] Peer Ticks: P0:1710 P2:1710 P3:1710 P4:1709 P5:1634 P6:1634 P7:1610 
+[HEARTBEAT] SimTick: 1711 | NetHead: 1710 | Confirmed: 1610 | Missing: 101 | StateHash: 0x0651208D
+[DIAGNOSTIC] Peer Ticks: P0:1718 P2:1718 P3:1718 P4:1718 P5:1642 P6:1637 P7:1619 
+[HEARTBEAT] SimTick: 1720 | NetHead: 1719 | Confirmed: 1619 | Missing: 101 | StateHash: 0x1F96B5C2
+[DIAGNOSTIC] Peer Ticks: P0:1719 P2:1719 P3:1719 P4:1719 P5:1642 P6:1648 P7:1619 
+[HEARTBEAT] SimTick: 1720 | NetHead: 1719 | Confirmed: 1619 | Missing: 101 | StateHash: 0x1F96B5C2
+[DIAGNOSTIC] Peer Ticks: P0:1726 P2:1726 P3:1726 P4:1726 P5:1653 P6:1653 P7:1626 
+[HEARTBEAT] SimTick: 1727 | NetHead: 1726 | Confirmed: 1626 | Missing: 101 | StateHash: 0x5166216E
+[DIAGNOSTIC] Peer Ticks: P0:1726 P2:1726 P3:1726 P4:1726 P5:1682 P6:1653 P7:1626 
+[HEARTBEAT] SimTick: 1727 | NetHead: 1726 | Confirmed: 1626 | Missing: 101 | StateHash: 0x5166216E
+[DIAGNOSTIC] Peer Ticks: P0:1729 P2:1729 P3:1729 P4:1729 P5:1709 P6:1655 P7:1629 
+[HEARTBEAT] SimTick: 1730 | NetHead: 1729 | Confirmed: 1629 | Missing: 101 | StateHash: 0x5166216E
+[DIAGNOSTIC] Peer Ticks: P0:1734 P2:1734 P3:1734 P4:1734 P5:1709 P6:1674 P7:1634 
+[HEARTBEAT] SimTick: 1735 | NetHead: 1734 | Confirmed: 1634 | Missing: 101 | StateHash: 0x01D6D159
+[DIAGNOSTIC] Peer Ticks: P0:1742 P2:1742 P3:1742 P4:1741 P5:1714 P6:1689 P7:1642 
+[HEARTBEAT] SimTick: 1743 | NetHead: 1742 | Confirmed: 1642 | Missing: 101 | StateHash: 0x01D6D159
+[DIAGNOSTIC] Peer Ticks: P0:1781 P2:1781 P3:1781 P4:1780 P5:1714 P6:1712 P7:1681 
+[HEARTBEAT] SimTick: 1782 | NetHead: 1781 | Confirmed: 1681 | Missing: 101 | StateHash: 0x01D6D159
+[DIAGNOSTIC] Peer Ticks: P0:1789 P2:1789 P3:1789 P4:1782 P5:1726 P6:1716 P7:1691 
+[HEARTBEAT] SimTick: 1790 | NetHead: 1789 | Confirmed: 1691 | Missing: 99 | StateHash: 0x01D6D159
+[DIAGNOSTIC] Peer Ticks: P0:1800 P2:1800 P3:1800 P4:1800 P5:1726 P6:1717 P7:1700 
+[HEARTBEAT] SimTick: 1801 | NetHead: 1800 | Confirmed: 1700 | Missing: 101 | StateHash: 0x01D6D159
+[DIAGNOSTIC] Peer Ticks: P0:1809 P2:1809 P3:1809 P4:1807 P5:1726 P6:1733 P7:1709 
+[HEARTBEAT] SimTick: 1810 | NetHead: 1809 | Confirmed: 1709 | Missing: 101 | StateHash: 0xE5AF4C45
+[DIAGNOSTIC] Peer Ticks: P0:1813 P2:1813 P3:1813 P4:1813 P5:1737 P6:1737 P7:1713 
+[HEARTBEAT] SimTick: 1814 | NetHead: 1813 | Confirmed: 1713 | Missing: 101 | StateHash: 0xB97B3BD4
+[DIAGNOSTIC] Peer Ticks: P0:1819 P2:1819 P3:1819 P4:1819 P5:1742 P6:1744 P7:1719 
+[HEARTBEAT] SimTick: 1820 | NetHead: 1819 | Confirmed: 1719 | Missing: 101 | StateHash: 0x1CD378AE
+[DIAGNOSTIC] Peer Ticks: P0:1824 P2:1825 P3:1825 P4:1824 P5:1753 P6:1750 P7:1726 
+[HEARTBEAT] SimTick: 1826 | NetHead: 1825 | Confirmed: 1726 | Missing: 100 | StateHash: 0x4567EAB0
+[DIAGNOSTIC] Peer Ticks: P0:1826 P2:1826 P3:1826 P4:1827 P5:1773 P6:1753 P7:1726 
+[HEARTBEAT] SimTick: 1827 | NetHead: 1826 | Confirmed: 1726 | Missing: 101 | StateHash: 0x4567EAB0
+[DIAGNOSTIC] Peer Ticks: P0:1829 P2:1829 P3:1829 P4:1829 P5:1800 P6:1753 P7:1729 
+[HEARTBEAT] SimTick: 1830 | NetHead: 1829 | Confirmed: 1729 | Missing: 101 | StateHash: 0x4567EAB0
+[DIAGNOSTIC] Peer Ticks: P0:1834 P2:1834 P3:1834 P4:1834 P5:1809 P6:1761 P7:1734 
+[HEARTBEAT] SimTick: 1835 | NetHead: 1834 | Confirmed: 1734 | Missing: 101 | StateHash: 0x7C0F8BAF
+[DIAGNOSTIC] Peer Ticks: P0:1834 P2:1834 P3:1834 P4:1834 P5:1814 P6:1774 P7:1734 
+[HEARTBEAT] SimTick: 1835 | NetHead: 1834 | Confirmed: 1734 | Missing: 101 | StateHash: 0x7C0F8BAF
+[DIAGNOSTIC] Peer Ticks: P0:1860 P2:1861 P3:1861 P4:1856 P5:1814 P6:1805 P7:1765 
+[HEARTBEAT] SimTick: 1862 | NetHead: 1861 | Confirmed: 1765 | Missing: 97 | StateHash: 0x636C0550
+[DIAGNOSTIC] Peer Ticks: P0:1881 P2:1881 P3:1881 P4:1881 P5:1825 P6:1816 P7:1781 
+[HEARTBEAT] SimTick: 1882 | NetHead: 1881 | Confirmed: 1781 | Missing: 101 | StateHash: 0x636C0550
+[DIAGNOSTIC] Peer Ticks: P0:1893 P2:1896 P3:1896 P4:1886 P5:1826 P6:1817 P7:1799 
+[HEARTBEAT] SimTick: 1897 | NetHead: 1896 | Confirmed: 1799 | Missing: 98 | StateHash: 0x636C0550
+[DIAGNOSTIC] Peer Ticks: P0:1902 P2:1902 P3:1902 P4:1900 P5:1826 P6:1819 P7:1802 
+[HEARTBEAT] SimTick: 1903 | NetHead: 1902 | Confirmed: 1802 | Missing: 101 | StateHash: 0x636C0550
+[DIAGNOSTIC] Peer Ticks: P0:1913 P2:1913 P3:1913 P4:1912 P5:1834 P6:1835 P7:1813 
+[HEARTBEAT] SimTick: 1914 | NetHead: 1913 | Confirmed: 1813 | Missing: 101 | StateHash: 0x636C0550
+[DIAGNOSTIC] Peer Ticks: P0:1919 P2:1919 P3:1919 P4:1919 P5:1837 P6:1835 P7:1819 
+[HEARTBEAT] SimTick: 1920 | NetHead: 1919 | Confirmed: 1819 | Missing: 101 | StateHash: 0x636C0550
+[DIAGNOSTIC] Peer Ticks: P0:1919 P2:1919 P3:1919 P4:1919 P5:1849 P6:1850 P7:1819 
+[HEARTBEAT] SimTick: 1920 | NetHead: 1919 | Confirmed: 1819 | Missing: 101 | StateHash: 0x636C0550
+[DIAGNOSTIC] Peer Ticks: P0:1926 P2:1926 P3:1926 P4:1926 P5:1864 P6:1850 P7:1826 
+[HEARTBEAT] SimTick: 1927 | NetHead: 1926 | Confirmed: 1826 | Missing: 101 | StateHash: 0x2F1CFA55
+[DIAGNOSTIC] Peer Ticks: P0:1927 P2:1927 P3:1927 P4:1928 P5:1887 P6:1853 P7:1827 
+[HEARTBEAT] SimTick: 1928 | NetHead: 1927 | Confirmed: 1827 | Missing: 101 | StateHash: 0x2F1CFA55
+[DIAGNOSTIC] Peer Ticks: P0:1929 P2:1929 P3:1929 P4:1929 P5:1889 P6:1853 P7:1829 
+[HEARTBEAT] SimTick: 1930 | NetHead: 1929 | Confirmed: 1829 | Missing: 101 | StateHash: 0x2F1CFA55
+[DIAGNOSTIC] Peer Ticks: P0:1929 P2:1929 P3:1929 P4:1929 P5:1889 P6:1853 P7:1829 
+[HEARTBEAT] SimTick: 1930 | NetHead: 1929 | Confirmed: 1829 | Missing: 101 | StateHash: 0x2F1CFA55
+[DIAGNOSTIC] Peer Ticks: P0:1929 P2:1929 P3:1929 P4:1929 P5:1889 P6:1853 P7:1829 
+[HEARTBEAT] SimTick: 1930 | NetHead: 1929 | Confirmed: 1829 | Missing: 101 | StateHash: 0x2F1CFA55
+[DIAGNOSTIC] Peer Ticks: P0:1929 P2:1929 P3:1929 P4:1929 P5:1889 P6:1853 P7:1829 
+[HEARTBEAT] SimTick: 1930 | NetHead: 1929 | Confirmed: 1829 | Missing: 101 | StateHash: 0x2F1CFA55
+C:\msys64\mingw64\bin\luajit: interrupted!
+stack traceback:
+	[C]: in function 'print'
+	main.lua:382: in main chunk
+	[C]: at 0x7ff7c4322040
+Enter Node ID (0-7) OR Preferred Local Port (e.g., 50000): 
+> [STUN] Querying external NAT edges at 138.199.152.240:3478...
+[STUN] Discovery successful. External mapped endpoint: 176.1.248.254:8005
+
+[MATCHMAKING] Select Mode: (H)ost New Game or (J)oin Existing Lobby
+> Enter Target 4-Character Lobby ID:
+> [MATCHMAKER] Joining Lobby: 6E53
+[MATCHMAKER] Polling quorum status. Waiting for 'locked'...
+[MATCHMAKER] Quorum reached (8/8). Lobby is LOCKED.
+[SYSTEM] Assigning Identity: Node 1. Meshing topology...
+[ICE] Node 0 is local loopback. P2P bypassed.
+[ICE] Node 2 is local loopback. P2P bypassed.
+[ICE] Node 3 is local loopback. P2P bypassed.
+[ICE] Quorum locked. Blasting P2P tokens for 4.76 seconds...
+[ICE] Sync window closed. Evaluating routing topologies...
+[ROUTING] Node 0 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 2 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 3 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 4 -> P2P [FAILED]. Falling back to Hetzner Relay.
+[ROUTING] Node 5 -> P2P [FAILED]. Falling back to Hetzner Relay.
+[ROUTING] Node 6 -> P2P [FAILED]. Falling back to Hetzner Relay.
+[ROUTING] Node 7 -> P2P [FAILED]. Falling back to Hetzner Relay.
+[SYSTEM] All routes bound. Drop-in complete.
+[SYSTEM] Topology Locked. Sleeping 4.76 seconds for global sync...
+[SYSTEM] Drop-in complete. Entering pristine FSM loop.
+[DIAGNOSTIC] Peer Ticks: P0:59 P2:62 P3:80 P4:21 P5:32 P6:46 P7:22 
+[HEARTBEAT] SimTick: 61 | NetHead: 60 | Confirmed: 21 | Missing: 40 | StateHash: 0xA11913F9
+[DIAGNOSTIC] Peer Ticks: P0:119 P2:122 P3:140 P4:80 P5:96 P6:105 P7:82 
+[HEARTBEAT] SimTick: 121 | NetHead: 120 | Confirmed: 80 | Missing: 41 | StateHash: 0xCF3966B9
+[DIAGNOSTIC] Peer Ticks: P0:179 P2:182 P3:200 P4:144 P5:155 P6:169 P7:145 
+[HEARTBEAT] SimTick: 181 | NetHead: 180 | Confirmed: 144 | Missing: 37 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:239 P2:242 P3:260 P4:203 P5:214 P6:228 P7:200 
+[HEARTBEAT] SimTick: 241 | NetHead: 240 | Confirmed: 200 | Missing: 41 | StateHash: 0x6A8D86B9
+[DIAGNOSTIC] Peer Ticks: P0:299 P2:302 P3:320 P4:262 P5:273 P6:287 P7:263 
+[HEARTBEAT] SimTick: 301 | NetHead: 300 | Confirmed: 262 | Missing: 39 | StateHash: 0x1E938B99
+[DIAGNOSTIC] Peer Ticks: P0:359 P2:362 P3:380 P4:321 P5:332 P6:346 P7:322 
+[HEARTBEAT] SimTick: 361 | NetHead: 360 | Confirmed: 321 | Missing: 40 | StateHash: 0x651C0919
+[DIAGNOSTIC] Peer Ticks: P0:419 P2:422 P3:440 P4:385 P5:396 P6:410 P7:382 
+[HEARTBEAT] SimTick: 421 | NetHead: 420 | Confirmed: 382 | Missing: 39 | StateHash: 0x1076B689
+[DIAGNOSTIC] Peer Ticks: P0:480 P2:482 P3:501 P4:444 P5:455 P6:469 P7:445 
+[HEARTBEAT] SimTick: 481 | NetHead: 480 | Confirmed: 444 | Missing: 37 | StateHash: 0x742E0DC9
+[DIAGNOSTIC] Peer Ticks: P0:539 P2:542 P3:561 P4:503 P5:514 P6:528 P7:505 
+[HEARTBEAT] SimTick: 541 | NetHead: 540 | Confirmed: 503 | Missing: 38 | StateHash: 0xAB32F0B9
+[DIAGNOSTIC] Peer Ticks: P0:599 P2:602 P3:621 P4:562 P5:573 P6:587 P7:563 
+[HEARTBEAT] SimTick: 601 | NetHead: 600 | Confirmed: 562 | Missing: 39 | StateHash: 0x91B12C39
+[DIAGNOSTIC] Peer Ticks: P0:660 P2:662 P3:681 P4:626 P5:637 P6:650 P7:627 
+[HEARTBEAT] SimTick: 661 | NetHead: 660 | Confirmed: 626 | Missing: 35 | StateHash: 0x48DF9869
+[DIAGNOSTIC] Peer Ticks: P0:720 P2:723 P3:741 P4:680 P5:691 P6:705 P7:681 
+[HEARTBEAT] SimTick: 721 | NetHead: 720 | Confirmed: 680 | Missing: 41 | StateHash: 0x891A1069
+[DIAGNOSTIC] Peer Ticks: P0:780 P2:783 P3:801 P4:742 P5:753 P6:760 P7:743 
+[HEARTBEAT] SimTick: 781 | NetHead: 780 | Confirmed: 742 | Missing: 39 | StateHash: 0x12BEB959
+[DIAGNOSTIC] Peer Ticks: P0:840 P2:843 P3:861 P4:795 P5:806 P6:819 P7:796 
+[HEARTBEAT] SimTick: 841 | NetHead: 840 | Confirmed: 795 | Missing: 46 | StateHash: 0x204384D9
+[DIAGNOSTIC] Peer Ticks: P0:900 P2:903 P3:921 P4:856 P5:867 P6:881 P7:858 
+[HEARTBEAT] SimTick: 902 | NetHead: 901 | Confirmed: 856 | Missing: 46 | StateHash: 0x2F2007E9
+[DIAGNOSTIC] Peer Ticks: P0:960 P2:963 P3:981 P4:925 P5:931 P6:950 P7:922 
+[HEARTBEAT] SimTick: 962 | NetHead: 961 | Confirmed: 922 | Missing: 40 | StateHash: 0x7E02F6D5
+[DIAGNOSTIC] Peer Ticks: P0:1020 P2:1023 P3:1041 P4:979 P5:990 P6:999 P7:976 
+[HEARTBEAT] SimTick: 1022 | NetHead: 1021 | Confirmed: 976 | Missing: 46 | StateHash: 0x7F2FB1F9
+[DIAGNOSTIC] Peer Ticks: P0:1080 P2:1083 P3:1101 P4:1038 P5:1050 P6:1064 P7:1029 
+[HEARTBEAT] SimTick: 1082 | NetHead: 1081 | Confirmed: 1029 | Missing: 53 | StateHash: 0x8D04357E
+[DIAGNOSTIC] Peer Ticks: P0:1140 P2:1143 P3:1161 P4:1097 P5:1117 P6:1131 P7:1107 
+[HEARTBEAT] SimTick: 1142 | NetHead: 1141 | Confirmed: 1097 | Missing: 45 | StateHash: 0xB3440829
+[DIAGNOSTIC] Peer Ticks: P0:1200 P2:1203 P3:1221 P4:1161 P5:1172 P6:1185 P7:1162 
+[HEARTBEAT] SimTick: 1202 | NetHead: 1201 | Confirmed: 1161 | Missing: 41 | StateHash: 0xD8CD3A75
+[DIAGNOSTIC] Peer Ticks: P0:1260 P2:1263 P3:1281 P4:1224 P5:1231 P6:1249 P7:1221 
+[HEARTBEAT] SimTick: 1262 | NetHead: 1261 | Confirmed: 1221 | Missing: 41 | StateHash: 0xABB52979
+[DIAGNOSTIC] Peer Ticks: P0:1320 P2:1323 P3:1341 P4:1279 P5:1290 P6:1303 P7:1280 
+[HEARTBEAT] SimTick: 1322 | NetHead: 1321 | Confirmed: 1279 | Missing: 43 | StateHash: 0x210791C5
+[DIAGNOSTIC] Peer Ticks: P0:1380 P2:1383 P3:1401 P4:1342 P5:1353 P6:1367 P7:1344 
+[HEARTBEAT] SimTick: 1382 | NetHead: 1381 | Confirmed: 1342 | Missing: 40 | StateHash: 0x42DCF1F9
+[DIAGNOSTIC] Peer Ticks: P0:1440 P2:1443 P3:1461 P4:1406 P5:1418 P6:1431 P7:1408 
+[HEARTBEAT] SimTick: 1442 | NetHead: 1441 | Confirmed: 1406 | Missing: 36 | StateHash: 0xFEAABBE5
+[DIAGNOSTIC] Peer Ticks: P0:1501 P2:1503 P3:1522 P4:1460 P5:1471 P6:1485 P7:1462 
+[HEARTBEAT] SimTick: 1502 | NetHead: 1501 | Confirmed: 1460 | Missing: 42 | StateHash: 0x4A218539
+[DIAGNOSTIC] Peer Ticks: P0:1561 P2:1563 P3:1582 P4:1520 P5:1532 P6:1545 P7:1522 
+[HEARTBEAT] SimTick: 1562 | NetHead: 1561 | Confirmed: 1520 | Missing: 42 | StateHash: 0xB8A968C5
+[DIAGNOSTIC] Peer Ticks: P0:1621 P2:1623 P3:1642 P4:1583 P5:1594 P6:1612 P7:1584 
+[HEARTBEAT] SimTick: 1622 | NetHead: 1621 | Confirmed: 1583 | Missing: 39 | StateHash: 0x157FFE49
+[DIAGNOSTIC] Peer Ticks: P0:1681 P2:1683 P3:1702 P4:1642 P5:1653 P6:1667 P7:1643 
+[HEARTBEAT] SimTick: 1682 | NetHead: 1681 | Confirmed: 1642 | Missing: 40 | StateHash: 0x4D55D1B5
+[DIAGNOSTIC] Peer Ticks: P0:1741 P2:1744 P3:1762 P4:1703 P5:1712 P6:1728 P7:1703 
+[HEARTBEAT] SimTick: 1742 | NetHead: 1741 | Confirmed: 1703 | Missing: 39 | StateHash: 0x01D6D159
+[DIAGNOSTIC] Peer Ticks: P0:1801 P2:1804 P3:1822 P4:1760 P5:1771 P6:1785 P7:1762 
+[HEARTBEAT] SimTick: 1802 | NetHead: 1801 | Confirmed: 1760 | Missing: 42 | StateHash: 0x61E27BC5
+[DIAGNOSTIC] Peer Ticks: P0:1861 P2:1864 P3:1882 P4:1824 P5:1835 P6:1849 P7:1825 
+[HEARTBEAT] SimTick: 1862 | NetHead: 1861 | Confirmed: 1824 | Missing: 38 | StateHash: 0xF35C6EA9
+[DIAGNOSTIC] Peer Ticks: P0:1921 P2:1924 P3:1942 P4:1881 P5:1894 P6:1906 P7:1875 
+[HEARTBEAT] SimTick: 1922 | NetHead: 1921 | Confirmed: 1875 | Missing: 47 | StateHash: 0x9B2E0455
+[DIAGNOSTIC] Peer Ticks: P0:1981 P2:1984 P3:2002 P4:1942 P5:1953 P6:1967 P7:1943 
+[HEARTBEAT] SimTick: 1983 | NetHead: 1982 | Confirmed: 1942 | Missing: 41 | StateHash: 0x57736479
+[DIAGNOSTIC] Peer Ticks: P0:2041 P2:2044 P3:2062 P4:2001 P5:2012 P6:2026 P7:2002 
+[HEARTBEAT] SimTick: 2043 | NetHead: 2042 | Confirmed: 2001 | Missing: 42 | StateHash: 0xABC0F605
+[DIAGNOSTIC] Peer Ticks: P0:2101 P2:2104 P3:2122 P4:2064 P5:2075 P6:2089 P7:2066 
+[HEARTBEAT] SimTick: 2103 | NetHead: 2102 | Confirmed: 2064 | Missing: 39 | StateHash: 0x4AAA4B79
+[DIAGNOSTIC] Peer Ticks: P0:2161 P2:2164 P3:2182 P4:2124 P5:2135 P6:2148 P7:2125 
+[HEARTBEAT] SimTick: 2163 | NetHead: 2162 | Confirmed: 2124 | Missing: 39 | StateHash: 0x398CAB25
+[DIAGNOSTIC] Peer Ticks: P0:2221 P2:2224 P3:2242 P4:2183 P5:2196 P6:2208 P7:2185 
+[HEARTBEAT] SimTick: 2223 | NetHead: 2222 | Confirmed: 2183 | Missing: 40 | StateHash: 0xFCC694F9
+[DIAGNOSTIC] Peer Ticks: P0:2281 P2:2284 P3:2302 P4:2242 P5:2253 P6:2266 P7:2243 
+[HEARTBEAT] SimTick: 2283 | NetHead: 2282 | Confirmed: 2242 | Missing: 41 | StateHash: 0x7963B605
+[DIAGNOSTIC] Peer Ticks: P0:2341 P2:2344 P3:2362 P4:2301 P5:2316 P6:2326 P7:2306 
+[HEARTBEAT] SimTick: 2343 | NetHead: 2342 | Confirmed: 2301 | Missing: 42 | StateHash: 0x9106DDF9
+[DIAGNOSTIC] Peer Ticks: P0:2401 P2:2404 P3:2423 P4:2366 P5:2377 P6:2390 P7:2367 
+[HEARTBEAT] SimTick: 2403 | NetHead: 2402 | Confirmed: 2366 | Missing: 37 | StateHash: 0x57A2A345
+[DIAGNOSTIC] Peer Ticks: P0:2461 P2:2464 P3:2483 P4:2427 P5:2434 P6:2452 P7:2429 
+[HEARTBEAT] SimTick: 2463 | NetHead: 2462 | Confirmed: 2427 | Missing: 36 | StateHash: 0x0DE014F9
+[DIAGNOSTIC] Peer Ticks: P0:2522 P2:2524 P3:2543 P4:2478 P5:2485 P6:2499 P7:2483 
+[HEARTBEAT] SimTick: 2523 | NetHead: 2522 | Confirmed: 2478 | Missing: 45 | StateHash: 0x91670805
+[DIAGNOSTIC] Peer Ticks: P0:2582 P2:2585 P3:2603 P4:2545 P5:2553 P6:2567 P7:2546 
+[HEARTBEAT] SimTick: 2583 | NetHead: 2582 | Confirmed: 2545 | Missing: 38 | StateHash: 0x5F663DD9
+[DIAGNOSTIC] Peer Ticks: P0:2642 P2:2645 P3:2663 P4:2599 P5:2611 P6:2624 P7:2601 
+[HEARTBEAT] SimTick: 2643 | NetHead: 2642 | Confirmed: 2599 | Missing: 44 | StateHash: 0x29BEDC65
+[DIAGNOSTIC] Peer Ticks: P0:2702 P2:2705 P3:2723 P4:2665 P5:2677 P6:2690 P7:2667 
+[HEARTBEAT] SimTick: 2703 | NetHead: 2702 | Confirmed: 2665 | Missing: 38 | StateHash: 0x7F0B2119
+[DIAGNOSTIC] Peer Ticks: P0:2762 P2:2765 P3:2783 P4:2723 P5:2734 P6:2748 P7:2724 
+[HEARTBEAT] SimTick: 2763 | NetHead: 2762 | Confirmed: 2723 | Missing: 40 | StateHash: 0x70376785
+[DIAGNOSTIC] Peer Ticks: P0:2822 P2:2825 P3:2843 P4:2785 P5:2796 P6:2809 P7:2786 
+[HEARTBEAT] SimTick: 2823 | NetHead: 2822 | Confirmed: 2785 | Missing: 38 | StateHash: 0xCE8AB039
+[DIAGNOSTIC] Peer Ticks: P0:2882 P2:2885 P3:2903 P4:2842 P5:2858 P6:2871 P7:2848 
+[HEARTBEAT] SimTick: 2884 | NetHead: 2883 | Confirmed: 2842 | Missing: 42 | StateHash: 0x04916025
+[DIAGNOSTIC] Peer Ticks: P0:2942 P2:2945 P3:2963 P4:2903 P5:2914 P6:2928 P7:2905 
+[HEARTBEAT] SimTick: 2944 | NetHead: 2943 | Confirmed: 2903 | Missing: 41 | StateHash: 0x1CD8BE59
+[DIAGNOSTIC] Peer Ticks: P0:3002 P2:3005 P3:3023 P4:2964 P5:2975 P6:2983 P7:2966 
+[HEARTBEAT] SimTick: 3004 | NetHead: 3003 | Confirmed: 2964 | Missing: 40 | StateHash: 0xC53C57C5
+[DIAGNOSTIC] Peer Ticks: P0:3062 P2:3065 P3:3083 P4:3027 P5:3033 P6:3042 P7:3024 
+[HEARTBEAT] SimTick: 3064 | NetHead: 3063 | Confirmed: 3024 | Missing: 40 | StateHash: 0x5D8FDAA9
+[DIAGNOSTIC] Peer Ticks: P0:3122 P2:3125 P3:3143 P4:3089 P5:3100 P6:3113 P7:3090 
+[HEARTBEAT] SimTick: 3124 | NetHead: 3123 | Confirmed: 3089 | Missing: 35 | StateHash: 0xAD1B71F5
+[DIAGNOSTIC] Peer Ticks: P0:3182 P2:3185 P3:3203 P4:3140 P5:3162 P6:3165 P7:3142 
+[HEARTBEAT] SimTick: 3184 | NetHead: 3183 | Confirmed: 3140 | Missing: 44 | StateHash: 0x2A7BC979
+[DIAGNOSTIC] Peer Ticks: P0:3242 P2:3245 P3:3263 P4:3208 P5:3219 P6:3233 P7:3210 
+[HEARTBEAT] SimTick: 3244 | NetHead: 3243 | Confirmed: 3208 | Missing: 36 | StateHash: 0x7D75B185
+[DIAGNOSTIC] Peer Ticks: P0:3302 P2:3305 P3:3323 P4:3260 P5:3272 P6:3285 P7:3262 
+[HEARTBEAT] SimTick: 3304 | NetHead: 3303 | Confirmed: 3260 | Missing: 44 | StateHash: 0x92A65A69
+[DIAGNOSTIC] Peer Ticks: P0:3362 P2:3365 P3:3383 P4:3327 P5:3338 P6:3352 P7:3329 
+[HEARTBEAT] SimTick: 3364 | NetHead: 3363 | Confirmed: 3327 | Missing: 37 | StateHash: 0x72BA50D5
+[DIAGNOSTIC] Peer Ticks: P0:3422 P2:3425 P3:3443 P4:3389 P5:3400 P6:3414 P7:3385 
+[HEARTBEAT] SimTick: 3424 | NetHead: 3423 | Confirmed: 3385 | Missing: 39 | StateHash: 0xE6169799
+[DIAGNOSTIC] Peer Ticks: P0:3482 P2:3485 P3:3503 P4:3446 P5:3445 P6:3471 P7:3448 
+[HEARTBEAT] SimTick: 3484 | NetHead: 3483 | Confirmed: 3445 | Missing: 39 | StateHash: 0x1A8E7333
+[DIAGNOSTIC] Peer Ticks: P0:3542 P2:3545 P3:3564 P4:3507 P5:3514 P6:3529 P7:3505 
+[HEARTBEAT] SimTick: 3544 | NetHead: 3543 | Confirmed: 3505 | Missing: 39 | StateHash: 0x9FE5EEAF
+[DIAGNOSTIC] Peer Ticks: P0:3603 P2:3605 P3:3624 P4:3550 P5:3560 P6:3577 P7:3542 
+[HEARTBEAT] SimTick: 3604 | NetHead: 3603 | Confirmed: 3542 | Missing: 62 | StateHash: 0xA7C3BDEC
+[DIAGNOSTIC] Peer Ticks: P0:3663 P2:3665 P3:3684 P4:3624 P5:3635 P6:3649 P7:3625 
+[HEARTBEAT] SimTick: 3664 | NetHead: 3663 | Confirmed: 3624 | Missing: 40 | StateHash: 0x357EC5BF
+[DIAGNOSTIC] Peer Ticks: P0:3723 P2:3725 P3:3744 P4:3680 P5:3692 P6:3698 P7:3682 
+[HEARTBEAT] SimTick: 3724 | NetHead: 3723 | Confirmed: 3680 | Missing: 44 | StateHash: 0x881BFA33
+[DIAGNOSTIC] Peer Ticks: P0:3783 P2:3786 P3:3804 P4:3742 P5:3753 P6:3767 P7:3744 
+[HEARTBEAT] SimTick: 3784 | NetHead: 3783 | Confirmed: 3742 | Missing: 42 | StateHash: 0xFE4333DF
+[DIAGNOSTIC] Peer Ticks: P0:3843 P2:3846 P3:3864 P4:3806 P5:3817 P6:3831 P7:3807 
+[HEARTBEAT] SimTick: 3844 | NetHead: 3843 | Confirmed: 3806 | Missing: 38 | StateHash: 0x3DDD6613
+[DIAGNOSTIC] Peer Ticks: P0:3903 P2:3906 P3:3924 P4:3860 P5:3881 P6:3894 P7:3862 
+[HEARTBEAT] SimTick: 3904 | NetHead: 3903 | Confirmed: 3860 | Missing: 44 | StateHash: 0x67AC58FF
+[DIAGNOSTIC] Peer Ticks: P0:3963 P2:3966 P3:3984 P4:3922 P5:3933 P6:3947 P7:3923 
+[HEARTBEAT] SimTick: 3964 | NetHead: 3963 | Confirmed: 3922 | Missing: 42 | StateHash: 0x35304F93
+[DIAGNOSTIC] Peer Ticks: P0:4023 P2:4026 P3:4044 P4:3983 P5:3994 P6:4008 P7:3985 
+[HEARTBEAT] SimTick: 4025 | NetHead: 4024 | Confirmed: 3983 | Missing: 42 | StateHash: 0x46224E8F
+[DIAGNOSTIC] Peer Ticks: P0:4083 P2:4086 P3:4104 P4:4045 P5:4056 P6:4069 P7:4046 
+[HEARTBEAT] SimTick: 4085 | NetHead: 4084 | Confirmed: 4045 | Missing: 40 | StateHash: 0xC1EFE883
+[DIAGNOSTIC] Peer Ticks: P0:4143 P2:4146 P3:4164 P4:4105 P5:4116 P6:4130 P7:4107 
+[HEARTBEAT] SimTick: 4145 | NetHead: 4144 | Confirmed: 4105 | Missing: 40 | StateHash: 0x56F411BF
+[DIAGNOSTIC] Peer Ticks: P0:4203 P2:4206 P3:4224 P4:4164 P5:4176 P6:4189 P7:4166 
+[HEARTBEAT] SimTick: 4205 | NetHead: 4204 | Confirmed: 4164 | Missing: 41 | StateHash: 0x5C82CBF3
+[DIAGNOSTIC] Peer Ticks: P0:4263 P2:4266 P3:4284 P4:4223 P5:4235 P6:4248 P7:4225 
+[HEARTBEAT] SimTick: 4265 | NetHead: 4264 | Confirmed: 4223 | Missing: 42 | StateHash: 0x70AC867F
+[DIAGNOSTIC] Peer Ticks: P0:4323 P2:4326 P3:4344 P4:4281 P5:4292 P6:4306 P7:4283 
+[HEARTBEAT] SimTick: 4325 | NetHead: 4324 | Confirmed: 4281 | Missing: 44 | StateHash: 0xC6C25D44
+[DIAGNOSTIC] Peer Ticks: P0:4383 P2:4386 P3:4404 P4:4340 P5:4351 P6:4365 P7:4342 
+[HEARTBEAT] SimTick: 4385 | NetHead: 4384 | Confirmed: 4340 | Missing: 45 | StateHash: 0x18E1AEA4
+[DIAGNOSTIC] Peer Ticks: P0:4443 P2:4446 P3:4460 P4:4360 P5:4371 P6:4370 P7:4362 
+[HEARTBEAT] SimTick: 4445 | NetHead: 4444 | Confirmed: 4360 | Missing: 85 | StateHash: 0x81705C4D
+Enter Node ID (0-7) OR Preferred Local Port (e.g., 50000): 
+> [STUN] Querying external NAT edges at 138.199.152.240:3478...
+[STUN] Discovery successful. External mapped endpoint: 176.1.248.254:8025
+
+[MATCHMAKING] Select Mode: (H)ost New Game or (J)oin Existing Lobby
+> Enter Target 4-Character Lobby ID:
+> [MATCHMAKER] Joining Lobby: C9FD
+[MATCHMAKER] Polling quorum status. Waiting for 'locked'...
+[MATCHMAKER] Quorum reached (8/8). Lobby is LOCKED.
+[SYSTEM] Assigning Identity: Node 1. Meshing topology...
+[ICE] Node 0 is local loopback. P2P bypassed.
+[ICE] Node 2 is local loopback. P2P bypassed.
+[ICE] Node 3 is local loopback. P2P bypassed.
+[ICE] Quorum locked. Blasting P2P tokens for 4.95 seconds...
+[ICE] Sync window closed. Evaluating routing topologies...
+[ROUTING] Node 0 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 2 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 3 -> P2P [DIRECT RESIDENTIAL]
+[ROUTING] Node 4 -> P2P [FAILED]. Falling back to Hetzner Relay.
+[ROUTING] Node 5 -> P2P [FAILED]. Falling back to Hetzner Relay.
+[ROUTING] Node 6 -> P2P [FAILED]. Falling back to Hetzner Relay.
+[ROUTING] Node 7 -> P2P [FAILED]. Falling back to Hetzner Relay.
+[SYSTEM] All routes bound. Drop-in complete.
+[SYSTEM] Topology Locked. Sleeping 4.95 seconds for global sync...
+[SYSTEM] Drop-in complete. Entering pristine FSM loop.
+[DIAGNOSTIC] Peer Ticks: P0:69 P2:76 P3:91 P4:36 P5:51 P6:64 P7:41 
+[HEARTBEAT] SimTick: 61 | NetHead: 60 | Confirmed: 36 | Missing: 25 | StateHash: 0xD7164C3F
+[DIAGNOSTIC] Peer Ticks: P0:129 P2:136 P3:151 P4:95 P5:110 P6:122 P7:100 
+[HEARTBEAT] SimTick: 121 | NetHead: 120 | Confirmed: 95 | Missing: 26 | StateHash: 0xECC76E50
+[DIAGNOSTIC] Peer Ticks: P0:189 P2:196 P3:209 P4:122 P5:171 P6:135 P7:160 
+[HEARTBEAT] SimTick: 181 | NetHead: 180 | Confirmed: 122 | Missing: 59 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
+[DIAGNOSTIC] Peer Ticks: P0:209 P2:209 P3:209 P4:122 P5:205 P6:135 P7:205 
+[HEARTBEAT] SimTick: 210 | NetHead: 209 | Confirmed: 122 | Missing: 88 | StateHash: 0x7DADB4B9
