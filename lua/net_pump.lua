@@ -26,7 +26,7 @@ function Pump.send_dynamic_history(ctx)
                 local chk_base = conf_tick - cfg_net.HASH_WINDOW_LEN + 1
                 if chk_base < 1 then chk_base = 1 end
                 pkt.checksum_base_tick = chk_base
-                
+
                 for i = 0, conf_tick - chk_base do
                     local c_idx = bit.band(chk_base + i, cfg_net.RING_MASK)
                     pkt.recent_checksums[i] = ctx.rollback_arena.frames[c_idx].state_checksum
@@ -150,6 +150,9 @@ function Pump.intercept_network(ctx, current_tick)
 
             -- [!] DEEP AMNESIA FIX: Iterate up to HASH_WINDOW_LEN
             if pkt.checksum_base_tick > 0 then
+                -- [!] DIRECTIVE 1: Update the Stale Hash Horizon
+                ctx.peer_checksum_base[pid] = math.max(ctx.peer_checksum_base[pid], pkt.checksum_base_tick)
+
                 for chk_i = 0, cfg_net.HASH_WINDOW_LEN - 1 do
                     local chk_tick = pkt.checksum_base_tick + chk_i
                     local inc_chk = pkt.recent_checksums[chk_i]

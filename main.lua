@@ -302,6 +302,10 @@ local ctx = {
     }
 }
 
+-- Add this to the ctx allocation/setup
+ctx.peer_checksum_base = ffi.new("uint32_t[?]", cfg_net.MAX_PLAYERS)
+ffi.fill(ctx.peer_checksum_base, ffi.sizeof("uint32_t") * cfg_net.MAX_PLAYERS, 0)
+
 local f0 = ctx.rollback_arena.frames[0]
 f0.tick = 0
 for p = 0, cfg_net.MAX_PLAYERS - 1 do

@@ -1,3 +1,4 @@
+-- lua/fsm_core.lua
 local net = require("network")
 local State = require("sim_world")
 local bit = require("bit")
@@ -9,7 +10,7 @@ local FSM = {}
 
 function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
     local true_consensus = 0xFFFFFFFF
-    local min_ack_of_me = 0xFFFFFFFF 
+    local min_ack_of_me = 0xFFFFFFFF
 
     for p = 0, cfg_net.MAX_PLAYERS - 1 do
         if p ~= ctx.net_identity and ctx.peer_active[p] then
@@ -116,11 +117,20 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
                 if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 then
                     for p_chk = 0, cfg_net.MAX_PLAYERS - 1 do
                         if p_chk ~= ctx.net_identity and v_frame.remote_checksums[p_chk] ~= 0 then
-                            if v_frame.state_checksum ~= v_frame.remote_checksums[p_chk] then
-                                print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X",
-                                    v_tick, v_frame.state_checksum, p_chk, v_frame.remote_checksums[p_chk]))
-                                os.exit(1)
+
+                            -- [!] DIRECTIVE 1: Stale Hash Invalidation
+                            if v_tick >= ctx.peer_checksum_base[p_chk] then
+                                if v_frame.state_checksum ~= v_frame.remote_checksums[p_chk] then
+                                    print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X",
+                                        v_tick, v_frame.state_checksum, p_chk, v_frame.remote_checksums[p_chk]))
+                                    os.exit(1)
+                                end
+                            else
+                                -- Hash is older than the peer's current broadcast horizon.
+                                -- Safely discard it to prevent leapfrog amnesia desyncs.
+                                v_frame.remote_checksums[p_chk] = 0
                             end
+
                         end
                     end
                 end
