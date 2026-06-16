@@ -3,7 +3,7 @@ local State = require("sim_world")
 local bit = require("bit")
 local ffi = require("ffi")
 local RNG = require("sim_rng")
-local cfg_net = require("config_net") -- [!] ADDED: The Registry
+local cfg_net = require("config_net")
 
 local FSM = {}
 
@@ -53,9 +53,10 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
             for p = 0, cfg_net.MAX_PLAYERS - 1 do
                 frame.player_input[p] = 0
                 frame.click_grid_idx[p] = 65535
+                -- [!] PHASE 2: Ensure the 2D array is zeroed out for future ticks
+                frame.remote_checksums[p] = 0
             end
             frame.state_checksum = 0
-            frame.remote_checksum = 0
             frame.state = 0
             frame.remote_peer_id = 0
         end
@@ -111,10 +112,16 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
                 local v_idx = bit.band(v_tick, cfg_net.RING_MASK)
                 local v_frame = ctx.rollback_arena.frames[v_idx]
 
-                if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 and v_frame.remote_checksum ~= 0 then
-                    if v_frame.state_checksum ~= v_frame.remote_checksum then
-                        print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote: 0x%08X", v_tick, v_frame.state_checksum, v_frame.remote_checksum))
-                        os.exit(1)
+                -- [!] PHASE 2: Decentralized 2D Matrix Verification
+                if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 then
+                    for p_chk = 0, cfg_net.MAX_PLAYERS - 1 do
+                        if p_chk ~= ctx.net_identity and v_frame.remote_checksums[p_chk] ~= 0 then
+                            if v_frame.state_checksum ~= v_frame.remote_checksums[p_chk] then
+                                print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X",
+                                    v_tick, v_frame.state_checksum, p_chk, v_frame.remote_checksums[p_chk]))
+                                os.exit(1)
+                            end
+                        end
                     end
                 end
             end
