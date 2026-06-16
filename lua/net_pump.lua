@@ -59,14 +59,19 @@ function Pump.send_dynamic_history(ctx)
                 local inc_input = frame.player_input[ctx.net_identity]
                 local inc_click = frame.click_grid_idx[ctx.net_identity]
 
-                if (inc_input ~= 0 or inc_click ~= 65535) and pkt.packed_count < cfg_net.MAX_PACKED_ACTIONS then
-                    local mask_idx = bit.rshift(i, 5) 
-                    local bit_idx = bit.band(i, 31)   
+                -- [!] OVERFLOW ALARM PATCH
+                if (inc_input ~= 0 or inc_click ~= 65535) then
+                    if pkt.packed_count < cfg_net.MAX_PACKED_ACTIONS then
+                        local mask_idx = bit.rshift(i, 5)
+                        local bit_idx = bit.band(i, 31)
 
-                    pkt.active_mask[mask_idx] = bit.bor(pkt.active_mask[mask_idx], bit.lshift(1, bit_idx))
-                    pkt.packed_inputs[pkt.packed_count] = inc_input
-                    pkt.packed_clicks[pkt.packed_count] = inc_click
-                    pkt.packed_count = pkt.packed_count + 1
+                        pkt.active_mask[mask_idx] = bit.bor(pkt.active_mask[mask_idx], bit.lshift(1, bit_idx))
+                        pkt.packed_inputs[pkt.packed_count] = inc_input
+                        pkt.packed_clicks[pkt.packed_count] = inc_click
+                        pkt.packed_count = pkt.packed_count + 1
+                    else
+                        print(string.format("[WARNING] Payload Compression Overflow! Dropped active input at tick %d", h_tick))
+                    end
                 end
             end
 

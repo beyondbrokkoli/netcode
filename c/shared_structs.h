@@ -21,8 +21,8 @@ typedef struct {
     uint16_t _align_pad;
     uint32_t active_mask[8];
     uint8_t packed_count;
-    uint8_t packed_inputs[32];
-    uint16_t packed_clicks[32];
+    uint8_t packed_inputs[128];
+    uint16_t packed_clicks[128];
 } LockstepPacket;
 #pragma pack(pop)
 
