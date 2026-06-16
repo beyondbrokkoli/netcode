@@ -2,7 +2,7 @@ local ffi = require("ffi")
 local bit = require("bit")
 local cfg = require("config_engine")
 local net = require("network")
-local cfg_net = require("config_net") -- [!] ADDED: The Registry
+local cfg_net = require("config_net")
 
 local CHAOS_PACKET_LOSS = 0.0
 local Pump = {}
@@ -21,10 +21,16 @@ function Pump.send_dynamic_history(ctx)
             pkt.frame_tick = current_tick
             pkt.ack_tick = ctx.peer_highest_tick[p]
 
+            -- [!] PHASE 2: Fill the redundant 8-tick hash window (Outbound)
             if conf_tick > 0 and ctx.rollback_arena.is_rollback_active == 0 then
-                local conf_idx = bit.band(conf_tick, cfg_net.RING_MASK)
-                pkt.state_checksum = ctx.rollback_arena.frames[conf_idx].state_checksum
-                pkt.checksum_tick = conf_tick
+                local chk_base = conf_tick - 7
+                if chk_base < 1 then chk_base = 1 end
+                pkt.checksum_base_tick = chk_base
+                
+                for i = 0, conf_tick - chk_base do
+                    local c_idx = bit.band(chk_base + i, cfg_net.RING_MASK)
+                    pkt.recent_checksums[i] = ctx.rollback_arena.frames[c_idx].state_checksum
+                end
             end
 
             local needed_base = ctx.peer_ack_of_me[p] + 1
@@ -92,9 +98,9 @@ function Pump.intercept_network(ctx, current_tick)
                         for p_scan = 0, cfg_net.MAX_PLAYERS - 1 do
                             h_frame.player_input[p_scan] = 0
                             h_frame.click_grid_idx[p_scan] = 65535
+                            h_frame.remote_checksums[p_scan] = 0 -- Reset 2D Array
                         end
                         h_frame.state_checksum = 0
-                        h_frame.remote_checksum = 0
                     end
 
                     local inc_input = pkt.inputs[h]
@@ -117,12 +123,20 @@ function Pump.intercept_network(ctx, current_tick)
                 ctx.peer_highest_tick[pid] = pkt.frame_tick
             end
 
-            if pkt.checksum_tick > 0 and pkt.checksum_tick >= math.max(0, ctx.rollback_arena.confirmed_tick - cfg_net.DESYNC_SWEEP) and pkt.checksum_tick <= current_tick then
-                local c_idx = bit.band(pkt.checksum_tick, cfg_net.RING_MASK)
-                local c_frame = ctx.rollback_arena.frames[c_idx]
+            -- [!] PHASE 2: Map the redundant 8-tick window into the 2D Array (Inbound)
+            if pkt.checksum_base_tick > 0 then
+                for chk_i = 0, 7 do
+                    local chk_tick = pkt.checksum_base_tick + chk_i
+                    local inc_chk = pkt.recent_checksums[chk_i]
 
-                if c_frame.tick == pkt.checksum_tick then
-                    c_frame.remote_checksum = pkt.state_checksum
+                    if inc_chk ~= 0 and chk_tick >= math.max(0, ctx.rollback_arena.confirmed_tick - cfg_net.DESYNC_SWEEP) and chk_tick <= current_tick then
+                        local c_idx = bit.band(chk_tick, cfg_net.RING_MASK)
+                        local c_frame = ctx.rollback_arena.frames[c_idx]
+
+                        if c_frame.tick == chk_tick then
+                            c_frame.remote_checksums[pid] = inc_chk
+                        end
+                    end
                 end
             end
         end
