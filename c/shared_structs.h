@@ -12,10 +12,10 @@
 typedef struct {
     uint64_t session_token;
     uint32_t frame_tick;
-    uint32_t checksum_tick;
-    uint32_t state_checksum;
     uint32_t ack_tick;
     uint32_t base_tick;
+    uint32_t checksum_base_tick;
+    uint32_t recent_checksums[8];
     uint8_t player_id;
     uint8_t history_count;
     uint16_t _align_pad;
@@ -29,7 +29,7 @@ typedef struct __attribute__((packed, aligned(4))) {
     uint8_t state;
     uint8_t _pad_auto_0[3];
     uint32_t state_checksum;
-    uint32_t remote_checksum;
+    uint32_t remote_checksums[8];
     uint8_t remote_peer_id;
     uint8_t player_input[8];
     uint8_t _pad_auto_1[3];
@@ -42,8 +42,8 @@ typedef struct __attribute__((packed, aligned(64))) {
     uint8_t is_rollback_active;
     uint8_t _pad_auto_0[3];
     uint32_t rollback_target;
-    uint8_t _pad_auto_1[44];
+    uint8_t _pad_auto_1[72];
     NetworkFrame frames[256];
-    uint8_t _pad_tail[4];
+    uint8_t _pad_tail[40];
 } RollbackBuffer;
 
