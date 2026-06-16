@@ -1,0 +1,23 @@
+[P2] [DIAGNOSTIC] Peer Ticks: P0:21820 P1:21820 P3:21820 P4:21811 P5:21817 P6:21814 P7:21803
+[P2] [HEARTBEAT] SimTick: 21821 | NetHead: 21820 | Confirmed: 21803 | Missing: 18 | StateHash: 0xF392E3FF
+[P1] [DIAGNOSTIC] Peer Ticks: P0:21820 P2:21820 P3:21820 P4:21811 P5:21817 P6:21814 P7:21803
+[P1] [HEARTBEAT] SimTick: 21821 | NetHead: 21820 | Confirmed: 21803 | Missing: 18 | StateHash: 0xF392E3FF
+[P3] [DIAGNOSTIC] Peer Ticks: P0:21820 P1:21820 P2:21820 P4:21811 P5:21817 P6:21814 P7:21803
+[P3] [HEARTBEAT] SimTick: 21821 | NetHead: 21820 | Confirmed: 21803 | Missing: 18 | StateHash: 0xF392E3FF
+[P0] [DIAGNOSTIC] Peer Ticks: P1:21820 P2:21820 P3:21820 P4:21811 P5:21817 P6:21814 P7:21803
+[P0] [HEARTBEAT] SimTick: 21821 | NetHead: 21820 | Confirmed: 21803 | Missing: 18 | StateHash: 0xF392E3FF
+[P2] [DIAGNOSTIC] Peer Ticks: P0:21820 P1:21820 P3:21820 P4:21811 P5:21817 P6:21814 P7:21803
+[P2] [HEARTBEAT] SimTick: 21821 | NetHead: 21820 | Confirmed: 21803 | Missing: 18 | StateHash: 0xF392E3FF
+[P1] [DIAGNOSTIC] Peer Ticks: P0:21820 P2:21820 P3:21820 P4:21811 P5:21817 P6:21814 P7:21803
+[P1] [HEARTBEAT] SimTick: 21821 | NetHead: 21820 | Confirmed: 21803 | Missing: 18 | StateHash: 0xF392E3FF
+[P3] [DIAGNOSTIC] Peer Ticks: P0:21820 P1:21820 P2:21820 P4:21811 P5:21817 P6:21814 P7:21803
+[P3] [HEARTBEAT] SimTick: 21821 | NetHead: 21820 | Confirmed: 21803 | Missing: 18 | StateHash: 0xF392E3FF
+[P0] [DIAGNOSTIC] Peer Ticks: P1:21820 P2:21820 P3:21820 P4:21811 P5:21817 P6:21814 P7:21803
+[P0] [HEARTBEAT] SimTick: 21821 | NetHead: 21820 | Confirmed: 21803 | Missing: 18 | StateHash: 0xF392E3FF
+[P2] C:\msys64\mingw64\bin\luajit: interrupted!
+[P1] C:\msys64\mingw64\bin\luajit: interrupted!
+
+[HARNESS] Ctrl+C Detected. Terminating Multiverse.
+[HARNESS] Clean Exit.
+
+AzureAD+HalimOmarZaghdoudi@DESKTOP-BD3FFTI MINGW64 ~/wan_build
