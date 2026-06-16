@@ -27,14 +27,16 @@ M.specs = {
             { type = "uint32_t", name = "frame_tick" },
             { type = "uint32_t", name = "ack_tick" },
             { type = "uint32_t", name = "base_tick" },
-            -- [!] PHASE 2: Replaced single hash with an 8-tick sliding window of redundant hashes
             { type = "uint32_t", name = "checksum_base_tick" },
             { type = "uint32_t", name = "recent_checksums", count = 8 },
             { type = "uint8_t", name = "player_id" },
             { type = "uint8_t", name = "history_count" },
             { type = "uint16_t", name = "_align_pad" },
-            { type = "uint32_t", name = "clicks", count = cfg_net.HISTORY_LEN },
-            { type = "uint8_t", name = "inputs", count = cfg_net.HISTORY_LEN }
+            -- [!] PHASE 3: Sparse Bitmask Payload Compression
+            { type = "uint32_t", name = "active_mask", count = 8 }, -- 256 bits for max 240 history length
+            { type = "uint8_t", name = "packed_count" },
+            { type = "uint8_t", name = "packed_inputs", count = cfg_net.MAX_PACKED_ACTIONS },
+            { type = "uint16_t", name = "packed_clicks", count = cfg_net.MAX_PACKED_ACTIONS }
         }
     },
     {
@@ -43,11 +45,11 @@ M.specs = {
             { type = "uint32_t", name = "tick" },
             { type = "uint8_t", name = "state" },
             { type = "uint32_t", name = "state_checksum" },
-            -- [!] PHASE 2: Converted to a 2D Array mapping peer ID to their reported hash
             { type = "uint32_t", name = "remote_checksums", count = cfg_net.MAX_PLAYERS },
             { type = "uint8_t", name = "remote_peer_id" },
             { type = "uint8_t", name = "player_input", count = cfg_net.MAX_PLAYERS },
-            { type = "uint32_t", name = "click_grid_idx", count = cfg_net.MAX_PLAYERS }
+            -- [!] PHASE 3: Downgraded to uint16_t
+            { type = "uint16_t", name = "click_grid_idx", count = cfg_net.MAX_PLAYERS }
         }
     },
     {
