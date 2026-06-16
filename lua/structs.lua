@@ -1,4 +1,5 @@
 local ffi = require("ffi")
+local cfg_net = require("config_net")
 local M = {}
 
 local struct_sizes = {
@@ -31,8 +32,8 @@ M.specs = {
             { type = "uint8_t", name = "player_id" },
             { type = "uint8_t", name = "history_count" },
             { type = "uint16_t", name = "_align_pad" },
-            { type = "uint32_t", name = "clicks", count = 128 }, -- [SCALE UP]
-            { type = "uint8_t", name = "inputs", count = 128 }   -- [SCALE UP]
+            { type = "uint32_t", name = "clicks", count = cfg_net.HISTORY_LEN },
+            { type = "uint8_t", name = "inputs", count = cfg_net.HISTORY_LEN }
         }
     },
     {
@@ -43,8 +44,8 @@ M.specs = {
             { type = "uint32_t", name = "state_checksum" },
             { type = "uint32_t", name = "remote_checksum" },
             { type = "uint8_t", name = "remote_peer_id" },
-            { type = "uint8_t", name = "player_input", count = 8 },
-            { type = "uint32_t", name = "click_grid_idx", count = 8 }
+            { type = "uint8_t", name = "player_input", count = cfg_net.MAX_PLAYERS },
+            { type = "uint32_t", name = "click_grid_idx", count = cfg_net.MAX_PLAYERS }
         }
     },
     {
@@ -54,7 +55,7 @@ M.specs = {
             { type = "uint32_t", name = "confirmed_tick" },
             { type = "uint8_t", name = "is_rollback_active" },
             { type = "uint32_t", name = "rollback_target" },
-            { type = "NetworkFrame", name = "frames", count = 256 } -- [SCALE UP]
+            { type = "NetworkFrame", name = "frames", count = cfg_net.RING_SIZE }
         }
     }
 }

@@ -1,0 +1,23 @@
+local ConfigNet = {}
+
+-- Engine & Temporal Logic
+ConfigNet.MAX_PLAYERS = 8
+ConfigNet.RING_SIZE = 256
+ConfigNet.RING_MASK = ConfigNet.RING_SIZE - 1         -- 255
+ConfigNet.HISTORY_LEN = 128
+ConfigNet.HISTORY_HORIZON = ConfigNet.HISTORY_LEN - 1 -- 127
+ConfigNet.LOOKAHEAD_CAP = 100
+ConfigNet.DESYNC_SWEEP = 60
+ConfigNet.TICK_RATE = 60
+
+-- Infrastructure Routing (Matchmaker, STUN, Fallback ICE)
+ConfigNet.MATCHMAKER_URL = "http://138.199.152.240:80"
+ConfigNet.STUN_SERVER = "138.199.152.240"
+ConfigNet.STUN_PORT = 3478
+ConfigNet.RELAY_IP = "138.199.152.240"
+ConfigNet.RELAY_PORT = 49152
+
+-- I/O Limits
+ConfigNet.MAX_BURST_PACKETS = 256
+
+return ConfigNet
