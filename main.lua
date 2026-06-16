@@ -338,7 +338,7 @@ while true do
     local frame_time = math.max(0.001, math.min(current_time - last_time, 0.25))
     last_time = current_time
 
-    Pump.intercept_network(ctx, ctx.sim_tick_count)
+   Pump.intercept_network(ctx, ctx.sim_tick_count)
 
     local c_idx = bit.band(ctx.sim_tick_count, cfg_net.RING_MASK)
     local pending_frame = ctx.rollback_arena.frames[c_idx]
@@ -348,9 +348,10 @@ while true do
         for p = 0, cfg_net.MAX_PLAYERS - 1 do
             pending_frame.player_input[p] = 0
             pending_frame.click_grid_idx[p] = 65535
+            -- [!] PHASE 2: Zero out the 2D array matrix for hardware polling
+            pending_frame.remote_checksums[p] = 0
         end
         pending_frame.state_checksum = 0
-        pending_frame.remote_checksum = 0
         pending_frame.state = 0
         pending_frame.remote_peer_id = 0
     end
