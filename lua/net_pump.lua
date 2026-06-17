@@ -141,25 +141,26 @@ function Pump.intercept_network(ctx, current_tick)
                         h_frame.remote_peer_id = 0
                     end
 
-                if h_frame.player_input[pid] ~= inc_input or h_frame.click_grid_idx[pid] ~= inc_click then
-                    if h_tick < current_tick then
-                        if ctx.rollback_arena.is_rollback_active == 0 or h_tick < ctx.rollback_arena.rollback_target then
-                            ctx.rollback_arena.is_rollback_active = 1
-                            ctx.rollback_arena.rollback_target = h_tick
+                    if h_frame.player_input[pid] ~= inc_input or h_frame.click_grid_idx[pid] ~= inc_click then
+                        if h_tick < current_tick then
+                            if ctx.rollback_arena.is_rollback_active == 0 or h_tick < ctx.rollback_arena.rollback_target then
+                                ctx.rollback_arena.is_rollback_active = 1
+                                ctx.rollback_arena.rollback_target = h_tick
+                            end
                         end
-                    end
 
-                    h_frame.player_input[pid] = inc_input
-                    h_frame.click_grid_idx[pid] = inc_click
+                        h_frame.player_input[pid] = inc_input
+                        h_frame.click_grid_idx[pid] = inc_click
 
-                    -- [!] PATCH 1 UPGRADE: Total Timeline Amnesia
-                    -- Wipe the local hash, BUT ALSO wipe the stale remote hashes.
-                    -- This prevents us from validating our fresh state against a ghost's old state.
-                    h_frame.state_checksum = 0
-                    h_frame.state = 0
+                        -- [!] PATCH 1 UPGRADE: Total Timeline Amnesia
+                        -- Wipe the local hash, BUT ALSO wipe the stale remote hashes.
+                        -- This prevents us from validating our fresh state against a ghost's old state.
+                        h_frame.state_checksum = 0
+                        h_frame.state = 0
 
-                    for p_scan = 0, cfg_net.MAX_PLAYERS - 1 do
-                        h_frame.remote_checksums[p_scan] = 0
+                        for p_scan = 0, cfg_net.MAX_PLAYERS - 1 do
+                            h_frame.remote_checksums[p_scan] = 0
+                        end
                     end
                 end
             end
