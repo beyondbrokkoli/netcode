@@ -82,10 +82,14 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
             for t = t_tgt, ctx.sim_tick_count - 1 do
                 local f_idx = bit.band(t, cfg_net.RING_MASK)
                 local f = ctx.rollback_arena.frames[f_idx]
+
                 State.update_simulation(ctx.rts_grid, t, f, cfg_net.MAX_PLAYERS)
 
                 local h_terrain = net.HashState(ctx.rts_grid.terrain, bytes_terrain, 0)
                 f.state_checksum = net.HashState(ctx.rts_grid.elevation, bytes_elevation, h_terrain)
+
+                -- [!] PATCH: Obliterate old remote hashes when local timeline changes
+                ffi.fill(f.remote_checksums, 32, 0)
 
                 ffi.copy(ctx.snapshot_ring.terrain[f_idx], ctx.rts_grid.terrain, bytes_terrain)
                 ffi.copy(ctx.snapshot_ring.elevation[f_idx], ctx.rts_grid.elevation, bytes_elevation)
@@ -110,32 +114,21 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
             -- [!] PATCH: Floor the sweep at Tick 1. Tick 0 is never transmitted over the wire.
             local sweep_start = math.max(1, conf_tick - cfg_net.DESYNC_SWEEP)
 
-            for v_tick = sweep_start, conf_tick do
-                local v_idx = bit.band(v_tick, cfg_net.RING_MASK)
-                local v_frame = ctx.rollback_arena.frames[v_idx]
+            -- [!] PATCH: The Blind Sweep Guard
+            if ctx.rollback_arena.is_rollback_active == 0 and ctx.sim_tick_count > ctx.rollback_arena.confirmed_tick then
+                local conf_tick = ctx.rollback_arena.confirmed_tick
+                local sweep_start = math.max(1, conf_tick - cfg_net.DESYNC_SWEEP)
 
-               -- Inside FSM.tick_playing_state (around line 105)
-               if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 then
-                   for p_chk = 0, cfg_net.MAX_PLAYERS - 1 do
-                       if p_chk ~= ctx.net_identity then
-                           local remote_hash = v_frame.remote_checksums[p_chk]
+                for v_tick = sweep_start, conf_tick do
+                    local v_idx = bit.band(v_tick, cfg_net.RING_MASK)
+                    local v_frame = ctx.rollback_arena.frames[v_idx]
 
-                           if remote_hash ~= 0 then
-                               -- Standard validation
-                               if v_frame.state_checksum ~= remote_hash then
-                                   print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X",
-                                       v_tick, v_frame.state_checksum, p_chk, remote_hash))
-                                   os.exit(1)
-                               end
-
-
-                            else
-                                -- [!] PATCH 2.2: The Ultimate Starvation Fix
-                                -- Fast peers are forbidden from sending hashes until global consensus rises.
-                                -- We must patiently hold the unvalidated frame until the absolute physical
-                                -- memory limit of our ring buffer is reached (HISTORY_HORIZON).
-                                if (ctx.sim_tick_count - v_tick) >= cfg_net.HISTORY_HORIZON then
-                                    print(string.format("[FATAL DESYNC] Hash Starvation! P%d permanently ghosted us on Tick: %d", p_chk, v_tick))
+                    if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 then
+                        for p_chk = 0, cfg_net.MAX_PLAYERS - 1 do
+                            if p_chk ~= ctx.net_identity and v_frame.remote_checksums[p_chk] ~= 0 then
+                                if v_frame.state_checksum ~= v_frame.remote_checksums[p_chk] then
+                                    print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X", 
+                                        v_tick, v_frame.state_checksum, p_chk, v_frame.remote_checksums[p_chk]))
                                     os.exit(1)
                                 end
                             end

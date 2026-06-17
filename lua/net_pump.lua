@@ -130,14 +130,17 @@ function Pump.intercept_network(ctx, current_tick)
 
                     if h_frame.tick ~= h_tick then
                         h_frame.tick = h_tick
-                        h_frame.state = cfg.net_state.empty
-                        for p_scan = 0, cfg_net.MAX_PLAYERS - 1 do
-                            h_frame.player_input[p_scan] = 0
+                        h_frame.state = 0
+    
+                        -- [!] PATCH: Fast FFI memory wiping guarantees no dirty padding bytes
+                        ffi.fill(h_frame.player_input, 8, 0)
+                        ffi.fill(h_frame.remote_checksums, 32, 0)
+    
+                        for p_scan = 0, 7 do
                             h_frame.click_grid_idx[p_scan] = 65535
-                            h_frame.remote_checksums[p_scan] = 0
                         end
+    
                         h_frame.state_checksum = 0
-                        -- [!] INVARIANT 3 FIX: Zero the leaky FFI struct memory
                         h_frame.remote_peer_id = 0
                     end
 

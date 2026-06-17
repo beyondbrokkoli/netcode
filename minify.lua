@@ -87,13 +87,13 @@ local order = {
 --    "lua/sim_rng.lua",
 --    "lua/registry_export.lua",
 --    "build.lua",
---    "c/shared_structs.h",
+    "c/shared_structs.h",
 --    "c/vx_net.c",
 --    "lua/network.lua",
     "lua/fsm_core.lua",
     "lua/net_pump.lua",
     "lua/sim_rng.lua",
---    "main.lua",
+    "main.lua",
 --     [ C-CORE ]
 --    "c/main.c",
 --     [ LUA ENGINE MODULES ]
