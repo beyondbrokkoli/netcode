@@ -38,12 +38,10 @@ function Pump.send_dynamic_history(ctx)
 
             local history_len = current_tick - needed_base + 1
 
-            -- [!] FIXED: Do not alter needed_base if they are deeply starved.
-            -- Instead, only pack the OLDEST allowed boundary to help them catch up sequentially.
             if history_len > cfg_net.MAX_PACKED_ACTIONS then
+                -- [!] FIXED: Do not alter needed_base. Send the OLDEST missing MTU chunk
+                -- to systematically heal deeply starved peers without leaving gaps.
                 history_len = cfg_net.MAX_PACKED_ACTIONS
-                -- We send the oldest 240 missing ticks they requested, NOT the newest 240 ticks.
-                -- This allows deeply starved peers to systematically heal their timeline.
             elseif history_len <= 0 then
                 history_len = 1
                 needed_base = current_tick
@@ -156,8 +154,11 @@ function Pump.intercept_network(ctx, current_tick)
                 end
             end
 
-            if pkt.frame_tick > ctx.peer_highest_tick[pid] then
-                ctx.peer_highest_tick[pid] = pkt.frame_tick
+            -- [!] FIXED: Do not ACK the sender's optimistic future tick.
+            -- We must strictly ACK the highest tick actually received in the payload.
+            local payload_highest_tick = pkt.base_tick + pkt.history_count - 1
+            if payload_highest_tick > ctx.peer_highest_tick[pid] then
+                ctx.peer_highest_tick[pid] = payload_highest_tick
             end
 
             -- [!] REVERTED: Remove ctx.peer_checksum_base tracker
