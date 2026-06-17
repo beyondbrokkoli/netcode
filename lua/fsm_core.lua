@@ -141,8 +141,14 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
                                         os.exit(1)
                                     end
                                 elseif (ctx.sim_tick_count - v_tick) >= cfg_net.HISTORY_HORIZON then
-                                    print(string.format("[FATAL DESYNC] Hash Starvation! P%d permanently ghosted us on Tick: %d", p_chk, v_tick))
-                                    os.exit(1)
+                                    -- [!] PATCH: The Hash Window Drift Fix
+                                    -- Only starve if the missing hash is recent enough to be in the peer's 64-tick broadcast window.
+                                    -- If it is ancient (near the 60-tick sweep tail), they naturally rotated it out.
+                                    -- Because subsequent newer hashes match, we safely know the timeline remains mathematically intact.
+                                    if (conf_tick - v_tick) < (cfg_net.HASH_WINDOW_LEN - 15) then
+                                        print(string.format("[FATAL DESYNC] Hash Starvation! P%d permanently ghosted us on Tick: %d", p_chk, v_tick))
+                                        os.exit(1)
+                                    end
                                 end
                             end
                         end
