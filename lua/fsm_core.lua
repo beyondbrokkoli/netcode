@@ -127,14 +127,19 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
                                        v_tick, v_frame.state_checksum, p_chk, remote_hash))
                                    os.exit(1)
                                end
-                           else
-                               -- [!] PATCH 2: The Hash Starvation Timeout
-                               -- If we advanced past the hash window and STILL have no remote hash, we desynced by silence.
-                               if (ctx.sim_tick_count - v_tick) > cfg_net.HASH_WINDOW_LEN then
-                                   print(string.format("[FATAL DESYNC] Hash Starvation! P%d never verified Tick: %d", p_chk, v_tick))
-                                   os.exit(1)
-                               end
-                           end
+
+                            else
+                                -- [!] PATCH 2.1: The Hash Starvation Timeout (Corrected)
+                                -- Measure against the REMOTE peer's progress, not local prediction.
+                                local peer_head = tonumber(ctx.peer_highest_tick[p_chk])
+
+                                -- Only trigger if the peer has actually simulated past v_tick AND
+                                -- their sliding window has permanently left v_tick behind.
+                                if peer_head > v_tick and (peer_head - v_tick) > cfg_net.HASH_WINDOW_LEN then
+                                    print(string.format("[FATAL DESYNC] Hash Starvation! P%d ghosted us on Tick: %d", p_chk, v_tick))
+                                    os.exit(1)
+                                end
+                            end
                         end
                     end
                 end
