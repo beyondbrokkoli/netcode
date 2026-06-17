@@ -125,10 +125,15 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
 
                     if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 then
                         for p_chk = 0, cfg_net.MAX_PLAYERS - 1 do
-                            if p_chk ~= ctx.net_identity and v_frame.remote_checksums[p_chk] ~= 0 then
-                                if v_frame.state_checksum ~= v_frame.remote_checksums[p_chk] then
-                                    print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X", 
-                                        v_tick, v_frame.state_checksum, p_chk, v_frame.remote_checksums[p_chk]))
+                            if p_chk ~= ctx.net_identity then
+                                local remote_hash = v_frame.remote_checksums[p_chk]
+                                if remote_hash ~= 0 then
+                                    if v_frame.state_checksum ~= remote_hash then
+                                        print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X", v_tick, v_frame.state_checksum, p_chk, remote_hash))
+                                        os.exit(1)
+                                    end
+                                elseif (ctx.sim_tick_count - v_tick) >= cfg_net.HISTORY_HORIZON then
+                                    print(string.format("[FATAL DESYNC] Hash Starvation! P%d permanently ghosted us on Tick: %d", p_chk, v_tick))
                                     os.exit(1)
                                 end
                             end
