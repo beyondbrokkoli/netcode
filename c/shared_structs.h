@@ -46,7 +46,7 @@ typedef struct __attribute__((packed, aligned(64))) {
     uint8_t _pad_auto_0[3];
     uint32_t rollback_target;
     uint8_t _pad_auto_1[56];
-    NetworkFrame frames[256];
+    NetworkFrame frames[512];
     uint8_t _pad_tail[56];
 } RollbackBuffer;
 

@@ -2,8 +2,8 @@ local ConfigNet = {}
 
 -- Engine & Temporal Logic
 ConfigNet.MAX_PLAYERS = 8
-ConfigNet.RING_SIZE = 256
-ConfigNet.RING_MASK = ConfigNet.RING_SIZE - 1         -- 255
+ConfigNet.RING_SIZE = 512                            -- [!] UPGRADED: Protects against temporal collision
+ConfigNet.RING_MASK = ConfigNet.RING_SIZE - 1        -- 511
 ConfigNet.HISTORY_LEN = 240                           -- [!] PHASE 3: Scaled up to survive 2000ms RTT
 ConfigNet.HISTORY_HORIZON = ConfigNet.HISTORY_LEN - 1 -- 239
 ConfigNet.MAX_PACKED_ACTIONS = 240 -- [!] Matches history exactly. Overflow is mathematically dead.
