@@ -81,7 +81,7 @@ print("--- AI SNAPSHOT ---")
 local order = {
     -- [ ENTRY POINTS ]
     "lua/config_net.lua",
-    "lua/config_engine.lua",
+--    "lua/config_engine.lua",
     "lua/structs.lua",
     "lua/sim_world.lua",
 --    "lua/sim_rng.lua",
@@ -89,10 +89,11 @@ local order = {
 --    "build.lua",
 --    "c/shared_structs.h",
 --    "c/vx_net.c",
-    "lua/network.lua",
+--    "lua/network.lua",
     "lua/fsm_core.lua",
     "lua/net_pump.lua",
-    "main.lua",
+    "lua/sim_rng.lua",
+--    "main.lua",
 --     [ C-CORE ]
 --    "c/main.c",
 --     [ LUA ENGINE MODULES ]

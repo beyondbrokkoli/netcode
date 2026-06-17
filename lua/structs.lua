@@ -33,7 +33,8 @@ M.specs = {
             { type = "uint8_t", name = "history_count" },
             { type = "uint16_t", name = "_align_pad" },
             -- [!] PHASE 3: Sparse Bitmask Payload Compression
-            { type = "uint32_t", name = "active_mask", count = 8 }, -- 256 bits for max 240 history length
+            -- [!] REPLACED: uint32_t active_mask[8]
+            { type = "uint8_t", name = "active_mask", count = 32 },
             { type = "uint8_t", name = "packed_count" },
             { type = "uint8_t", name = "packed_inputs", count = cfg_net.MAX_PACKED_ACTIONS },
             { type = "uint16_t", name = "packed_clicks", count = cfg_net.MAX_PACKED_ACTIONS }

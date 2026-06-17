@@ -51,7 +51,7 @@ function Pump.send_dynamic_history(ctx)
             pkt.history_count = history_len
             pkt.packed_count = 0
 
-            -- [!] One-Pass Reverse Packing (Guaranteed Fit)
+            -- Pass: Guaranteed Packing
             for i = history_len - 1, 0, -1 do
                 local h_tick = needed_base + i
                 local h_idx = bit.band(h_tick, cfg_net.RING_MASK)
@@ -61,8 +61,9 @@ function Pump.send_dynamic_history(ctx)
                 local inc_click = frame.click_grid_idx[ctx.net_identity]
 
                 if (inc_input ~= 0 or inc_click ~= 65535) then
-                    local mask_idx = bit.rshift(i, 5)
-                    local bit_idx = bit.band(i, 31)
+                    -- [!] 8-Bit Math: Safely bypass LuaJIT's 32-bit sign extension trap
+                    local mask_idx = bit.rshift(i, 3)
+                    local bit_idx = bit.band(i, 7)
 
                     pkt.active_mask[mask_idx] = bit.bor(pkt.active_mask[mask_idx], bit.lshift(1, bit_idx))
                     pkt.packed_inputs[pkt.packed_count] = inc_input
@@ -100,15 +101,16 @@ function Pump.intercept_network(ctx, current_tick)
 
             local unpack_idx = 0
 
-            -- [!] REVERSED: Unpack from newest to oldest to match the byte payload order
+            -- Unpack from newest to oldest
             for h = pkt.history_count - 1, 0, -1 do
                 local h_tick = pkt.base_tick + h
 
                 local inc_input = 0
                 local inc_click = 65535
 
-                local mask_idx = bit.rshift(h, 5)
-                local bit_idx = bit.band(h, 31)
+                -- [!] 8-Bit Math
+                local mask_idx = bit.rshift(h, 3)
+                local bit_idx = bit.band(h, 7)
 
                 if bit.band(pkt.active_mask[mask_idx], bit.lshift(1, bit_idx)) ~= 0 then
                     if unpack_idx < pkt.packed_count then
@@ -131,6 +133,8 @@ function Pump.intercept_network(ctx, current_tick)
                             h_frame.remote_checksums[p_scan] = 0
                         end
                         h_frame.state_checksum = 0
+                        -- [!] INVARIANT 3 FIX: Zero the leaky FFI struct memory
+                        h_frame.remote_peer_id = 0
                     end
 
                     if h_frame.player_input[pid] ~= inc_input or h_frame.click_grid_idx[pid] ~= inc_click then

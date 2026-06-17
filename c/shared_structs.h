@@ -19,7 +19,7 @@ typedef struct {
     uint8_t player_id;
     uint8_t history_count;
     uint16_t _align_pad;
-    uint32_t active_mask[8];
+    uint8_t active_mask[32];
     uint8_t packed_count;
     uint8_t packed_inputs[240];
     uint16_t packed_clicks[240];
