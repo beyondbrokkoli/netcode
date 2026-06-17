@@ -45,6 +45,10 @@ function Pump.send_dynamic_history(ctx)
                 -- We send the oldest 240 missing ticks they requested, NOT the newest 240 ticks.
                 -- This allows deeply starved peers to systematically heal their timeline.
             elseif history_len <= 0 then
+                history_len = 1
+                needed_base = current_tick
+            end
+
             pkt.base_tick = needed_base
             pkt.history_count = history_len
             pkt.packed_count = 0
