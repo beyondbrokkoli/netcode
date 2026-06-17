@@ -47,11 +47,35 @@ function Pump.send_dynamic_history(ctx)
                 needed_base = current_tick
             end
 
+            -- [!] THE AAA TWO-PASS FIX: Prevent Truncation Ambiguity
+            local active_count = 0
+            local safe_base = needed_base
+
+            -- Pass 1: Dry-run backwards to find the safe temporal base
+            for i = history_len - 1, 0, -1 do
+                local h_tick = needed_base + i
+                local h_idx = bit.band(h_tick, cfg_net.RING_MASK)
+                local frame = ctx.rollback_arena.frames[h_idx]
+
+                if frame.player_input[ctx.net_identity] ~= 0 or frame.click_grid_idx[ctx.net_identity] ~= 65535 then
+                    active_count = active_count + 1
+                    if active_count > cfg_net.MAX_PACKED_ACTIONS then
+                        safe_base = h_tick + 1 -- Anchor right above the oldest overflowing input
+                        break
+                    end
+                end
+            end
+
+            -- Recalculate history boundaries based on the safe slice
+            needed_base = safe_base
+            history_len = current_tick - needed_base + 1
+            if history_len <= 0 then history_len = 1; needed_base = current_tick end
+
             pkt.base_tick = needed_base
             pkt.history_count = history_len
             pkt.packed_count = 0
 
-            -- [!] REVERSED: Pack the newest frames first to prioritize the simulation head
+            -- Pass 2: Guaranteed Packing (Will never overflow)
             for i = history_len - 1, 0, -1 do
                 local h_tick = needed_base + i
                 local h_idx = bit.band(h_tick, cfg_net.RING_MASK)
@@ -61,20 +85,16 @@ function Pump.send_dynamic_history(ctx)
                 local inc_click = frame.click_grid_idx[ctx.net_identity]
 
                 if (inc_input ~= 0 or inc_click ~= 65535) then
-                    if pkt.packed_count < cfg_net.MAX_PACKED_ACTIONS then
-                        local mask_idx = bit.rshift(i, 5)
-                        local bit_idx = bit.band(i, 31)
+                    local mask_idx = bit.rshift(i, 5)
+                    local bit_idx = bit.band(i, 31)
 
-                        pkt.active_mask[mask_idx] = bit.bor(pkt.active_mask[mask_idx], bit.lshift(1, bit_idx))
-                        pkt.packed_inputs[pkt.packed_count] = inc_input
-                        pkt.packed_clicks[pkt.packed_count] = inc_click
-                        pkt.packed_count = pkt.packed_count + 1
-                    else
-                        -- Now drops the OLDEST, least-important frames if APM exceeds 1920
-                        print(string.format("[WARNING] Payload Compression Overflow! Dropped active input at tick %d", h_tick))
-                    end
+                    pkt.active_mask[mask_idx] = bit.bor(pkt.active_mask[mask_idx], bit.lshift(1, bit_idx))
+                    pkt.packed_inputs[pkt.packed_count] = inc_input
+                    pkt.packed_clicks[pkt.packed_count] = inc_click
+                    pkt.packed_count = pkt.packed_count + 1
                 end
             end
+
             net.SendTo(pkt, p)
         end
     end
