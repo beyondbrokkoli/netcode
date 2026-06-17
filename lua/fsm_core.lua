@@ -96,9 +96,6 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
                 local h_terrain = net.HashState(ctx.rts_grid.terrain, bytes_terrain, 0)
                 f.state_checksum = net.HashState(ctx.rts_grid.elevation, bytes_elevation, h_terrain)
 
-                -- [!] PATCH: Obliterate old remote hashes when local timeline changes
-                ffi.fill(f.remote_checksums, 32, 0)
-
                 ffi.copy(ctx.snapshot_ring.terrain[f_idx], ctx.rts_grid.terrain, bytes_terrain)
                 ffi.copy(ctx.snapshot_ring.elevation[f_idx], ctx.rts_grid.elevation, bytes_elevation)
                 ffi.copy(ctx.snapshot_ring.rng_state[f_idx], ctx.rts_grid.rng_state, 4)

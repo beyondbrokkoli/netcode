@@ -150,14 +150,10 @@ function Pump.intercept_network(ctx, current_tick)
                         h_frame.click_grid_idx[pid] = inc_click
 
                         -- [!] PATCH 1 UPGRADE: Total Timeline Amnesia
-                        -- Wipe the local hash, BUT ALSO wipe the stale remote hashes.
-                        -- This prevents us from validating our fresh state against a ghost's old state.
+                        -- Wipe the local state_checksum and state flag to force recalculation.
+                        -- Do NOT wipe the remote_checksums matrix; preserve cryptographic consensus.
                         h_frame.state_checksum = 0
                         h_frame.state = 0
-
-                        for p_scan = 0, cfg_net.MAX_PLAYERS - 1 do
-                            h_frame.remote_checksums[p_scan] = 0
-                        end
                     end
                 end
             end
