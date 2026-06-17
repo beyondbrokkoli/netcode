@@ -129,18 +129,13 @@ function Pump.intercept_network(ctx, current_tick)
                     local h_frame = ctx.rollback_arena.frames[h_idx]
 
                     if h_frame.tick ~= h_tick then
+                        -- [!] PATCH: Total FFI struct obliteration, inclusive of alignment padding
+                        ffi.fill(h_frame, ffi.sizeof("NetworkFrame"), 0)
+
                         h_frame.tick = h_tick
-                        h_frame.state = 0
-
-                        ffi.fill(h_frame.player_input, 8, 0)
-                        ffi.fill(h_frame.remote_checksums, 32, 0)
-
                         for p_scan = 0, cfg_net.MAX_PLAYERS - 1 do
                             h_frame.click_grid_idx[p_scan] = 65535
                         end
-
-                        h_frame.state_checksum = 0
-                        h_frame.remote_peer_id = 0
                     end
 
                     if h_frame.player_input[pid] ~= inc_input or h_frame.click_grid_idx[pid] ~= inc_click then

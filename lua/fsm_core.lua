@@ -63,6 +63,14 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
         end
         frame.tick = ctx.sim_tick_count
 
+        -- [!] PATCH: Deterministic inputs must be strictly coupled to the accumulator
+        if ctx.sim_tick_count % 120 == (ctx.net_identity * 10) then
+            if ctx.last_bot_tick ~= ctx.sim_tick_count then
+                local pseudo_random_idx = (ctx.sim_tick_count * 137 + ctx.net_identity * 73) % ctx.total_tiles
+                frame.click_grid_idx[ctx.net_identity] = pseudo_random_idx
+                ctx.last_bot_tick = ctx.sim_tick_count
+            end
+        end
         ctx.rollback_arena.head_tick = ctx.sim_tick_count
 
         if ctx.rollback_arena.is_rollback_active == 1 then
