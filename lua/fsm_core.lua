@@ -128,15 +128,14 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
                                    os.exit(1)
                                end
 
-                            else
-                                -- [!] PATCH 2.1: The Hash Starvation Timeout (Corrected)
-                                -- Measure against the REMOTE peer's progress, not local prediction.
-                                local peer_head = tonumber(ctx.peer_highest_tick[p_chk])
 
-                                -- Only trigger if the peer has actually simulated past v_tick AND
-                                -- their sliding window has permanently left v_tick behind.
-                                if peer_head > v_tick and (peer_head - v_tick) > cfg_net.HASH_WINDOW_LEN then
-                                    print(string.format("[FATAL DESYNC] Hash Starvation! P%d ghosted us on Tick: %d", p_chk, v_tick))
+                            else
+                                -- [!] PATCH 2.2: The Ultimate Starvation Fix
+                                -- Fast peers are forbidden from sending hashes until global consensus rises.
+                                -- We must patiently hold the unvalidated frame until the absolute physical
+                                -- memory limit of our ring buffer is reached (HISTORY_HORIZON).
+                                if (ctx.sim_tick_count - v_tick) >= cfg_net.HISTORY_HORIZON then
+                                    print(string.format("[FATAL DESYNC] Hash Starvation! P%d permanently ghosted us on Tick: %d", p_chk, v_tick))
                                     os.exit(1)
                                 end
                             end
