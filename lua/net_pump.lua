@@ -33,24 +33,18 @@ function Pump.send_dynamic_history(ctx)
                 end
             end
 
-            -- Inside Pump.send_dynamic_history (around line 30)
             local needed_base = ctx.peer_ack_of_me[p] + 1
-            if needed_base == 1 then
-                -- [!] PATCH 4.A: Clamp the absolute base request to the MTU limit
-                needed_base = math.max(1, current_tick - (cfg_net.MAX_PACKED_ACTIONS - 1))
-            end
+            if needed_base < 1 then needed_base = 1 end
 
             local history_len = current_tick - needed_base + 1
 
-            -- [!] PATCH 4.B: Enforce the MTU physical limit, NOT the memory ring limit
+            -- [!] FIXED: Do not alter needed_base if they are deeply starved.
+            -- Instead, only pack the OLDEST allowed boundary to help them catch up sequentially.
             if history_len > cfg_net.MAX_PACKED_ACTIONS then
                 history_len = cfg_net.MAX_PACKED_ACTIONS
-                needed_base = current_tick - cfg_net.MAX_PACKED_ACTIONS + 1
+                -- We send the oldest 240 missing ticks they requested, NOT the newest 240 ticks.
+                -- This allows deeply starved peers to systematically heal their timeline.
             elseif history_len <= 0 then
-                history_len = 1
-                needed_base = current_tick
-            end
-
             pkt.base_tick = needed_base
             pkt.history_count = history_len
             pkt.packed_count = 0
