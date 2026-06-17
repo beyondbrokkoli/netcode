@@ -107,7 +107,8 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
             ctx.sim_tick_count = ctx.sim_tick_count + 1
 
             local conf_tick = ctx.rollback_arena.confirmed_tick
-            local sweep_start = math.max(0, conf_tick - cfg_net.DESYNC_SWEEP)
+            -- [!] PATCH: Floor the sweep at Tick 1. Tick 0 is never transmitted over the wire.
+            local sweep_start = math.max(1, conf_tick - cfg_net.DESYNC_SWEEP)
 
             for v_tick = sweep_start, conf_tick do
                 local v_idx = bit.band(v_tick, cfg_net.RING_MASK)
