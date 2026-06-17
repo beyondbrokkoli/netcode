@@ -360,9 +360,14 @@ while true do
         pending_frame.remote_peer_id = 0
     end
 
+    -- Inside the main hardware loop (around line 20)
     if ctx.sim_tick_count % 120 == (ctx.net_identity * 10) then
         if ctx.last_bot_tick ~= ctx.sim_tick_count then
-            pending_frame.click_grid_idx[ctx.net_identity] = math.random(0, ctx.total_tiles - 1)
+            -- [!] PATCH 3: Purely deterministic, non-destructive bot inputs.
+            -- Uses a prime multiplier and modulo. No float math. No RNG state mutation.
+            local pseudo_random_idx = (ctx.sim_tick_count * 137 + ctx.net_identity * 73) % ctx.total_tiles
+            pending_frame.click_grid_idx[ctx.net_identity] = pseudo_random_idx
+
             ctx.last_bot_tick = ctx.sim_tick_count
         end
     end

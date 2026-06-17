@@ -33,15 +33,19 @@ function Pump.send_dynamic_history(ctx)
                 end
             end
 
+            -- Inside Pump.send_dynamic_history (around line 30)
             local needed_base = ctx.peer_ack_of_me[p] + 1
             if needed_base == 1 then
-                needed_base = math.max(1, current_tick - cfg_net.HISTORY_HORIZON)
+                -- [!] PATCH 4.A: Clamp the absolute base request to the MTU limit
+                needed_base = math.max(1, current_tick - (cfg_net.MAX_PACKED_ACTIONS - 1))
             end
 
             local history_len = current_tick - needed_base + 1
-            if history_len > cfg_net.HISTORY_LEN then
-                history_len = cfg_net.HISTORY_LEN
-                needed_base = current_tick - cfg_net.HISTORY_HORIZON
+
+            -- [!] PATCH 4.B: Enforce the MTU physical limit, NOT the memory ring limit
+            if history_len > cfg_net.MAX_PACKED_ACTIONS then
+                history_len = cfg_net.MAX_PACKED_ACTIONS
+                needed_base = current_tick - cfg_net.MAX_PACKED_ACTIONS + 1
             elseif history_len <= 0 then
                 history_len = 1
                 needed_base = current_tick
@@ -137,15 +141,23 @@ function Pump.intercept_network(ctx, current_tick)
                         h_frame.remote_peer_id = 0
                     end
 
+                    -- Inside Pump.intercept_network (around line 96)
                     if h_frame.player_input[pid] ~= inc_input or h_frame.click_grid_idx[pid] ~= inc_click then
                         if h_tick < current_tick then
                             if ctx.rollback_arena.is_rollback_active == 0 or h_tick < ctx.rollback_arena.rollback_target then
-                                ctx.rollback_arena.is_rollback_active = 1
-                                ctx.rollback_arena.rollback_target = h_tick
+                               ctx.rollback_arena.is_rollback_active = 1
+                               ctx.rollback_arena.rollback_target = h_tick
                             end
                         end
+
                         h_frame.player_input[pid] = inc_input
                         h_frame.click_grid_idx[pid] = inc_click
+
+                        -- [!] PATCH 1: Invalidate the locally predicted checksum!
+                        -- If the prediction was wrong, this hash is garbage. Clear it so the
+                        -- DESYNC_SWEEP doesn't falsely validate it against remote hashes.
+                        h_frame.state_checksum = 0
+                        h_frame.state = 0
                     end
                 end
             end

@@ -113,17 +113,27 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
                 local v_idx = bit.band(v_tick, cfg_net.RING_MASK)
                 local v_frame = ctx.rollback_arena.frames[v_idx]
 
-                -- [!] PHASE 2: Decentralized 2D Matrix Verification (Restored)
-                if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 then
-                    for p_chk = 0, cfg_net.MAX_PLAYERS - 1 do
-                        if p_chk ~= ctx.net_identity and v_frame.remote_checksums[p_chk] ~= 0 then
+               -- Inside FSM.tick_playing_state (around line 105)
+               if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 then
+                   for p_chk = 0, cfg_net.MAX_PLAYERS - 1 do
+                       if p_chk ~= ctx.net_identity then
+                           local remote_hash = v_frame.remote_checksums[p_chk]
 
-                            if v_frame.state_checksum ~= v_frame.remote_checksums[p_chk] then
-                                print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X",
-                                    v_tick, v_frame.state_checksum, p_chk, v_frame.remote_checksums[p_chk]))
-                                os.exit(1)
-                            end
-
+                           if remote_hash ~= 0 then
+                               -- Standard validation
+                               if v_frame.state_checksum ~= remote_hash then
+                                   print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X",
+                                       v_tick, v_frame.state_checksum, p_chk, remote_hash))
+                                   os.exit(1)
+                               end
+                           else
+                               -- [!] PATCH 2: The Hash Starvation Timeout
+                               -- If we advanced past the hash window and STILL have no remote hash, we desynced by silence.
+                               if (ctx.sim_tick_count - v_tick) > cfg_net.HASH_WINDOW_LEN then
+                                   print(string.format("[FATAL DESYNC] Hash Starvation! P%d never verified Tick: %d", p_chk, v_tick))
+                                   os.exit(1)
+                               end
+                           end
                         end
                     end
                 end
