@@ -1,5 +1,28 @@
-# 1. Remove all Weaver Engine QoS policies instantly
-Remove-NetQosPolicy -Name "Weaver_*" -Confirm:$false
+# 1. Enforce Administrator Privileges
+if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Warning "[FATAL] QoS manipulation requires Administrator rights."
+    Write-Warning "Please right-click PowerShell and run as Administrator."
+    Break
+}
 
-# 2. Verify the slate is clean (this should return an error saying no policies were found)
-Get-NetQosPolicy -Name "Weaver_*"
+Write-Host "Scanning NDIS layer for Weaver Engine QoS throttles..." -ForegroundColor Cyan
+
+# 2. Check for lingering policies gracefully
+$ghosts = Get-NetQosPolicy -Name "Weaver_*" -ErrorAction SilentlyContinue
+
+if ($ghosts) {
+    Write-Host "[WARNING] Found active Weaver throttles. Purging..." -ForegroundColor Yellow
+    
+    # 3. Nuke them
+    Remove-NetQosPolicy -Name "Weaver_*" -Confirm:$false
+    
+    # 4. Verify destruction
+    $verify = Get-NetQosPolicy -Name "Weaver_*" -ErrorAction SilentlyContinue
+    if ($verify) {
+        Write-Host "[FATAL ERROR] Failed to remove QoS policies. Check Group Policy overrides." -ForegroundColor Red
+    } else {
+        Write-Host "✅ Purge complete. Windows QoS is completely clean." -ForegroundColor Green
+    }
+} else {
+    Write-Host "✅ Network is already pristine. No Weaver QoS policies found." -ForegroundColor Green
+}
