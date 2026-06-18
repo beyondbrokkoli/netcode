@@ -19,11 +19,13 @@ sudo tc qdisc add dev lo parent 1:20 handle 20: netem delay 40ms 10ms loss 1%
 sudo tc class add dev lo parent 1: classid 1:30 htb rate 10mbit
 sudo tc qdisc add dev lo parent 1:30 handle 30: netem delay 150ms 50ms loss 5% reorder 5% 25%
 
-# --- CLASS 40: "School Cellphone Tethering" (Nodes 5, 6, 7) ---
-# 1Mbit choke. 500ms base delay + 400ms jitter with 25% correlation (Bufferbloat bursts)
-# 15% packet loss + 5% duplication (forces your rollback engine to discard dupes)
+# --- CLASS 40: "The 119-Tick Purgatory" (Nodes 5, 6, 7) ---
+# 1Mbit choke. 
+# 1800ms base delay + 400ms jitter with 50% correlation.
+# This forces packets to routinely oscillate between 1400ms (safe) and 2200ms (beyond HISTORY_LEN).
+# We also inject a brutal 20% loss to shred the sequential continuity of the MTU blanket.
 sudo tc class add dev lo parent 1: classid 1:40 htb rate 1mbit
-sudo tc qdisc add dev lo parent 1:40 handle 40: netem delay 500ms 400ms 25% loss 15% duplicate 5%
+sudo tc qdisc add dev lo parent 1:40 handle 40: netem delay 1800ms 400ms 50% loss 20% duplicate 10%
 
 # --- CLASS 99: Default Fallback ---
 sudo tc class add dev lo parent 1: classid 1:99 htb rate 100mbit

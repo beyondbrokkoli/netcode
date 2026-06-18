@@ -1,0 +1,13 @@
+# Clear any existing Weaver Engine QoS policies
+Remove-NetQosPolicy -Name "Weaver_*" -Confirm:$false
+
+# --- CLASS 30: "Symmetric NAT / Bad 4G" (10 Mbit) ---
+New-NetQosPolicy -Name "Weaver_Node3" -IPDstPortMatchCondition 50003 -ThrottleRateActionBitsPerSecond 10000000
+New-NetQosPolicy -Name "Weaver_Node4" -IPDstPortMatchCondition 50004 -ThrottleRateActionBitsPerSecond 10000000
+
+# --- CLASS 40: "School Cellphone Tethering" (1 Mbit) ---
+New-NetQosPolicy -Name "Weaver_Node5" -IPDstPortMatchCondition 50005 -ThrottleRateActionBitsPerSecond 1000000
+New-NetQosPolicy -Name "Weaver_Node6" -IPDstPortMatchCondition 50006 -ThrottleRateActionBitsPerSecond 1000000
+New-NetQosPolicy -Name "Weaver_Node7" -IPDstPortMatchCondition 50007 -ThrottleRateActionBitsPerSecond 1000000
+
+Write-Host "✅ Windows QoS Bandwidth Chokes applied."

@@ -1,16 +1,15 @@
--- lua/fsm_core.lua
 local net = require("network")
 local State = require("sim_world")
 local bit = require("bit")
 local ffi = require("ffi")
 local RNG = require("sim_rng")
-local cfg_net = require("config_net")
+local cfg_net = require("config_net") -- [!] ADDED: The Registry
 
 local FSM = {}
 
 function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
     local true_consensus = 0xFFFFFFFF
-    local min_ack_of_me = 0xFFFFFFFF
+    local min_ack_of_me = 0xFFFFFFFF 
 
     for p = 0, cfg_net.MAX_PLAYERS - 1 do
         if p ~= ctx.net_identity and ctx.peer_active[p] then
@@ -54,23 +53,14 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
             for p = 0, cfg_net.MAX_PLAYERS - 1 do
                 frame.player_input[p] = 0
                 frame.click_grid_idx[p] = 65535
-                -- [!] PHASE 2: Ensure the 2D array is zeroed out for future ticks
-                frame.remote_checksums[p] = 0
             end
             frame.state_checksum = 0
+            frame.remote_checksum = 0
             frame.state = 0
             frame.remote_peer_id = 0
         end
         frame.tick = ctx.sim_tick_count
 
-        -- [!] PATCH: Deterministic inputs must be strictly coupled to the accumulator
-        if ctx.sim_tick_count % 120 == (ctx.net_identity * 10) then
-            if ctx.last_bot_tick ~= ctx.sim_tick_count then
-                local pseudo_random_idx = (ctx.sim_tick_count * 137 + ctx.net_identity * 73) % ctx.total_tiles
-                frame.click_grid_idx[ctx.net_identity] = pseudo_random_idx
-                ctx.last_bot_tick = ctx.sim_tick_count
-            end
-        end
         ctx.rollback_arena.head_tick = ctx.sim_tick_count
 
         if ctx.rollback_arena.is_rollback_active == 1 then
@@ -90,7 +80,6 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
             for t = t_tgt, ctx.sim_tick_count - 1 do
                 local f_idx = bit.band(t, cfg_net.RING_MASK)
                 local f = ctx.rollback_arena.frames[f_idx]
-
                 State.update_simulation(ctx.rts_grid, t, f, cfg_net.MAX_PLAYERS)
 
                 local h_terrain = net.HashState(ctx.rts_grid.terrain, bytes_terrain, 0)
@@ -116,39 +105,16 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
             ctx.sim_tick_count = ctx.sim_tick_count + 1
 
             local conf_tick = ctx.rollback_arena.confirmed_tick
-            -- [!] PATCH: Floor the sweep at Tick 1. Tick 0 is never transmitted over the wire.
-            local sweep_start = math.max(1, conf_tick - cfg_net.DESYNC_SWEEP)
+            local sweep_start = math.max(0, conf_tick - cfg_net.DESYNC_SWEEP)
 
-            -- [!] PATCH: The Blind Sweep Guard
-            if ctx.rollback_arena.is_rollback_active == 0 and ctx.sim_tick_count > ctx.rollback_arena.confirmed_tick then
-                local conf_tick = ctx.rollback_arena.confirmed_tick
-                local sweep_start = math.max(1, conf_tick - cfg_net.DESYNC_SWEEP)
+            for v_tick = sweep_start, conf_tick do
+                local v_idx = bit.band(v_tick, cfg_net.RING_MASK)
+                local v_frame = ctx.rollback_arena.frames[v_idx]
 
-                for v_tick = sweep_start, conf_tick do
-                    local v_idx = bit.band(v_tick, cfg_net.RING_MASK)
-                    local v_frame = ctx.rollback_arena.frames[v_idx]
-
-                    if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 then
-                        for p_chk = 0, cfg_net.MAX_PLAYERS - 1 do
-                            if p_chk ~= ctx.net_identity then
-                                local remote_hash = v_frame.remote_checksums[p_chk]
-                                if remote_hash ~= 0 then
-                                    if v_frame.state_checksum ~= remote_hash then
-                                        print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote (P%d): 0x%08X", v_tick, v_frame.state_checksum, p_chk, remote_hash))
-                                        os.exit(1)
-                                    end
-                                elseif (ctx.sim_tick_count - v_tick) >= cfg_net.HISTORY_HORIZON then
-                                    -- [!] PATCH: The Hash Window Drift Fix
-                                    -- Only starve if the missing hash is recent enough to be in the peer's 64-tick broadcast window.
-                                    -- If it is ancient (near the 60-tick sweep tail), they naturally rotated it out.
-                                    -- Because subsequent newer hashes match, we safely know the timeline remains mathematically intact.
-                                    if (conf_tick - v_tick) < (cfg_net.HASH_WINDOW_LEN - 15) then
-                                        print(string.format("[FATAL DESYNC] Hash Starvation! P%d permanently ghosted us on Tick: %d", p_chk, v_tick))
-                                        os.exit(1)
-                                    end
-                                end
-                            end
-                        end
+                if v_frame.tick == v_tick and v_frame.state_checksum ~= 0 and v_frame.remote_checksum ~= 0 then
+                    if v_frame.state_checksum ~= v_frame.remote_checksum then
+                        print(string.format("[FATAL DESYNC] Tick: %d | Local: 0x%08X | Remote: 0x%08X", v_tick, v_frame.state_checksum, v_frame.remote_checksum))
+                        os.exit(1)
                     end
                 end
             end

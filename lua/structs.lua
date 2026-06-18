@@ -25,19 +25,15 @@ M.specs = {
         members = {
             { type = "uint64_t", name = "session_token" },
             { type = "uint32_t", name = "frame_tick" },
+            { type = "uint32_t", name = "checksum_tick" },
+            { type = "uint32_t", name = "state_checksum" },
             { type = "uint32_t", name = "ack_tick" },
             { type = "uint32_t", name = "base_tick" },
-            { type = "uint32_t", name = "checksum_base_tick" },
-            { type = "uint32_t", name = "recent_checksums", count = cfg_net.HASH_WINDOW_LEN },
             { type = "uint8_t", name = "player_id" },
             { type = "uint8_t", name = "history_count" },
             { type = "uint16_t", name = "_align_pad" },
-            -- [!] PHASE 3: Sparse Bitmask Payload Compression
-            -- [!] REPLACED: uint32_t active_mask[8]
-            { type = "uint8_t", name = "active_mask", count = 32 },
-            { type = "uint8_t", name = "packed_count" },
-            { type = "uint8_t", name = "packed_inputs", count = cfg_net.MAX_PACKED_ACTIONS },
-            { type = "uint16_t", name = "packed_clicks", count = cfg_net.MAX_PACKED_ACTIONS }
+            { type = "uint32_t", name = "clicks", count = cfg_net.HISTORY_LEN },
+            { type = "uint8_t", name = "inputs", count = cfg_net.HISTORY_LEN }
         }
     },
     {
@@ -46,11 +42,10 @@ M.specs = {
             { type = "uint32_t", name = "tick" },
             { type = "uint8_t", name = "state" },
             { type = "uint32_t", name = "state_checksum" },
-            { type = "uint32_t", name = "remote_checksums", count = cfg_net.MAX_PLAYERS },
+            { type = "uint32_t", name = "remote_checksum" },
             { type = "uint8_t", name = "remote_peer_id" },
             { type = "uint8_t", name = "player_input", count = cfg_net.MAX_PLAYERS },
-            -- [!] PHASE 3: Downgraded to uint16_t
-            { type = "uint16_t", name = "click_grid_idx", count = cfg_net.MAX_PLAYERS }
+            { type = "uint32_t", name = "click_grid_idx", count = cfg_net.MAX_PLAYERS }
         }
     },
     {

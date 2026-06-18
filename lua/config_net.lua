@@ -2,15 +2,16 @@ local ConfigNet = {}
 
 -- Engine & Temporal Logic
 ConfigNet.MAX_PLAYERS = 8
-ConfigNet.RING_SIZE = 512                            -- [!] UPGRADED: Protects against temporal collision
-ConfigNet.RING_MASK = ConfigNet.RING_SIZE - 1        -- 511
-ConfigNet.HISTORY_LEN = 240                           -- [!] PHASE 3: Scaled up to survive 2000ms RTT
-ConfigNet.HISTORY_HORIZON = ConfigNet.HISTORY_LEN - 1 -- 239
-ConfigNet.MAX_PACKED_ACTIONS = 240 -- [!] Matches history exactly. Overflow is mathematically dead.
-ConfigNet.LOOKAHEAD_CAP = 200
-ConfigNet.DESYNC_SWEEP = 60
+
+-- [!] THE GOLDEN RATIO
 ConfigNet.TICK_RATE = 60
-ConfigNet.HASH_WINDOW_LEN = 64
+ConfigNet.LOOKAHEAD_CAP = 60          -- 1 Second Hard Pause. We never guess further than this.
+ConfigNet.HISTORY_LEN = 120           -- 2 Seconds of payload. The "Blanket" is always 2x the Cap.
+ConfigNet.HISTORY_HORIZON = ConfigNet.HISTORY_LEN - 1
+ConfigNet.DESYNC_SWEEP = 60           -- 1 Second trailing validation
+
+ConfigNet.RING_SIZE = 512             -- 512 > (120 + 60 + 60) -> Zero Memory Collisions
+ConfigNet.RING_MASK = ConfigNet.RING_SIZE - 1
 
 -- Infrastructure Routing (Matchmaker, STUN, Fallback ICE)
 ConfigNet.MATCHMAKER_URL = "http://138.199.152.240:80"

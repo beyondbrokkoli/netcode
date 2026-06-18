@@ -2,7 +2,7 @@ local ffi = require("ffi")
 local bit = require("bit")
 local cfg = require("config_engine")
 local net = require("network")
-local cfg_net = require("config_net")
+local cfg_net = require("config_net") -- [!] ADDED: The Registry
 
 local CHAOS_PACKET_LOSS = 0.0
 local Pump = {}
@@ -18,19 +18,14 @@ function Pump.send_dynamic_history(ctx)
 
             pkt.session_token = ctx.session_token
             pkt.player_id = ctx.net_identity
+            pkt._align_pad = p -- [!] SSoT: Stamp the intended destination ID
             pkt.frame_tick = current_tick
             pkt.ack_tick = ctx.peer_highest_tick[p]
 
-            -- [!] DEEP AMNESIA FIX: Re-Anchor to conf_tick (mathematical certainty), but use the expanded window
             if conf_tick > 0 and ctx.rollback_arena.is_rollback_active == 0 then
-                local chk_base = conf_tick - cfg_net.HASH_WINDOW_LEN + 1
-                if chk_base < 1 then chk_base = 1 end
-                pkt.checksum_base_tick = chk_base
-
-                for i = 0, conf_tick - chk_base do
-                    local c_idx = bit.band(chk_base + i, cfg_net.RING_MASK)
-                    pkt.recent_checksums[i] = ctx.rollback_arena.frames[c_idx].state_checksum
-                end
+                local conf_idx = bit.band(conf_tick, cfg_net.RING_MASK)
+                pkt.state_checksum = ctx.rollback_arena.frames[conf_idx].state_checksum
+                pkt.checksum_tick = conf_tick
             end
 
             local needed_base = ctx.peer_ack_of_me[p] + 1
@@ -38,10 +33,10 @@ function Pump.send_dynamic_history(ctx)
 
             local history_len = current_tick - needed_base + 1
 
-            if history_len > cfg_net.MAX_PACKED_ACTIONS then
-                -- [!] FIXED: Do not alter needed_base. Send the OLDEST missing MTU chunk
-                -- to systematically heal deeply starved peers without leaving gaps.
-                history_len = cfg_net.MAX_PACKED_ACTIONS
+            if history_len > cfg_net.HISTORY_LEN then
+                history_len = cfg_net.HISTORY_LEN
+                -- DO NOT alter needed_base here.
+                -- Send the oldest missing chunk to mathematically guarantee gapless recovery.
             elseif history_len <= 0 then
                 history_len = 1
                 needed_base = current_tick
@@ -49,27 +44,13 @@ function Pump.send_dynamic_history(ctx)
 
             pkt.base_tick = needed_base
             pkt.history_count = history_len
-            pkt.packed_count = 0
 
-            -- Pass: Guaranteed Packing
-            for i = history_len - 1, 0, -1 do
+            for i = 0, history_len - 1 do
                 local h_tick = needed_base + i
                 local h_idx = bit.band(h_tick, cfg_net.RING_MASK)
                 local frame = ctx.rollback_arena.frames[h_idx]
-
-                local inc_input = frame.player_input[ctx.net_identity]
-                local inc_click = frame.click_grid_idx[ctx.net_identity]
-
-                if (inc_input ~= 0 or inc_click ~= 65535) then
-                    -- [!] 8-Bit Math: Safely bypass LuaJIT's 32-bit sign extension trap
-                    local mask_idx = bit.rshift(i, 3)
-                    local bit_idx = bit.band(i, 7)
-
-                    pkt.active_mask[mask_idx] = bit.bor(pkt.active_mask[mask_idx], bit.lshift(1, bit_idx))
-                    pkt.packed_inputs[pkt.packed_count] = inc_input
-                    pkt.packed_clicks[pkt.packed_count] = inc_click
-                    pkt.packed_count = pkt.packed_count + 1
-                end
+                pkt.inputs[i] = frame.player_input[ctx.net_identity]
+                pkt.clicks[i] = frame.click_grid_idx[ctx.net_identity]
             end
 
             net.SendTo(pkt, p)
@@ -87,6 +68,12 @@ function Pump.intercept_network(ctx, current_tick)
         local pkt = global_in_buffer[i]
         local pid = pkt.player_id
 
+        -- [!] SSoT: Shotgun Relay Cross-Talk Filter
+        -- Discard any broadcast packets not explicitly addressed to our local node.
+        if pkt._align_pad ~= ctx.net_identity then
+            goto continue_inbox
+        end
+
         if pkt.frame_tick < ctx.rollback_arena.confirmed_tick then
             goto continue_inbox
         end
@@ -99,40 +86,26 @@ function Pump.intercept_network(ctx, current_tick)
             local window_start = math.max(0, current_tick - cfg_net.HISTORY_HORIZON)
             local window_end = math.min(current_tick + cfg_net.RING_MASK, ctx.rollback_arena.confirmed_tick + cfg_net.RING_MASK)
 
-            local unpack_idx = 0
-
-            -- Unpack from newest to oldest
-            for h = pkt.history_count - 1, 0, -1 do
+            for h = 0, pkt.history_count - 1 do
                 local h_tick = pkt.base_tick + h
-
-                local inc_input = 0
-                local inc_click = 65535
-
-                -- [!] 8-Bit Math
-                local mask_idx = bit.rshift(h, 3)
-                local bit_idx = bit.band(h, 7)
-
-                if bit.band(pkt.active_mask[mask_idx], bit.lshift(1, bit_idx)) ~= 0 then
-                    if unpack_idx < pkt.packed_count then
-                        inc_input = pkt.packed_inputs[unpack_idx]
-                        inc_click = pkt.packed_clicks[unpack_idx]
-                        unpack_idx = unpack_idx + 1
-                    end
-                end
 
                 if h_tick > ctx.rollback_arena.confirmed_tick and h_tick >= window_start and h_tick <= window_end then
                     local h_idx = bit.band(h_tick, cfg_net.RING_MASK)
                     local h_frame = ctx.rollback_arena.frames[h_idx]
 
                     if h_frame.tick ~= h_tick then
-                        -- [!] PATCH: Total FFI struct obliteration, inclusive of alignment padding
-                        ffi.fill(h_frame, ffi.sizeof("NetworkFrame"), 0)
-
                         h_frame.tick = h_tick
+                        h_frame.state = cfg.net_state.empty
                         for p_scan = 0, cfg_net.MAX_PLAYERS - 1 do
+                            h_frame.player_input[p_scan] = 0
                             h_frame.click_grid_idx[p_scan] = 65535
                         end
+                        h_frame.state_checksum = 0
+                        h_frame.remote_checksum = 0
                     end
+
+                    local inc_input = pkt.inputs[h]
+                    local inc_click = pkt.clicks[h]
 
                     if h_frame.player_input[pid] ~= inc_input or h_frame.click_grid_idx[pid] ~= inc_click then
                         if h_tick < current_tick then
@@ -141,40 +114,30 @@ function Pump.intercept_network(ctx, current_tick)
                                 ctx.rollback_arena.rollback_target = h_tick
                             end
                         end
-
                         h_frame.player_input[pid] = inc_input
                         h_frame.click_grid_idx[pid] = inc_click
-
-                        -- [!] PATCH 1 UPGRADE: Total Timeline Amnesia
-                        -- Wipe the local state_checksum and state flag to force recalculation.
-                        -- Do NOT wipe the remote_checksums matrix; preserve cryptographic consensus.
-                        h_frame.state_checksum = 0
-                        h_frame.state = 0
                     end
                 end
             end
 
-            -- [!] FIXED: Do not ACK the sender's optimistic future tick.
-            -- We must strictly ACK the highest tick actually received in the payload.
             local payload_highest_tick = pkt.base_tick + pkt.history_count - 1
-            if payload_highest_tick > ctx.peer_highest_tick[pid] then
-                ctx.peer_highest_tick[pid] = payload_highest_tick
+
+            -- [!] FIXED: The Contiguous ACK Guard
+            -- Only advance consensus if the incoming packet perfectly overlaps or connects 
+            -- to our currently verified timeline. If pkt.base_tick is floating in the future, 
+            -- it means packets arrived out of order and we have a hole in reality.
+            if pkt.base_tick <= ctx.peer_highest_tick[pid] + 1 then
+                if payload_highest_tick > ctx.peer_highest_tick[pid] then
+                    ctx.peer_highest_tick[pid] = payload_highest_tick
+                end
             end
 
-            -- [!] REVERTED: Remove ctx.peer_checksum_base tracker
-            if pkt.checksum_base_tick > 0 then
-                for chk_i = 0, cfg_net.HASH_WINDOW_LEN - 1 do
-                    local chk_tick = pkt.checksum_base_tick + chk_i
-                    local inc_chk = pkt.recent_checksums[chk_i]
+            if pkt.checksum_tick > 0 and pkt.checksum_tick >= math.max(0, ctx.rollback_arena.confirmed_tick - cfg_net.DESYNC_SWEEP) and pkt.checksum_tick <= current_tick then
+                local c_idx = bit.band(pkt.checksum_tick, cfg_net.RING_MASK)
+                local c_frame = ctx.rollback_arena.frames[c_idx]
 
-                    if inc_chk ~= 0 and chk_tick >= math.max(0, ctx.rollback_arena.confirmed_tick - cfg_net.DESYNC_SWEEP) and chk_tick <= current_tick then
-                        local c_idx = bit.band(chk_tick, cfg_net.RING_MASK)
-                        local c_frame = ctx.rollback_arena.frames[c_idx]
-
-                        if c_frame.tick == chk_tick then
-                            c_frame.remote_checksums[pid] = inc_chk
-                        end
-                    end
+                if c_frame.tick == pkt.checksum_tick then
+                    c_frame.remote_checksum = pkt.state_checksum
                 end
             end
         end

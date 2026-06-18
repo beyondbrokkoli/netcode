@@ -86,7 +86,7 @@ local function get_local_ip()
     return res
 end
 
-local json = require("json_util") 
+local json = require("json_util")
 
 print("Enter Node ID (0-7) OR Preferred Local Port (e.g., 50000): ")
 io.write("> ")
@@ -132,7 +132,7 @@ io.write("> ")
 local mode_input = io.read("*l"):upper()
 
 local lobby_id = ""
-local session_token = nil 
+local session_token = nil
 
 local payload_tbl = {
     public_ip = my_pub_ip,
@@ -209,12 +209,12 @@ for i, p in ipairs(status_data.players) do
         active_peers[peer_id] = true
         if p.ip == my_pub_ip and p.local_ip == my_local_ip then
             net.Connect(peer_id, "127.0.0.1", tonumber(p.local_port))
-            p2p_established[peer_id] = true
-            print(string.format("[ICE] Node %d is local loopback. P2P bypassed.", peer_id))
+            -- [!] FIXED: Do not assume loopback works (Split-Brain Hack Support)
+            print(string.format("[ICE] Node %d is local loopback. Attempting direct blast...", peer_id))
         elseif p.ip == my_pub_ip then
             net.Connect(peer_id, p.local_ip, tonumber(p.local_port))
-            p2p_established[peer_id] = true
-            print(string.format("[ICE] Node %d is on LAN. Hairpin bypassed.", peer_id))
+            -- [!] FIXED: Do not assume LAN works. Force it to prove viability via ICE blast.
+            print(string.format("[ICE] Node %d is on LAN. Attempting hairpin bypass blast...", peer_id))
         else
             net.Connect(peer_id, p.ip, tonumber(p.port))
         end
@@ -302,10 +302,6 @@ local ctx = {
     }
 }
 
--- Add this to the ctx allocation/setup
-ctx.peer_checksum_base = ffi.new("uint32_t[?]", cfg_net.MAX_PLAYERS)
-ffi.fill(ctx.peer_checksum_base, ffi.sizeof("uint32_t") * cfg_net.MAX_PLAYERS, 0)
-
 local f0 = ctx.rollback_arena.frames[0]
 f0.tick = 0
 for p = 0, cfg_net.MAX_PLAYERS - 1 do
@@ -342,7 +338,7 @@ while true do
     local frame_time = math.max(0.001, math.min(current_time - last_time, 0.25))
     last_time = current_time
 
-   Pump.intercept_network(ctx, ctx.sim_tick_count)
+    Pump.intercept_network(ctx, ctx.sim_tick_count)
 
     local c_idx = bit.band(ctx.sim_tick_count, cfg_net.RING_MASK)
     local pending_frame = ctx.rollback_arena.frames[c_idx]
@@ -352,12 +348,18 @@ while true do
         for p = 0, cfg_net.MAX_PLAYERS - 1 do
             pending_frame.player_input[p] = 0
             pending_frame.click_grid_idx[p] = 65535
-            -- [!] PHASE 2: Zero out the 2D array matrix for hardware polling
-            pending_frame.remote_checksums[p] = 0
         end
         pending_frame.state_checksum = 0
+        pending_frame.remote_checksum = 0
         pending_frame.state = 0
         pending_frame.remote_peer_id = 0
+    end
+
+    if ctx.sim_tick_count % 120 == (ctx.net_identity * 10) then
+        if ctx.last_bot_tick ~= ctx.sim_tick_count then
+            pending_frame.click_grid_idx[ctx.net_identity] = math.random(0, ctx.total_tiles - 1)
+            ctx.last_bot_tick = ctx.sim_tick_count
+        end
     end
 
     ctx.accumulator = ctx.accumulator + frame_time

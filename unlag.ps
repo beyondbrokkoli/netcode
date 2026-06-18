@@ -1,0 +1,5 @@
+# 1. Remove all Weaver Engine QoS policies instantly
+Remove-NetQosPolicy -Name "Weaver_*" -Confirm:$false
+
+# 2. Verify the slate is clean (this should return an error saying no policies were found)
+Get-NetQosPolicy -Name "Weaver_*"
