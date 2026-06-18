@@ -207,26 +207,24 @@ for i, p in ipairs(status_data.players) do
     local peer_id = i - 1
     if peer_id ~= local_id then
         active_peers[peer_id] = true
-        -- [!] SSoT: Topology Evaluation
-        if p.ip == my_pub_ip and p.local_ip == my_local_ip then
-            net.Connect(peer_id, "127.0.0.1", tonumber(p.local_port))
-            if my_pub_ip == "127.0.0.1" or p.ip == "127.0.0.1" then
-                p2p_established[peer_id] = true -- Auto-trust localhost harness
-                print(string.format("[ICE] Node %d is Localhost Harness. Auto-validated.", peer_id))
-            else
-                print(string.format("[ICE] Node %d is local loopback. Attempting blast...", peer_id))
-            end
-        elseif p.ip == my_pub_ip then
-            net.Connect(peer_id, p.local_ip, tonumber(p.local_port))
-            if my_pub_ip == "127.0.0.1" or p.ip == "127.0.0.1" then
-                p2p_established[peer_id] = true -- Auto-trust localhost harness
-                print(string.format("[ICE] Node %d is Localhost Harness. Auto-validated.", peer_id))
-            else
-                print(string.format("[ICE] Node %d is on LAN. Attempting hairpin bypass...", peer_id))
-            end
+
+        -- [!] THE ANTI-HAIRPIN LAN CLAMP
+        -- If we share a public IP or matchmaker says 127.0.0.1, we are behind the same NAT.
+        if p.ip == my_pub_ip or p.ip == "127.0.0.1" or my_pub_ip == "127.0.0.1" then
+
+            -- Resolve VirtualBox Bridged (diff local IPs) vs strict localhost (same local IP)
+            local target_ip = (p.local_ip == my_local_ip) and "127.0.0.1" or p.local_ip
+
+            net.Connect(peer_id, target_ip, tonumber(p.local_port))
+
+            -- Instantly trust the local subnet. This bypasses the Mutual Handshake loop below.
+            p2p_established[peer_id] = true
+            print(string.format("[ROUTING] Node %d clamped to LAN (%s:%d). Hairpin bypassed.", peer_id, target_ip, p.local_port))
+
         else
+            -- Different Public IP = True WAN. Stage it for ICE punching and Omnibus fallback.
             net.Connect(peer_id, p.ip, tonumber(p.port))
-            print(string.format("[ICE] Node %d is on WAN. Attempting NAT punch...", peer_id))
+            print(string.format("[ROUTING] Node %d is WAN. Staging for ICE...", peer_id))
         end
     end
 end
