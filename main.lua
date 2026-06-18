@@ -118,7 +118,7 @@ local function extract_true_64bit_token(json_string)
     local val = ffi.cast("uint64_t", 0)
     for i = 1, #token_digits do
         local byte = string.byte(token_digits, i)
-        if byte >= 48 and byte <= 57 then 
+        if byte >= 48 and byte <= 57 then
             val = (val * 10) + (byte - 48)
         else
             break
@@ -235,8 +235,11 @@ local real_time_remaining = status_data.start_time - status_data.server_time
 local sync_start_time = get_time_hires()
 
 if real_time_remaining > 0 then
-    print(string.format("[ICE] Quorum locked. Blasting P2P tokens for %.2f seconds...", real_time_remaining))
+    print(string.format("[ICE] Quorum locked. Initiating Mutual Handshake for %.2f seconds...", real_time_remaining))
     local handshake_buffer = ffi.new("LockstepPacket[32]")
+
+    -- [!] NEW: Track asymmetric reception state separately from mutual establishment
+    local p2p_heard = {}
 
     while (get_time_hires() - sync_start_time) < real_time_remaining do
         for peer_id, active in pairs(active_peers) do
@@ -244,7 +247,9 @@ if real_time_remaining > 0 then
                 local ping_pkt = ffi.new("LockstepPacket")
                 ping_pkt.session_token = session_token
                 ping_pkt.player_id = local_id
-                ping_pkt.frame_tick = 0
+
+                -- STATE MACHINE: Send 1 (PONG) if we heard them, else send 0 (PING)
+                ping_pkt.frame_tick = p2p_heard[peer_id] and 1 or 0
                 net.SendTo(ping_pkt, peer_id)
             end
         end
@@ -252,14 +257,20 @@ if real_time_remaining > 0 then
         local count = net.RecvAll(handshake_buffer, 32)
         for i = 0, count - 1 do
             local pkt = handshake_buffer[i]
-            if pkt.session_token == session_token and pkt.frame_tick == 0 then
-                if not p2p_established[pkt.player_id] then
-                    p2p_established[pkt.player_id] = true
-                    print(string.format("[ICE] P2P Direct Punch-Through SUCCESS for Node %d!", pkt.player_id))
+            if pkt.session_token == session_token then
+                local sender = pkt.player_id
+
+                -- They sent a packet (Ping or Pong). Asymmetric reception achieved.
+                p2p_heard[sender] = true
+
+                -- If they sent a PONG (1+), they heard our PING. Mutual trust confirmed!
+                if pkt.frame_tick >= 1 and not p2p_established[sender] then
+                    p2p_established[sender] = true
+                    print(string.format("[ICE] Mutual P2P Punch-Through SUCCESS for Node %d!", sender))
                 end
             end
         end
-        sys_sleep(50) 
+        sys_sleep(50)
     end
 end
 
