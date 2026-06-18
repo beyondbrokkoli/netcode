@@ -6,13 +6,16 @@ local cfg_net = require("config_net") -- [!] ADDED: The Registry
 
 local CHAOS_PACKET_LOSS = 0.0
 local Pump = {}
+-- [!] NEW: Persistent Omnibus outgoing buffer
+local global_out_pkt = ffi.new("LockstepPacket")
 
 function Pump.send_dynamic_history(ctx)
     local current_tick = ctx.rollback_arena.head_tick
     local conf_tick = ctx.rollback_arena.confirmed_tick
 
-    local pkt = ffi.new("LockstepPacket")
-    ffi.fill(pkt, ffi.sizeof("LockstepPacket"), 0)
+    -- Zero the persistent memory block instead of allocating
+    ffi.fill(global_out_pkt, ffi.sizeof("LockstepPacket"), 0)
+    local pkt = global_out_pkt
 
     pkt.session_token = ctx.session_token
     pkt.player_id = ctx.net_identity

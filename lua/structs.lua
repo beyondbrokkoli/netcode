@@ -30,6 +30,7 @@ M.specs = {
             { type = "uint32_t", name = "base_tick" },
             { type = "uint8_t", name = "player_id" },
             { type = "uint8_t", name = "history_count" },
+            { type = "uint16_t", name = "_align_pad" }, -- [!] RESTORED: Forces 4-byte alignment
             { type = "uint32_t", name = "peer_acks", count = cfg_net.MAX_PLAYERS },
             { type = "uint32_t", name = "clicks", count = cfg_net.HISTORY_LEN },
             { type = "uint8_t", name = "inputs", count = cfg_net.HISTORY_LEN }

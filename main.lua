@@ -167,9 +167,6 @@ end
 -- [!] SSoT: Relay Logic
 net.SetRelayIP(cfg_net.RELAY_IP)
 
--- [!] SSoT: Network Intercept Buffer
-local incoming_packets = ffi.new("LockstepPacket[?]", cfg_net.MAX_BURST_PACKETS)
-
 print("[MATCHMAKER] Polling quorum status. Waiting for 'locked'...")
 local status_data = nil
 
@@ -309,7 +306,7 @@ local ctx = {
     net_identity = local_id,
     sim_tick_count = 1,
     accumulator = 0.0,
-    pending_click = -1,
+    pending_click = 65535,
     total_tiles = total_tiles,
     last_bot_tick = 0,
     p2p_established = p2p_established, -- [!] INJECTED: Topology Map for Omnibus Routing
