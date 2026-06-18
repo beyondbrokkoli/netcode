@@ -8,9 +8,25 @@ local net = require("network")
 local cfg = require("config_engine")
 local cfg_net = require("config_net") -- [!] ADDED: SSoT Registry
 local FSM = require("fsm_core")
-local Pump = require("net_pump") 
-local RNG = require("sim_rng")
-local State = require("sim_world")
+local Pump = require("net_pump")
+local Game = require("game_state")
+
+local Engine = {}
+function Engine.SubmitCommand(ctx, opcode, flags, target_id, target_pos)
+    local c_idx = bit.band(ctx.sim_tick_count, cfg_net.RING_MASK)
+    local pending_frame = ctx.rollback_arena.frames[c_idx]
+    local cmds = pending_frame.commands[ctx.net_identity]
+
+    if cmds[0].opcode == 0 then
+        cmds[0].opcode = opcode; cmds[0].flags = flags
+        cmds[0].target_id = target_id; cmds[0].target_pos = target_pos
+    elseif cmds[1].opcode == 0 then
+        cmds[1].opcode = opcode; cmds[1].flags = flags
+        cmds[1].target_id = target_id; cmds[1].target_pos = target_pos
+    else
+        print("[WARNING] Engine Command Buffer saturated for tick " .. ctx.sim_tick_count)
+    end
+end
 
 ffi.cdef[[
     void Sleep(uint32_t dwMilliseconds);
@@ -271,7 +287,7 @@ end
 
 print("[ICE] Sync window closed. Evaluating routing topologies...")
 -- [!] SSoT: Relay Logic
-net.SetRelayIP(cfg_net.RELAY_IP) 
+net.SetRelayIP(cfg_net.RELAY_IP)
 
 for peer_id, active in pairs(active_peers) do
     if active then
@@ -297,37 +313,29 @@ if real_time_remaining > 0 then
     sys_sleep(real_time_remaining * 1000)
 end
 
-local total_tiles = cfg.world.map_width * cfg.world.map_height
-local bytes_terrain = 8 * total_tiles * ffi.sizeof("uint16_t")
-local bytes_elevation = 8 * total_tiles * ffi.sizeof("float")
-
 local ctx = {
-    session_token = session_token,
-    net_identity = local_id,
-    sim_tick_count = 1,
-    accumulator = 0.0,
-    pending_click = 65535,
-    total_tiles = total_tiles,
-    last_bot_tick = 0,
-    p2p_established = p2p_established, -- [!] INJECTED: Topology Map for Omnibus Routing
-    -- [!] SSoT: Memory Arrays parameterized via string format
-    peer_active = ffi.new(string.format("bool[%d]", cfg_net.MAX_PLAYERS)),
-    peer_highest_tick = ffi.new(string.format("uint32_t[%d]", cfg_net.MAX_PLAYERS)),
-    peer_ack_of_me = ffi.new(string.format("uint32_t[%d]", cfg_net.MAX_PLAYERS)),
-    rts_grid = State.init_grid(total_tiles),
-    rollback_arena = ffi.new("RollbackBuffer"),
-    snapshot_ring = {
-        terrain = ffi.new(string.format("uint16_t[%d][%d][%d]", cfg_net.RING_SIZE, cfg_net.MAX_PLAYERS, total_tiles)),
-        elevation = ffi.new(string.format("float[%d][%d][%d]", cfg_net.RING_SIZE, cfg_net.MAX_PLAYERS, total_tiles)),
-        rng_state = ffi.new(string.format("uint32_t[%d][1]", cfg_net.RING_SIZE))
+        session_token = session_token,
+        net_identity = local_id,
+        sim_tick_count = 1,
+        accumulator = 0.0,
+        total_tiles = cfg.world.map_width * cfg.world.map_height,
+        last_bot_tick = 0,
+        p2p_established = p2p_established,
+        peer_active = ffi.new(string.format("bool[%d]", cfg_net.MAX_PLAYERS)),
+        peer_highest_tick = ffi.new(string.format("uint32_t[%d]", cfg_net.MAX_PLAYERS)),
+        peer_ack_of_me = ffi.new(string.format("uint32_t[%d]", cfg_net.MAX_PLAYERS)),
+
+        -- Black Box allocations
+        rts_grid = Game.InitState(session_token),
+        rollback_arena = ffi.new("RollbackBuffer"),
+        snapshot_ring = ffi.new(string.format("%s[%d]", Game.GetStateName(), cfg_net.RING_SIZE))
     }
-}
 
 local f0 = ctx.rollback_arena.frames[0]
 f0.tick = 0
 for p = 0, cfg_net.MAX_PLAYERS - 1 do
-    f0.click_grid_idx[p] = 65535
-    f0.player_input[p] = 0
+    f0.commands[p][0].opcode = 0
+    f0.commands[p][1].opcode = 0
 end
 
 ctx.rollback_arena.head_tick = 0
@@ -339,14 +347,8 @@ for p = 0, cfg_net.MAX_PLAYERS - 1 do
     end
 end
 
-RNG.seed(ctx.rts_grid.rng_state, session_token)
-
-ffi.copy(ctx.snapshot_ring.terrain[0], ctx.rts_grid.terrain, bytes_terrain)
-ffi.copy(ctx.snapshot_ring.elevation[0], ctx.rts_grid.elevation, bytes_elevation)
-ffi.copy(ctx.snapshot_ring.rng_state[0], ctx.rts_grid.rng_state, 4)
-
-local h0_terrain = net.HashState(ctx.rts_grid.terrain, bytes_terrain, 0)
-f0.state_checksum = net.HashState(ctx.rts_grid.elevation, bytes_elevation, h0_terrain)
+ffi.copy(ctx.snapshot_ring[0], ctx.rts_grid, Game.GetStateSize())
+f0.state_checksum = Game.HashState(ctx.rts_grid)
 
 local FIXED_DT = 1.0 / cfg_net.TICK_RATE
 local last_time = get_time_hires()
@@ -367,8 +369,8 @@ while true do
     if pending_frame.tick ~= ctx.sim_tick_count then
         pending_frame.tick = ctx.sim_tick_count
         for p = 0, cfg_net.MAX_PLAYERS - 1 do
-            pending_frame.player_input[p] = 0
-            pending_frame.click_grid_idx[p] = 65535
+            pending_frame.commands[p][0].opcode = 0
+            pending_frame.commands[p][1].opcode = 0
         end
         pending_frame.state_checksum = 0
         pending_frame.remote_checksum = 0
@@ -378,13 +380,13 @@ while true do
 
     if ctx.sim_tick_count % 120 == (ctx.net_identity * 10) then
         if ctx.last_bot_tick ~= ctx.sim_tick_count then
-            pending_frame.click_grid_idx[ctx.net_identity] = math.random(0, ctx.total_tiles - 1)
+            Engine.SubmitCommand(ctx, 1, 0, 0, math.random(0, ctx.total_tiles - 1))
             ctx.last_bot_tick = ctx.sim_tick_count
         end
     end
 
     ctx.accumulator = ctx.accumulator + frame_time
-    FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
+    FSM.tick_playing_state(ctx, FIXED_DT)
 
     Pump.send_dynamic_history(ctx)
 

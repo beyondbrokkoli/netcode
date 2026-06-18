@@ -49,8 +49,12 @@ function Pump.send_dynamic_history(ctx)
         local h_tick = needed_base + i
         local h_idx = bit.band(h_tick, cfg_net.RING_MASK)
         local frame = ctx.rollback_arena.frames[h_idx]
-        pkt.inputs[i] = frame.player_input[ctx.net_identity]
-        pkt.clicks[i] = frame.click_grid_idx[ctx.net_identity]
+
+        -- High performance 16-byte contiguous array copy
+        local src_ptr = ffi.cast("uint64_t*", frame.commands[ctx.net_identity])
+        local dst_ptr = ffi.cast("uint64_t*", pkt.commands[i])
+        dst_ptr[0] = src_ptr[0]
+        dst_ptr[1] = src_ptr[1]
     end
 
     -- Topology Routing: P2P + Single Dedicated Relay Megaphone
@@ -112,25 +116,26 @@ function Pump.intercept_network(ctx, current_tick)
                         h_frame.tick = h_tick
                         h_frame.state = cfg.net_state.empty
                         for p_scan = 0, cfg_net.MAX_PLAYERS - 1 do
-                            h_frame.player_input[p_scan] = 0
-                            h_frame.click_grid_idx[p_scan] = 65535
+                            h_frame.commands[p_scan][0].opcode = 0
+                            h_frame.commands[p_scan][1].opcode = 0
                         end
                         h_frame.state_checksum = 0
                         h_frame.remote_checksum = 0
                     end
 
-                    local inc_input = pkt.inputs[h]
-                    local inc_click = pkt.clicks[h]
+                    -- Treat 2x 8-byte PlayerCommands as two 64-bit ints for rapid desync detection
+                    local inc_ptr = ffi.cast("uint64_t*", pkt.commands[h])
+                    local h_ptr   = ffi.cast("uint64_t*", h_frame.commands[pid])
 
-                    if h_frame.player_input[pid] ~= inc_input or h_frame.click_grid_idx[pid] ~= inc_click then
+                    if h_ptr[0] ~= inc_ptr[0] or h_ptr[1] ~= inc_ptr[1] then
                         if h_tick < current_tick then
                             if ctx.rollback_arena.is_rollback_active == 0 or h_tick < ctx.rollback_arena.rollback_target then
                                 ctx.rollback_arena.is_rollback_active = 1
                                 ctx.rollback_arena.rollback_target = h_tick
                             end
                         end
-                        h_frame.player_input[pid] = inc_input
-                        h_frame.click_grid_idx[pid] = inc_click
+                        h_ptr[0] = inc_ptr[0]
+                        h_ptr[1] = inc_ptr[1]
                     end
                 end
             end

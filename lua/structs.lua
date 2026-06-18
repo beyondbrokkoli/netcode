@@ -21,6 +21,15 @@ end
 
 M.specs = {
     {
+       name = "PlayerCommand", align = 1, force_align = true, wire_format = true,
+       members = {
+            { type = "uint8_t", name = "opcode" },
+            { type = "uint8_t", name = "flags" },
+            { type = "uint16_t", name = "target_id" },
+            { type = "uint32_t", name = "target_pos" }
+        }
+    },
+    {
         name = "LockstepPacket", align = 1, wire_format = true, force_align = true,
         members = {
             { type = "uint64_t", name = "session_token" },
@@ -32,8 +41,7 @@ M.specs = {
             { type = "uint8_t", name = "history_count" },
             { type = "uint16_t", name = "_align_pad" }, -- [!] RESTORED: Forces 4-byte alignment
             { type = "uint32_t", name = "peer_acks", count = cfg_net.MAX_PLAYERS },
-            { type = "uint32_t", name = "clicks", count = cfg_net.HISTORY_LEN },
-            { type = "uint8_t", name = "inputs", count = cfg_net.HISTORY_LEN }
+            { type = "PlayerCommand", name = "commands", count = { cfg_net.HISTORY_LEN, 2 } }
         }
     },
     {
@@ -44,8 +52,7 @@ M.specs = {
             { type = "uint32_t", name = "state_checksum" },
             { type = "uint32_t", name = "remote_checksum" },
             { type = "uint8_t", name = "remote_peer_id" },
-            { type = "uint8_t", name = "player_input", count = cfg_net.MAX_PLAYERS },
-            { type = "uint32_t", name = "click_grid_idx", count = cfg_net.MAX_PLAYERS }
+            { type = "PlayerCommand", name = "commands", count = { cfg_net.MAX_PLAYERS, 2 } }
         }
     },
     {

@@ -1,15 +1,14 @@
 local net = require("network")
-local State = require("sim_world")
+local Game = require("game_state")
 local bit = require("bit")
 local ffi = require("ffi")
-local RNG = require("sim_rng")
-local cfg_net = require("config_net") -- [!] ADDED: The Registry
+local cfg_net = require("config_net")
 
 local FSM = {}
 
-function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
+function FSM.tick_playing_state(ctx, FIXED_DT)
     local true_consensus = 0xFFFFFFFF
-    local min_ack_of_me = 0xFFFFFFFF 
+    local min_ack_of_me = 0xFFFFFFFF
 
     for p = 0, cfg_net.MAX_PLAYERS - 1 do
         if p ~= ctx.net_identity and ctx.peer_active[p] then
@@ -51,8 +50,8 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
 
         if frame.tick ~= ctx.sim_tick_count then
             for p = 0, cfg_net.MAX_PLAYERS - 1 do
-                frame.player_input[p] = 0
-                frame.click_grid_idx[p] = 65535
+                frame.commands[p][0].opcode = 0
+                frame.commands[p][1].opcode = 0
             end
             frame.state_checksum = 0
             frame.remote_checksum = 0
@@ -72,35 +71,26 @@ function FSM.tick_playing_state(ctx, FIXED_DT, bytes_terrain, bytes_elevation)
             end
 
             local r_idx = bit.band(t_tgt - 1, cfg_net.RING_MASK)
+            local state_size = Game.GetStateSize()
 
-            ffi.copy(ctx.rts_grid.terrain, ctx.snapshot_ring.terrain[r_idx], bytes_terrain)
-            ffi.copy(ctx.rts_grid.elevation, ctx.snapshot_ring.elevation[r_idx], bytes_elevation)
-            ffi.copy(ctx.rts_grid.rng_state, ctx.snapshot_ring.rng_state[r_idx], 4)
+            ffi.copy(ctx.rts_grid, ctx.snapshot_ring[r_idx], state_size)
 
             for t = t_tgt, ctx.sim_tick_count - 1 do
                 local f_idx = bit.band(t, cfg_net.RING_MASK)
                 local f = ctx.rollback_arena.frames[f_idx]
-                State.update_simulation(ctx.rts_grid, t, f, cfg_net.MAX_PLAYERS)
 
-                local h_terrain = net.HashState(ctx.rts_grid.terrain, bytes_terrain, 0)
-                f.state_checksum = net.HashState(ctx.rts_grid.elevation, bytes_elevation, h_terrain)
-
-                ffi.copy(ctx.snapshot_ring.terrain[f_idx], ctx.rts_grid.terrain, bytes_terrain)
-                ffi.copy(ctx.snapshot_ring.elevation[f_idx], ctx.rts_grid.elevation, bytes_elevation)
-                ffi.copy(ctx.snapshot_ring.rng_state[f_idx], ctx.rts_grid.rng_state, 4)
+                Game.SimulateTick(ctx.rts_grid, f.commands, t)
+                f.state_checksum = Game.HashState(ctx.rts_grid)
+                ffi.copy(ctx.snapshot_ring[f_idx], ctx.rts_grid, state_size)
             end
             ctx.rollback_arena.is_rollback_active = 0
         end
 
         if ctx.sim_tick_count <= remote_highest + cfg_net.LOOKAHEAD_CAP then
-            State.update_simulation(ctx.rts_grid, ctx.sim_tick_count, frame, cfg_net.MAX_PLAYERS)
+            Game.SimulateTick(ctx.rts_grid, frame.commands, ctx.sim_tick_count)
+            frame.state_checksum = Game.HashState(ctx.rts_grid)
 
-            local h_terrain = net.HashState(ctx.rts_grid.terrain, bytes_terrain, 0)
-            frame.state_checksum = net.HashState(ctx.rts_grid.elevation, bytes_elevation, h_terrain)
-
-            ffi.copy(ctx.snapshot_ring.terrain[c_idx], ctx.rts_grid.terrain, bytes_terrain)
-            ffi.copy(ctx.snapshot_ring.elevation[c_idx], ctx.rts_grid.elevation, bytes_elevation)
-            ffi.copy(ctx.snapshot_ring.rng_state[c_idx], ctx.rts_grid.rng_state, 4)
+            ffi.copy(ctx.snapshot_ring[c_idx], ctx.rts_grid, Game.GetStateSize())
 
             ctx.sim_tick_count = ctx.sim_tick_count + 1
 
