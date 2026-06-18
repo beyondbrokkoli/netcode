@@ -289,6 +289,10 @@ for peer_id, active in pairs(active_peers) do
     end
 end
 
+-- [!] NEW: Dedicated Omnibus Relay Socket (Index 8)
+-- Bypasses dirty NAT states from the ICE phase
+net.Connect(cfg_net.MAX_PLAYERS, cfg_net.RELAY_IP, cfg_net.RELAY_PORT)
+
 print("[SYSTEM] All routes bound. Drop-in complete.")
 
 local real_time_remaining = status_data.start_time - status_data.server_time

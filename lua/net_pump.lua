@@ -50,17 +50,22 @@ function Pump.send_dynamic_history(ctx)
         pkt.clicks[i] = frame.click_grid_idx[ctx.net_identity]
     end
 
-    -- Topology Routing: P2P + Single Relay Megaphone
-    local relay_sent = false
+    -- Topology Routing: P2P + Single Dedicated Relay Megaphone
+    local needs_relay = false
     for p = 0, cfg_net.MAX_PLAYERS - 1 do
         if p ~= ctx.net_identity and ctx.peer_active[p] then
             if ctx.p2p_established and ctx.p2p_established[p] then
                 net.SendTo(pkt, p) -- Direct P2P Blast
-            elseif not relay_sent then
-                net.SendTo(pkt, p) -- Single authoritative blast to the Python Relay
-                relay_sent = true
+            else
+                needs_relay = true
             end
         end
+    end
+
+    -- [!] FIRE THE MEGAPHONE
+    -- Send exactly one packet to the pristine Dedicated Relay Socket (Index 8)
+    if needs_relay then
+        net.SendTo(pkt, cfg_net.MAX_PLAYERS)
     end
 end
 
