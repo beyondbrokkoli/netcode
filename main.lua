@@ -207,12 +207,10 @@ for i, p in ipairs(status_data.players) do
     local peer_id = i - 1
     if peer_id ~= local_id then
         active_peers[peer_id] = true
-
-        -- [!] FIXED: Localhost Harness Override
-        -- Intelligently catch 127.0.0.1 matchmaker environments regardless of the LAN IP hardware query
-        if p.ip == "127.0.0.1" or my_pub_ip == "127.0.0.1" or (p.ip == my_pub_ip and p.local_ip == my_local_ip) then
+        if p.ip == my_pub_ip and p.local_ip == my_local_ip then
             net.Connect(peer_id, "127.0.0.1", tonumber(p.local_port))
-            print(string.format("[ICE] Node %d is local loopback (Harness Detected). Attempting direct blast...", peer_id))
+            -- [!] FIXED: Do not assume loopback works (Split-Brain Hack Support)
+            print(string.format("[ICE] Node %d is local loopback. Attempting direct blast...", peer_id))
         elseif p.ip == my_pub_ip then
             net.Connect(peer_id, p.local_ip, tonumber(p.local_port))
             -- [!] FIXED: Do not assume LAN works. Force it to prove viability via ICE blast.
