@@ -207,10 +207,12 @@ for i, p in ipairs(status_data.players) do
     local peer_id = i - 1
     if peer_id ~= local_id then
         active_peers[peer_id] = true
-        if p.ip == my_pub_ip and p.local_ip == my_local_ip then
+
+        -- [!] FIXED: Localhost Harness Override
+        -- Intelligently catch 127.0.0.1 matchmaker environments regardless of the LAN IP hardware query
+        if p.ip == "127.0.0.1" or my_pub_ip == "127.0.0.1" or (p.ip == my_pub_ip and p.local_ip == my_local_ip) then
             net.Connect(peer_id, "127.0.0.1", tonumber(p.local_port))
-            -- [!] FIXED: Do not assume loopback works (Split-Brain Hack Support)
-            print(string.format("[ICE] Node %d is local loopback. Attempting direct blast...", peer_id))
+            print(string.format("[ICE] Node %d is local loopback (Harness Detected). Attempting direct blast...", peer_id))
         elseif p.ip == my_pub_ip then
             net.Connect(peer_id, p.local_ip, tonumber(p.local_port))
             -- [!] FIXED: Do not assume LAN works. Force it to prove viability via ICE blast.
@@ -289,6 +291,7 @@ local ctx = {
     pending_click = -1,
     total_tiles = total_tiles,
     last_bot_tick = 0,
+    p2p_established = p2p_established, -- [!] INJECTED: Topology Map for Omnibus Routing
     -- [!] SSoT: Memory Arrays parameterized via string format
     peer_active = ffi.new(string.format("bool[%d]", cfg_net.MAX_PLAYERS)),
     peer_highest_tick = ffi.new(string.format("uint32_t[%d]", cfg_net.MAX_PLAYERS)),
