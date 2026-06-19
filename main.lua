@@ -323,8 +323,11 @@ ctx.rollback_arena.head_tick = 0
 ctx.rollback_arena.confirmed_tick = 0
 
 for p = 0, cfg_net.MAX_PLAYERS - 1 do
-    if p ~= local_id then
+    -- Dynamically set active state based on the STUN/Matchmaker phase
+    if active_peers[p] then
         ctx.peer_active[p] = true
+    else
+        ctx.peer_active[p] = false
     end
 end
 

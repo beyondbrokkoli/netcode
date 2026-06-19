@@ -1,7 +1,7 @@
 local ConfigNet = {}
 
 -- Engine & Temporal Logic
-ConfigNet.MAX_PLAYERS = 8
+ConfigNet.MAX_PLAYERS = 2
 
 -- [!] THE GOLDEN RATIO
 ConfigNet.TICK_RATE = 60
