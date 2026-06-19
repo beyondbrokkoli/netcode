@@ -102,32 +102,6 @@ local function get_local_ip()
     return res
 end
 
-local json = require("json_util")
-
-print("Enter Node ID (0-7) OR Preferred Local Port (e.g., 50000): ")
-io.write("> ")
-local user_input = tonumber(io.read("*l")) or 50000
-
-local local_port = user_input
-if local_port < 1000 then
-    local_port = 50000 + local_port
-end
-
-assert(net.Host(local_port), "FATAL: Failed to bind local socket port " .. local_port)
-local my_local_ip = get_local_ip()
-
--- [!] SSoT: STUN Logic
-print(string.format("[STUN] Querying external NAT edges at %s:%d...", cfg_net.STUN_SERVER, cfg_net.STUN_PORT))
-local stun_ok, my_pub_ip, my_pub_port = net.StunPunch(cfg_net.STUN_SERVER, cfg_net.STUN_PORT)
-
-if not stun_ok then
-    print("[WARNING] STUN negotiation failed. Operating via local loopbacks.")
-    my_pub_ip = my_local_ip
-    my_pub_port = local_port
-else
-    print(string.format("[STUN] Discovery successful. External mapped endpoint: %s:%d", my_pub_ip, my_pub_port))
-end
-
 local function extract_true_64bit_token(json_string)
     local token_digits = json_string:match('"session_token"%s*:%s*(%d+)')
     assert(token_digits, "FATAL: Could not locate session_token digits in JSON payload")
@@ -143,168 +117,175 @@ local function extract_true_64bit_token(json_string)
     return val
 end
 
-print("\n[MATCHMAKING] Select Mode: (H)ost New Game or (J)oin Existing Lobby")
+local json = require("json_util")
+
+print("Enter Node ID (0-7) OR Preferred Local Port (e.g., 50000): ")
 io.write("> ")
-local mode_input = io.read("*l"):upper()
+local user_input = tonumber(io.read("*l")) or 50000
 
-local lobby_id = ""
-local session_token = nil
+local local_port = user_input
+if local_port < 1000 then
+    local_port = 50000 + local_port
+end
 
-local payload_tbl = {
-    public_ip = my_pub_ip,
-    public_port = my_pub_port,
-    local_ip = my_local_ip,
-    local_port = local_port
-}
-local initial_payload = json.encode(payload_tbl)
+assert(net.Host(local_port), "FATAL: Failed to bind local socket port " .. local_port)
+local my_local_ip = get_local_ip()
 
-if mode_input == "H" then
-    print("[MATCHMAKER] Requesting new lobby...")
-    -- [!] SSoT: HTTP Matchmaker
-    local response = http_post(cfg_net.MATCHMAKER_URL .. "/host", initial_payload)
-    session_token = extract_true_64bit_token(response)
-    local res_data = json.decode(response)
-    lobby_id = res_data.lobby_id
-    print("[MATCHMAKER] Hosted Lobby, holding room: " .. lobby_id)
-else
-    if mode_input == "J" then
-        print("Enter Target 4-Character Lobby ID:")
-        io.write("> ")
-        lobby_id = io.read("*l"):upper()
+local function BootstrapNetworkTopology(local_port, my_local_ip)
+    print(string.format("[STUN] Querying external NAT edges at %s:%d...", cfg_net.STUN_SERVER, cfg_net.STUN_PORT))
+    local stun_ok, my_pub_ip, my_pub_port = net.StunPunch(cfg_net.STUN_SERVER, cfg_net.STUN_PORT)
+
+    if not stun_ok then
+        print("[WARNING] STUN negotiation failed. Operating via local loopbacks.")
+        my_pub_ip = my_local_ip
+        my_pub_port = local_port
     else
-        lobby_id = mode_input:upper()
+        print(string.format("[STUN] Discovery successful. External mapped endpoint: %s:%d", my_pub_ip, my_pub_port))
     end
-    print("[MATCHMAKER] Joining Lobby: " .. lobby_id)
-    -- [!] SSoT: HTTP Matchmaker
-    local response = http_post(cfg_net.MATCHMAKER_URL .. "/join/" .. lobby_id, initial_payload)
-    session_token = extract_true_64bit_token(response)
-end
 
--- [!] SSoT: Relay Logic
-net.SetRelayIP(cfg_net.RELAY_IP)
+    print("\n[MATCHMAKING] Select Mode: (H)ost New Game or (J)oin Existing Lobby")
+    io.write("> ")
+    local mode_input = io.read("*l"):upper()
 
-print("[MATCHMAKER] Polling quorum status. Waiting for 'locked'...")
-local status_data = nil
+    local lobby_id = ""
+    local session_token = nil
+    local initial_payload = json.encode({
+        public_ip = my_pub_ip, public_port = my_pub_port,
+        local_ip = my_local_ip, local_port = local_port
+    })
 
-while true do
-    -- [!] SSoT: HTTP Matchmaker
-    local raw_res = http_get(cfg_net.MATCHMAKER_URL .. "/status/" .. lobby_id)
-    if raw_res and raw_res ~= "" then
-        status_data = json.decode(raw_res)
-        if status_data.status == "locked" then
-            print(string.format("[MATCHMAKER] Quorum reached (%d/%d). Lobby is LOCKED.", status_data.player_count, cfg_net.MAX_PLAYERS))
-            break
-        end
-    end
-    sys_sleep(500)
-end
-
-local net_id_derived = 0
-for i, p in ipairs(status_data.players) do
-    if p.ip == my_pub_ip and tonumber(p.port) == my_pub_port and p.local_ip == my_local_ip and p.local_port == local_port then
-        net_id_derived = i - 1
-        break
-    end
-end
-
-local local_id = net_id_derived
-net.SetPlayerId(local_id)
-net.SetSession(session_token)
-
-print(string.format("[SYSTEM] Assigning Identity: Node %d. Meshing topology...", local_id))
-
-local p2p_established = {}
-local active_peers = {}
-
-for i, p in ipairs(status_data.players) do
-    local peer_id = i - 1
-    if peer_id ~= local_id then
-        active_peers[peer_id] = true
-
-        -- [!] THE ANTI-HAIRPIN LAN CLAMP
-        -- If we share a public IP or matchmaker says 127.0.0.1, we are behind the same NAT.
-        if p.ip == my_pub_ip or p.ip == "127.0.0.1" or my_pub_ip == "127.0.0.1" then
-
-            -- Resolve VirtualBox Bridged (diff local IPs) vs strict localhost (same local IP)
-            local target_ip = (p.local_ip == my_local_ip) and "127.0.0.1" or p.local_ip
-
-            net.Connect(peer_id, target_ip, tonumber(p.local_port))
-
-            -- Instantly trust the local subnet. This bypasses the Mutual Handshake loop below.
-            p2p_established[peer_id] = true
-            print(string.format("[ROUTING] Node %d clamped to LAN (%s:%d). Hairpin bypassed.", peer_id, target_ip, p.local_port))
-
+    if mode_input == "H" then
+        print("[MATCHMAKER] Requesting new lobby...")
+        local response = http_post(cfg_net.MATCHMAKER_URL .. "/host", initial_payload)
+        session_token = extract_true_64bit_token(response)
+        lobby_id = json.decode(response).lobby_id
+        print("[MATCHMAKER] Hosted Lobby, holding room: " .. lobby_id)
+    else
+        if mode_input == "J" then
+            print("Enter Target 4-Character Lobby ID:")
+            io.write("> ")
+            lobby_id = io.read("*l"):upper()
         else
-            -- Different Public IP = True WAN. Stage it for ICE punching and Omnibus fallback.
-            net.Connect(peer_id, p.ip, tonumber(p.port))
-            print(string.format("[ROUTING] Node %d is WAN. Staging for ICE...", peer_id))
+            lobby_id = mode_input:upper()
         end
+        print("[MATCHMAKER] Joining Lobby: " .. lobby_id)
+        local response = http_post(cfg_net.MATCHMAKER_URL .. "/join/" .. lobby_id, initial_payload)
+        session_token = extract_true_64bit_token(response)
     end
-end
 
-local real_time_remaining = status_data.start_time - status_data.server_time
-local sync_start_time = get_time_hires()
-
-if real_time_remaining > 0 then
-    print(string.format("[ICE] Quorum locked. Initiating Mutual Handshake for %.2f seconds...", real_time_remaining))
-    local handshake_buffer = ffi.new("LockstepPacket[32]")
-
-    -- [!] NEW: Track asymmetric reception state separately from mutual establishment
-    local p2p_heard = {}
-
-    while (get_time_hires() - sync_start_time) < real_time_remaining do
-        for peer_id, active in pairs(active_peers) do
-            if active and not p2p_established[peer_id] then
-                local ping_pkt = ffi.new("LockstepPacket")
-                ping_pkt.session_token = session_token
-                ping_pkt.player_id = local_id
-
-                -- STATE MACHINE: Send 1 (PONG) if we heard them, else send 0 (PING)
-                ping_pkt.frame_tick = p2p_heard[peer_id] and 1 or 0
-                net.SendTo(ping_pkt, peer_id)
+    print("[MATCHMAKER] Polling quorum status. Waiting for 'locked'...")
+    local status_data = nil
+    while true do
+        local raw_res = http_get(cfg_net.MATCHMAKER_URL .. "/status/" .. lobby_id)
+        if raw_res and raw_res ~= "" then
+            status_data = json.decode(raw_res)
+            if status_data.status == "locked" then
+                print(string.format("[MATCHMAKER] Quorum reached (%d/%d). Lobby is LOCKED.", status_data.player_count, cfg_net.MAX_PLAYERS))
+                break
             end
         end
+        sys_sleep(500)
+    end
 
-        local count = net.RecvAll(handshake_buffer, 32)
-        for i = 0, count - 1 do
-            local pkt = handshake_buffer[i]
-            if pkt.session_token == session_token then
-                local sender = pkt.player_id
+    local local_id = 0
+    for i, p in ipairs(status_data.players) do
+        if p.ip == my_pub_ip and tonumber(p.port) == my_pub_port and p.local_ip == my_local_ip and p.local_port == local_port then
+            local_id = i - 1; break
+        end
+    end
 
-                -- They sent a packet (Ping or Pong). Asymmetric reception achieved.
-                p2p_heard[sender] = true
+    net.SetPlayerId(local_id)
+    net.SetSession(session_token)
+    print(string.format("[SYSTEM] Assigning Identity: Node %d. Meshing topology...", local_id))
 
-                -- If they sent a PONG (1+), they heard our PING. Mutual trust confirmed!
-                if pkt.frame_tick >= 1 and not p2p_established[sender] then
-                    p2p_established[sender] = true
-                    print(string.format("[ICE] Mutual P2P Punch-Through SUCCESS for Node %d!", sender))
+    local p2p_established = {}
+    local active_peers = {}
+
+    for i, p in ipairs(status_data.players) do
+        local peer_id = i - 1
+        if peer_id ~= local_id then
+            active_peers[peer_id] = true
+            if p.ip == my_pub_ip or p.ip == "127.0.0.1" or my_pub_ip == "127.0.0.1" then
+                local target_ip = (p.local_ip == my_local_ip) and "127.0.0.1" or p.local_ip
+                net.Connect(peer_id, target_ip, tonumber(p.local_port))
+                p2p_established[peer_id] = true
+                print(string.format("[ROUTING] Node %d clamped to LAN (%s:%d). Hairpin bypassed.", peer_id, target_ip, p.local_port))
+            else
+                net.Connect(peer_id, p.ip, tonumber(p.port))
+                print(string.format("[ROUTING] Node %d is WAN. Staging for ICE...", peer_id))
+            end
+        end
+    end
+
+    local real_time_remaining = status_data.start_time - status_data.server_time
+    local sync_start_time = get_time_hires()
+
+    if real_time_remaining > 0 then
+        print(string.format("[ICE] Quorum locked. Initiating Mutual Handshake for %.2f seconds...", real_time_remaining))
+        local handshake_buffer = ffi.new("LockstepPacket[32]")
+        local p2p_heard = {}
+
+        while (get_time_hires() - sync_start_time) < real_time_remaining do
+            for peer_id, active in pairs(active_peers) do
+                if active and not p2p_established[peer_id] then
+                    local ping_pkt = ffi.new("LockstepPacket")
+                    ping_pkt.session_token = session_token
+                    ping_pkt.player_id = local_id
+                    ping_pkt.frame_tick = p2p_heard[peer_id] and 1 or 0
+                    net.SendTo(ping_pkt, peer_id)
                 end
             end
-        end
-        sys_sleep(50)
-    end
-end
 
-print("[ICE] Sync window closed. Evaluating routing topologies...")
--- [!] SSoT: Relay Logic
-net.SetRelayIP(cfg_net.RELAY_IP)
-
-for peer_id, active in pairs(active_peers) do
-    if active then
-        if p2p_established[peer_id] then
-            print(string.format("[ROUTING] Node %d -> P2P [DIRECT RESIDENTIAL]", peer_id))
-        else
-            print(string.format("[ROUTING] Node %d -> P2P [FAILED]. Falling back to Hetzner Relay.", peer_id))
-            net.Connect(peer_id, cfg_net.RELAY_IP, cfg_net.RELAY_PORT) -- [!] SSoT
+            local count = net.RecvAll(handshake_buffer, 32)
+            for i = 0, count - 1 do
+                local pkt = handshake_buffer[i]
+                if pkt.session_token == session_token then
+                    local sender = pkt.player_id
+                    p2p_heard[sender] = true
+                    if pkt.frame_tick >= 1 and not p2p_established[sender] then
+                        p2p_established[sender] = true
+                        print(string.format("[ICE] Mutual P2P Punch-Through SUCCESS for Node %d!", sender))
+                    end
+                end
+            end
+            sys_sleep(50)
         end
     end
+
+    print("[ICE] Sync window closed. Evaluating routing topologies...")
+
+    for peer_id, active in pairs(active_peers) do
+        if active then
+            if p2p_established[peer_id] then
+                print(string.format("[ROUTING] Node %d -> P2P [DIRECT RESIDENTIAL]", peer_id))
+            else
+                print(string.format("[ROUTING] Node %d -> P2P [FAILED]. Tagged for Omnibus Relay.", peer_id))
+                -- [!] FIX: Do NOT overwrite the peer_id socket with the Relay IP.
+                -- Leave it mapped to the dead WAN IP. The net_pump will route
+                -- this player's traffic through the MAX_PLAYERS socket instead.
+            end
+        end
+    end
+
+    -- Bind the Omnibus socket EXACTLY ONCE to Index 8.
+    net.SetRelayIP(cfg_net.RELAY_IP)
+    net.Connect(cfg_net.MAX_PLAYERS, cfg_net.RELAY_IP, cfg_net.RELAY_PORT)
+
+    -- Force register our NAT mapping with the Relay so it knows where to route
+    -- fallback packets, even if we are strictly P2P right now.
+    local reg_pkt = ffi.new("LockstepPacket")
+    reg_pkt.session_token = session_token
+    reg_pkt.player_id = local_id
+    reg_pkt.frame_tick = 0
+    net.SendTo(reg_pkt, cfg_net.MAX_PLAYERS)
+
+    print("[SYSTEM] All routes bound. Drop-in complete.")
+
+    return session_token, local_id, p2p_established, active_peers, status_data
 end
 
--- [!] NEW: Dedicated Omnibus Relay Socket (Index 8)
--- Bypasses dirty NAT states from the ICE phase
-net.Connect(cfg_net.MAX_PLAYERS, cfg_net.RELAY_IP, cfg_net.RELAY_PORT)
-
-print("[SYSTEM] All routes bound. Drop-in complete.")
+-- Execute the encapsulation
+local session_token, local_id, p2p_established, active_peers, status_data = BootstrapNetworkTopology(local_port, my_local_ip)
 
 local real_time_remaining = status_data.start_time - status_data.server_time
 
